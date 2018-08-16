@@ -17,7 +17,7 @@ public class CustomZuulFilter extends ZuulFilter{
 
 	@Override
 	public Object run() throws ZuulException {
-	     RequestContext ctx = RequestContext.getCurrentContext();
+	  /*   RequestContext ctx = RequestContext.getCurrentContext();
 	        HttpServletRequest request = ctx.getRequest();
 	        logger.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
 	        String sessionId = request.getParameter("sessionId");
@@ -38,7 +38,7 @@ public class CustomZuulFilter extends ZuulFilter{
 	            }
 	            ctx.setResponse(response);
 	            return null;
-	        }
+	        }*/
 	        logger.info("token验证成功");
 	        return null;
 	}

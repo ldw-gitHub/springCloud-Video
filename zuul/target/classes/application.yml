@@ -11,4 +11,7 @@ zuul:
   routes:
     service-a:
       path: /video/**
+      sensitiveHeaders: 
       service-id: service-video
+  sensitiveHeaders:
+    
