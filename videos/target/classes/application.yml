@@ -7,15 +7,17 @@ server:
 spring:
   application:
     name: service-video
-  datasource:
-    driverclassname: com.mysql.jdbc.Driver
-    username: root
-    password: 123456
-    url: jdbc:mysql://localhost:3306/shop?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20   
-    maxWait: 60000  
-    filters: stat
-    minEvictableIdleTimeMillis: 300000      # 配置一个连接在池中最小生存的时间，单位是毫秒
-    poolPreparedStatements: true
+    
+# feign配置
+feign:
+  hystrix:
+    # 在feign中开启hystrix功能，默认情况下feign不开启hystrix功能
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 8000
+        readTimeout: 8000
+        loggerLevel: basic
+        
+        
