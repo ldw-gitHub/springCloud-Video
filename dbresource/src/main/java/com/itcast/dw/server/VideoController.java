@@ -20,7 +20,7 @@ public class VideoController {
 	@Autowired
 	private VideoInfoMapper vm;
 	
-	@PostMapping(value = "/saveMedia")
+	@PostMapping(value = "/saveMedias")
 	public void saveMedia(@RequestBody VideoInfo vi) {
         vm.saveMedia(vi);
 	}

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
@@ -31,7 +31,7 @@ public class UploadController {
 	private VideoService videoService;
 	
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public String uploadFile(@RequestParam("uploadfile") CommonsMultipartFile uploadFile,HttpServletRequest request) throws IOException {
+	public String uploadFile(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
 		JSONObject response = new JSONObject();
 		
 		String attachName = request.getParameter("attachName");
@@ -52,12 +52,11 @@ public class UploadController {
 		response.put("success", flag);
 		response.put("uploadFileName", attachName);
 		
-		
 		return response.toString();
 	}
 	
 	
-	@RequestMapping(value = "/deleteFile")
+	@RequestMapping(value = "/deleteFile",method = RequestMethod.POST,produces = "application/json")
     public String deleteFile(HttpServletRequest request) throws Exception {    	
 		String attachName = request.getParameter("attachName");
 		String tag = request.getParameter("tag");
@@ -78,11 +77,6 @@ public class UploadController {
     @RequestMapping(value = "/saveMedia",method = RequestMethod.POST,produces = "application/json")
     public String saveMedia(HttpServletRequest request) throws Exception {    	
     	JSONObject response = new JSONObject();
-    	User user = (User) request.getSession().getAttribute("user");
-    	if(user == null) {
-    		response.put("success", false);
-    		return "redirect:/getLogin";
-    	}
     	String uploadImgPath = request.getParameter("uploadImgPath");
     	String uploadVideoPath = request.getParameter("uploadVideoPath");
     	String videoType = request.getParameter("videoType");
@@ -90,7 +84,7 @@ public class UploadController {
     	String filename = request.getParameter("filename");
     	
     	VideoInfo vi = new VideoInfo();
-    	vi.setCreateuserid(user.getId());
+    	vi.setCreateuserid(1);
     	vi.setImgpath("img/" + uploadImgPath);
     	vi.setVideopath("video/" + uploadVideoPath);
     	vi.setTitle(filename);
