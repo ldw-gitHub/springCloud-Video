@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -70,14 +72,20 @@ public class VideoController {
 	 * 根据视频id获取数据
 	 * @return
 	 */
-	@RequestMapping(value = "/findVideosById")
-	public ModelAndView findVideosById(HttpServletRequest request,ModelAndView vew){
+	@RequestMapping(value = "/findVideosById" ,method = RequestMethod.GET)
+	public String findVideosById(HttpServletRequest request){
 		String videoId = request.getParameter("videoId");
 		VideoInfo list = videoservice.getVideosById(Integer.parseInt(videoId));
 		Map<String,Object> rtMap = new HashMap<String,Object>();
 		rtMap.put("video", list);
-		vew.addAllObjects(rtMap);
-		vew.setViewName("body/videoplay");
-		return vew;
+		rtMap.put("success", true);
+		
+		String jsonString = null;
+		try {
+			jsonString = mapper.writeValueAsString(rtMap);
+		} catch (Exception e) {
+			log.info("Error in getDataLists()", e);
+		}
+		return jsonString;
 	}
 }

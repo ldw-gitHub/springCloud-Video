@@ -45,19 +45,20 @@ public class Login {
 			}
 			
 			//将用户信息存入session
-			HttpSession session = request.getSession();
+		/*	HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			
 			Cookie cc = new Cookie("sessionId", CommonUtil.getSessionKey());
 			cc.setMaxAge(60*60*24);
 			cc.setHttpOnly(false);
 			
-			response.addCookie(cc);
+			response.addCookie(cc);*/
 		
 			
 			log.info("login success" + user.getUsername());
 			obj.put("msg", "0001");
 			obj.put("user", user);
+			obj.put("accessToken", CommonUtil.getSessionKey());
 			
 		}
 		

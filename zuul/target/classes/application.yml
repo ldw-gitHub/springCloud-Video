@@ -7,6 +7,12 @@ server:
 spring:
   application:
     name: service-zuul
+  http:
+    multipart:
+      enabled: true   # 启用http上传处理
+      max-file-size: 100MB # 设置单个文件的最大长度
+      max-request-size: 100MB # 设置最大的请求文件的大小
+      
 zuul:
   routes:
     service-a:
@@ -14,6 +20,9 @@ zuul:
       sensitiveHeaders: 
       service-id: service-video
   sensitiveHeaders:
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
   
 hystrix:
   command:
@@ -21,5 +30,13 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 60000
+            timeoutInMilliseconds: 80000
+          ribbon:
+            ReadTimeout: 60000
+            ConnectTimeout: 60000
+            
+ribbon:
+    ReadTimeout: 60000
+    SocketTimeout: 60000
+    ConnectTimeout: 60000
     
