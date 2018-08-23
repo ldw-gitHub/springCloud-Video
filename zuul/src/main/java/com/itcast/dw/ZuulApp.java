@@ -8,8 +8,8 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
-
-import com.itcast.dw.filter.CustomZuulFilter;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -27,11 +27,29 @@ public class ZuulApp {
     @Bean  
     public MultipartConfigElement multipartConfigElement() {  
         MultipartConfigFactory factory = new MultipartConfigFactory();  
+        factory.setLocation("E:/uploadIoTmp");
         //单个文件最大  
-        factory.setMaxFileSize("102400KB"); //KB,MB  
+        factory.setMaxFileSize("2097152KB"); //KB,MB  
         /// 设置总上传数据总大小  
-        factory.setMaxRequestSize("102400KB");  
+        factory.setMaxRequestSize("2097152KB");  
         return factory.createMultipartConfig();  
     } 
+    
+    /**
+     * 大文件上传
+     * @return
+     */
+    @Bean
+    public SimpleClientHttpRequestFactory httpClientFactory() {
+    	SimpleClientHttpRequestFactory httpRequestFactory = new SimpleClientHttpRequestFactory();
+    	httpRequestFactory.setBufferRequestBody(false);
+    	return httpRequestFactory;
+    }
+    
+    @Bean
+    public RestTemplate restTemplate(SimpleClientHttpRequestFactory httpClientFactory) {
+           RestTemplate restTemplate = new RestTemplate(httpClientFactory);
+             return restTemplate;
+    }
 	
 }
