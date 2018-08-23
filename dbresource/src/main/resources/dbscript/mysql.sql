@@ -43,3 +43,20 @@ delete from videoinfo;
 
 -- 直接删除表中的所有数据
 truncate table videoinfo;
+
+
+
+----------------------登入信息表---------------------
+select @@GLOBAL.sql_mode;
+set @@GLOBAL.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+
+create table if not exists usersession(
+   sessiontoken varchar(50) not null,
+   userid int(10),
+   createtime date,
+   updatetime date,
+   remenberme int(1),
+   isonline int(1),
+   primary key (sessiontoken)
+) engine=InnoDB default charset=utf8;

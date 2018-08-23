@@ -40,3 +40,15 @@ ribbon:
     SocketTimeout: 60000
     ConnectTimeout: 60000
     
+    
+feign:
+  hystrix:
+    # 在feign中开启hystrix功能，默认情况下feign不开启hystrix功能
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 60000
+        readTimeout: 60000
+        loggerLevel: basic
+    

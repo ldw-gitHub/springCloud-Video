@@ -1,9 +1,8 @@
 package com.itcast.dw.controller;
 
-import javax.servlet.http.Cookie;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
 import com.itcast.dw.model.User;
+import com.itcast.dw.model.UserSession;
+import com.itcast.dw.service.SessionService;
 import com.itcast.dw.service.UserService;
 
 @RestController
@@ -23,14 +24,38 @@ public class Login {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private SessionService sessionService;
+	
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		JSONObject obj = new JSONObject();
+		String sessionToken  = request.getParameter("sessionToken");
+		UserSession us = sessionService.getOnlineSessionByToken(sessionToken);
+		
+		if(us == null) {
+			obj.put("success", true);
+			return obj.toJSONString();
+		}
+		
+		us.setIsonline(0);
+		us.setUpdatetime(new Date());
+		
+		sessionService.updateSession(us);
+		
+		obj.put("success", true);
+		return obj.toJSONString();
+	}
+	
 	@RequestMapping("/login")
-	public String login(HttpServletRequest request,HttpServletResponse response) {
+	public String login(HttpServletRequest request) {
 		
 		JSONObject obj = new JSONObject();
 		
 		//判断用户名密码
 		String name  = request.getParameter("username");
 		String password  = request.getParameter("password");
+		int remenberme  = Integer.parseInt(request.getParameter("remenberme"));
 		
 		User user = userService.getUserByName(name);
 		
@@ -45,20 +70,22 @@ public class Login {
 			}
 			
 			//将用户信息存入session
-		/*	HttpSession session = request.getSession();
-			session.setAttribute("user", user);
+			String sessionToken = CommonUtil.getSessionKey();
 			
-			Cookie cc = new Cookie("sessionId", CommonUtil.getSessionKey());
-			cc.setMaxAge(60*60*24);
-			cc.setHttpOnly(false);
+			UserSession us = new UserSession();
+			us.setCreatetime(new Date());
+			us.setIsonline(1);
+			us.setRemenberme(remenberme);
+			us.setSessiontoken(sessionToken);
+			us.setUpdatetime(new Date());
+			us.setUserid(user.getId());
 			
-			response.addCookie(cc);*/
-		
+			sessionService.saveUserSession(us);
 			
 			log.info("login success" + user.getUsername());
 			obj.put("msg", "0001");
 			obj.put("user", user);
-			obj.put("accessToken", CommonUtil.getSessionKey());
+			obj.put("accessToken", sessionToken);
 			
 		}
 		

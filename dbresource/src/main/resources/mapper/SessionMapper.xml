@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcast.dw.dao.SessionMapper">
+
+	<select id="getOnlineSessionByToken"
+		resultType="com.itcast.dw.model.UserSession"
+		parameterType="java.lang.String">
+		select *
+		from usersession
+		where sessiontoken =
+		#{sessiontoken,jdbcType=CHAR}
+		and isonline = 1
+	</select>
+
+	<!-- jdbcType=TIMESTAMP -->
+	<insert id="saveUserSession"
+		parameterType="com.itcast.dw.model.UserSession">
+		insert into usersession(sessiontoken, userid,
+		createtime,
+		updatetime, remenberme,isonline)
+		values(#{sessiontoken,jdbcType=VARCHAR},
+		#{userid,jdbcType=NUMERIC},
+		#{createtime},
+		#{updatetime},
+		#{remenberme,jdbcType=NUMERIC},
+		#{isonline,jdbcType=NUMERIC}
+		)
+	</insert>
+
+	<update id="updateSession"
+		parameterType="com.itcast.dw.model.UserSession">
+		<if test="sessiontoken != null and sessiontoken != ''">
+			update usersession
+			<set>
+				<if test="updatetime != null">
+					updatetime = #{updatetime},
+				</if>
+				<if test="remenberme != null">
+					remenberme = #{remenberme},
+				</if>
+				<if test="isonline != null">
+					isonline = #{isonline},
+				</if>
+			</set>
+			where sessiontoken = #{sessiontoken}
+		</if>
+	</update>
+
+
+</mapper>
