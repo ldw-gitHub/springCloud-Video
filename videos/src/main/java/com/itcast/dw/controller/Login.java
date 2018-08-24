@@ -82,6 +82,7 @@ public class Login {
 			
 			sessionService.saveUserSession(us);
 			
+			user.setPassword("");
 			log.info("login success" + user.getUsername());
 			obj.put("msg", "0001");
 			obj.put("user", user);

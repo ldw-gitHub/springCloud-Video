@@ -29,11 +29,14 @@ public class VideosApp {
     @Bean  
     public MultipartConfigElement multipartConfigElement() {  
         MultipartConfigFactory factory = new MultipartConfigFactory();  
-        factory.setLocation("E:/uploadIoTmp");
+        //缓存路径
+        factory.setLocation("D:/uploadIoTmp");
         //单个文件最大  
-        factory.setMaxFileSize("2097152KB"); //KB,MB  
+        factory.setMaxFileSize("2097152KB"); //KB,MB   2G
         /// 设置总上传数据总大小  
-        factory.setMaxRequestSize("2097152KB");  
+        factory.setMaxRequestSize("2097152KB");
+        //当文件大于10M磁盘写入
+        factory.setFileSizeThreshold("10240KB");
         return factory.createMultipartConfig();  
     } 
     

@@ -19,9 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
 import com.itcast.dw.common.UploadFile;
-import com.itcast.dw.model.User;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.service.VideoService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 public class UploadController {
@@ -31,6 +31,7 @@ public class UploadController {
 	private VideoService videoService;
 	
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	@HystrixCommand(fallbackMethod="uploadFallback")
 	public String uploadFile(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
 		JSONObject response = new JSONObject();
 		
@@ -53,6 +54,10 @@ public class UploadController {
 		response.put("uploadFileName", attachName);
 		
 		return response.toString();
+	}
+	
+	public String uploadFallback(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
+		return "{\"success\":\"false\"}";
 	}
 	
 	
