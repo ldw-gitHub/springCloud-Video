@@ -10,8 +10,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.web.client.RestTemplate;
 
 @EnableEurekaClient
 @EnableFeignClients
@@ -26,11 +24,11 @@ public class VideosApp {
      * 文件上传配置  
      * @return  
      */  
-    @Bean  
+/*    @Bean  
     public MultipartConfigElement multipartConfigElement() {  
         MultipartConfigFactory factory = new MultipartConfigFactory();  
         //缓存路径
-        factory.setLocation("D:/uploadIoTmp");
+        factory.setLocation("E:/uploadIoTmp");
         //单个文件最大  
         factory.setMaxFileSize("2097152KB"); //KB,MB   2G
         /// 设置总上传数据总大小  
@@ -38,13 +36,13 @@ public class VideosApp {
         //当文件大于10M磁盘写入
         factory.setFileSizeThreshold("10240KB");
         return factory.createMultipartConfig();  
-    } 
+    } */
     
     /**
      * 大文件上传
      * @return
      */
-    @Bean
+ /*   @Bean
     public SimpleClientHttpRequestFactory httpClientFactory() {
     	SimpleClientHttpRequestFactory httpRequestFactory = new SimpleClientHttpRequestFactory();
     	httpRequestFactory.setBufferRequestBody(false);
@@ -55,7 +53,7 @@ public class VideosApp {
     public RestTemplate restTemplate(SimpleClientHttpRequestFactory httpClientFactory) {
            RestTemplate restTemplate = new RestTemplate(httpClientFactory);
              return restTemplate;
-    }
+    }*/
     
     
     

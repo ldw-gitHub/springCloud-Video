@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
+import com.itcast.dw.common.FTPClientHelper;
 import com.itcast.dw.common.UploadFile;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.service.VideoService;
@@ -30,11 +31,24 @@ public class UploadController {
 	@Autowired
 	private VideoService videoService;
 	
-	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	@Autowired
+	private FTPClientHelper ftpClientHelper;
+	
+	@RequestMapping(value = "/uploadFile")
 	@HystrixCommand(fallbackMethod="uploadFallback")
 	public String uploadFile(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
 		JSONObject response = new JSONObject();
 		
+		String count = request.getParameter("count");
+		boolean isLast = true;
+		if(request.getParameter("isLast") != null){
+			isLast = Boolean.parseBoolean(request.getParameter("isLast"));
+		}
+		String name = request.getParameter("name");
+		int total = 1;
+		if(request.getParameter("total") != null){
+			total = Integer.parseInt(request.getParameter("total"));
+		}
 		String attachName = request.getParameter("attachName");
 		String tag = request.getParameter("tag");//文件夹名
 		String path = "img";
@@ -44,11 +58,31 @@ public class UploadController {
 		if(StringUtils.isNotEmpty(tag)) {
 			path = tag;
 		}
+		if(total == 1 && isLast){//只有一个文件
+			
+		}else if(total > 1){ //切割上传的文件
+			String pathName = name.substring(0, name.indexOf("."));
+			path = tag + "/" + pathName;
+		}
 		
 		attachName = "[" + CommonUtil.getDataFormat(new Date(), "yyyyMMddHHmmssSSS") + "]" + attachName;
 		
 		UploadFile ftp = new UploadFile();
 		boolean flag = ftp.UploadFileToServer(stream,attachName, path);
+	/*	boolean flag = false;
+		try {
+			String savefilePathName = path + "/" + attachName;
+			if(ftpClientHelper.haveDirectory(savefilePathName)){
+				flag = ftpClientHelper.storeFile(savefilePathName, stream);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		
+		if(total > 1 && isLast){
+			String resultPath = "/" + path.substring(0,path.lastIndexOf("/")) + "/" + attachName;
+			flag = ftp.mergeFiles(path,resultPath);
+		}
 		
 		response.put("success", flag);
 		response.put("uploadFileName", attachName);
@@ -57,7 +91,9 @@ public class UploadController {
 	}
 	
 	public String uploadFallback(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
-		return "{\"success\":\"false\"}";
+		JSONObject response = new JSONObject();
+		response.put("error", "upload error");
+		return response.toJSONString();
 	}
 	
 	

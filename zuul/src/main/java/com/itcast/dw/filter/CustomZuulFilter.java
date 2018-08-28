@@ -1,33 +1,27 @@
 package com.itcast.dw.filter;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.stereotype.Component;
 
-import com.itcast.dw.model.UserSession;
-import com.itcast.dw.service.SessionService;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 
+@Component
 public class CustomZuulFilter extends ZuulFilter {
 
 	private Logger logger = Logger.getLogger(CustomZuulFilter.class);
-	
-	@Autowired
-	private SessionService sessionservice;
 
 	@Override
 	public Object run() throws ZuulException {
 		RequestContext ctx = RequestContext.getCurrentContext();
 		HttpServletRequest request = ctx.getRequest();
 		logger.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
-		String sessiontoken = request.getParameter("sessiontoken");
+		return null;
+	/*	String sessiontoken = request.getParameter("sessiontoken");
 		logger.info("sessiontoken:" + sessiontoken);
 
 		UserSession us = sessionservice.getOnlineSessionByToken(sessiontoken);
@@ -50,7 +44,7 @@ public class CustomZuulFilter extends ZuulFilter {
 			}
 			ctx.setResponse(response);
 			return null;
-		}
+		}*/
 
 	}
 
@@ -66,7 +60,7 @@ public class CustomZuulFilter extends ZuulFilter {
 
 	@Override
 	public String filterType() {
-		return FilterConstants.ROUTE_TYPE;// pre前置过滤器、route转发过滤器、post请求返回过滤器
+		return FilterConstants.PRE_TYPE;// pre前置过滤器、route转发过滤器、post请求返回过滤器
 	}
 
 }

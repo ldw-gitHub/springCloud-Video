@@ -1,5 +1,11 @@
 package com.itcast.dw.common;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,6 +16,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +26,7 @@ public class UploadFile {
 	private static String ftpPort;
 	private static String ftpUsername;
 	private static String ftpPassword;
+	private static String ftpPath;
 	private FTPClient ftpClient = null;
 
 	static {
@@ -30,6 +38,7 @@ public class UploadFile {
 			ftpPort = properties.getProperty("ftpServerPort");
 			ftpUsername = properties.getProperty("ftpUsername");
 			ftpPassword = properties.getProperty("ftpPassword");
+			ftpPath = properties.getProperty("ftpPath");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -169,6 +178,54 @@ public class UploadFile {
 			}
 		}
 		return uploadFlag;
+	}
+	
+	public static boolean mergeFiles(String fpaths, String resultPath) {
+		resultPath = ftpPath + resultPath;
+		fpaths = ftpPath + "/" + fpaths;
+		File file = new File(fpaths);
+	    File[] fileList = file.listFiles();
+
+	    File resultFile = new File(resultPath);
+
+	    try {
+	        int bufSize = 1024;
+	        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFile));
+	        byte[] buffer = new byte[bufSize];
+
+	        for (int i = 0; i < fileList.length; i ++) {
+	            BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(fileList[i]));
+	            int readcount;
+	            while ((readcount = inputStream.read(buffer)) > 0) {
+	                outputStream.write(buffer, 0, readcount);
+	            }
+	            inputStream.close();
+	        }
+	        deleteDirAndFile(file);
+	        outputStream.close();
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	        return false;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+
+	    return true;
+	}
+	
+	public static boolean deleteDirAndFile(File dir) {
+		if (dir.isDirectory()) {
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++) {
+				try {
+					deleteDirAndFile(new File(dir, children[i]));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return dir.delete(); // 目录此时为空，可以删除
 	}
 
 }

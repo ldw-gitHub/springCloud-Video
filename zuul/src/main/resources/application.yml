@@ -7,32 +7,32 @@ server:
 spring:
   application:
     name: service-zuul
-      
+
 zuul:
   routes:
     service-video:
       path: /video/**
-      sensitiveHeaders: 
+      sensitiveHeaders: Cookie,Set-Cookie,Authorization
       service-id: service-video
   sensitiveHeaders:
-  host:
-    socket-timeout-millis: 400000
-    connect-timeout-millis: 400000
+  ignoreSecurityHeaders: false 
   
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 400000
-            
+#熔断时间Ribbon超时与Hystrix超时问题，为了确保Ribbon重试的时候不被熔断，
+#我们就需要让Hystrix的超时时间大于Ribbon的超时时间，否则Hystrix命令超时后，该命令直接熔断，重试机制就没有任何意义了
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 300000 
 ribbon:
-    ReadTimeout: 1600000
-    SocketTimeout: 1600000
-    ConnectTimeout: 1600000
+  ConnectTimeout: 6000
+  ReadTimeout: 300000
+  okhttp:
+    enabled: true
     
-#单独为video文件上传设置熔断时间
+    
+#单独为video文件上传设置
 
-    
+# 打印日志
+logging:
+  level:
+    root: INFO
+    com.springms: DEBUG
+    com.netflix: debug    
     
