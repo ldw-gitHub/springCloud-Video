@@ -24,4 +24,7 @@ public interface VideoService {
     
 	@GetMapping(value = "/getVideosById/{videoId}")
     VideoInfo getVideosById(@PathVariable("videoId") int videoId);
+	
+	@GetMapping(value = "/getVideosByUserId/{userId}")
+	List<VideoInfo> getVideosByUserId(@PathVariable("userId") int userId);
 }

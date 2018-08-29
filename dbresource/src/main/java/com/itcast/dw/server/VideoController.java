@@ -37,5 +37,10 @@ public class VideoController {
 	public VideoInfo getVideosById(@PathVariable int videoId) {
 		return vm.getVideosById(videoId);
 	}
+	
+	@GetMapping(value = "/getVideosByUserId/{userId}")
+	public List<VideoInfo> getVideosByUserId(@PathVariable int userId) {
+		return vm.getVideosByUserId(userId);
+	}
 
 }

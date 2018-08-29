@@ -25,7 +25,11 @@
 	</select>
 	
 	<select id="getVideosByType" resultMap="videoResultMap" parameterType="string">
-	    select * from videoinfo where videoType = #{videoType} ORDER BY updatetime DESC LIMIT 12
+	    select * from videoinfo where videoType = #{videoType} and isown = 0 ORDER BY updatetime DESC LIMIT 12
+	</select>
+	
+	<select id="getVideosByUserId" resultMap="videoResultMap" parameterType="int">
+	    select * from videoinfo where createuserid = #{userId} ORDER BY updatetime DESC LIMIT 12
 	</select>
 	
 	<select id="getVideosById" resultType="com.itcast.dw.model.VideoInfo" parameterType="int">

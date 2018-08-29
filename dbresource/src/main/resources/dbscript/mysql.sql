@@ -34,7 +34,7 @@ select * from videoinfo;
 
 -- 增加某一列
 alter table videoinfo add column videopath varchar(100);
-
+alter table videoinfo add column isown varchar(1) DEFAULT '1' COMMENT;
 -- 修改某一列的列名
 alter table videoinfo change column imgname imgpath varchar(50);
 

@@ -51,6 +51,27 @@ public class VideoController {
 	 * 根据视频类型获取数据
 	 * @return
 	 */
+	@RequestMapping(value = "/findMyOwnVideos")
+	public String findMyOwnVideos(HttpServletRequest request){
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		List<VideoInfo> list = videoservice.getVideosByUserId(userId);
+		Map<String,Object> rtMap = new HashMap<String,Object>();
+		rtMap.put("data", list);
+		rtMap.put("success", true);
+		
+		String jsonString = null;
+		try {
+			jsonString = mapper.writeValueAsString(rtMap);
+		} catch (Exception e) {
+			log.info("Error in getDataLists()", e);
+		}
+		return jsonString;
+	}
+	
+	/**
+	 * 根据视频类型获取数据
+	 * @return
+	 */
 	@RequestMapping(value = "/findVideosByType")
 	public String findVideosByType(HttpServletRequest request){
 		String videoType = request.getParameter("videoType");

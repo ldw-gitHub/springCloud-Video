@@ -12,4 +12,6 @@ public interface VideoInfoMapper {
 	List<VideoInfo> getVideosByType(String videoType);
 	
 	VideoInfo getVideosById(int videoId);
+	
+	List<VideoInfo> getVideosByUserId(int userId);
 }
