@@ -16,6 +16,7 @@ public class VideoInfo implements Serializable{
 	private String videopath;
 	private Date createtime;
 	private Date updatetime;
+	private String isown;
 	public int getId() {
 		return id;
 	}
@@ -72,6 +73,12 @@ public class VideoInfo implements Serializable{
 	}
 	public void setUpdatetime(Date updatetime) {
 		this.updatetime = updatetime;
+	}
+	public String getIsown() {
+		return isown;
+	}
+	public void setIsown(String isown) {
+		this.isown = isown;
 	}
 	
 

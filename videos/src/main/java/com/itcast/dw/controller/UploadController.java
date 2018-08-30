@@ -2,6 +2,7 @@ package com.itcast.dw.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -123,6 +124,7 @@ public class UploadController {
     	String videoType = request.getParameter("videoType");
     	String description = request.getParameter("description");
     	String filename = request.getParameter("filename");
+    	String isown = request.getParameter("isown");
     	
     	VideoInfo vi = new VideoInfo();
     	vi.setCreateuserid(1);
@@ -130,10 +132,12 @@ public class UploadController {
     	vi.setVideopath("video/" + uploadVideoPath);
     	vi.setTitle(filename);
     	vi.setVideoType(videoType);
-    	
-    	vi.setCreatetime(new Date());
-    	vi.setUpdatetime(new Date());
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String nowDate = sdf.format(new Date());
+    	vi.setCreatetime(sdf.parse(nowDate));
+    	vi.setUpdatetime(sdf.parse(nowDate));
     	vi.setDescription(description);
+    	vi.setIsown(isown);
     	
     	videoService.saveMedia(vi);
     	response.put("success", true);

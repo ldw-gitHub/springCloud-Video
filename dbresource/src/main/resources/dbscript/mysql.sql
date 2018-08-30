@@ -25,8 +25,8 @@ create table if not exists videoinfo(
    videoType varchar(10),
    imgpath varchar(50),
    videopath varchar(100),
-   createtime date,
-   updatetime date,
+   createtime TIMESTAMP,
+   updatetime TIMESTAMP,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
 
@@ -54,8 +54,8 @@ set @@GLOBAL.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_
 create table if not exists usersession(
    sessiontoken varchar(50) not null,
    userid int(10),
-   createtime date,
-   updatetime date,
+   createtime TIMESTAMP,
+   updatetime TIMESTAMP,
    remenberme int(1),
    isonline int(1),
    primary key (sessiontoken)

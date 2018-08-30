@@ -8,7 +8,7 @@
 		parameterType="com.itcast.dw.model.VideoInfo" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into videoinfo(title, description, createuserid,
-		videoType, imgpath,videopath, createtime, updatetime)
+		videoType, imgpath,videopath, createtime, updatetime,isown)
 		values(#{title,jdbcType=VARCHAR},
 		#{description,jdbcType=VARCHAR},
 		#{createuserid,jdbcType=NUMERIC},
@@ -16,7 +16,8 @@
 		#{imgpath,jdbcType=VARCHAR},
 		#{videopath,jdbcType=VARCHAR},
 		#{createtime,jdbcType=TIMESTAMP},
-		#{updatetime,jdbcType=TIMESTAMP}
+		#{updatetime,jdbcType=TIMESTAMP},
+		#{isown,jdbcType=VARCHAR}
 		)
 	</insert>
 	
