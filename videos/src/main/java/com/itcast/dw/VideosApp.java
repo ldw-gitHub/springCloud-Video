@@ -24,7 +24,7 @@ public class VideosApp {
      * 文件上传配置  
      * @return  
      */  
-/*    @Bean  
+    @Bean  
     public MultipartConfigElement multipartConfigElement() {  
         MultipartConfigFactory factory = new MultipartConfigFactory();  
         //缓存路径
@@ -36,7 +36,7 @@ public class VideosApp {
         //当文件大于10M磁盘写入
         factory.setFileSizeThreshold("10240KB");
         return factory.createMultipartConfig();  
-    } */
+    } 
     
     /**
      * 大文件上传
