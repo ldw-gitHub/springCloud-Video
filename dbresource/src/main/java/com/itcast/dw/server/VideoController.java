@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itcast.dw.dao.VideoInfoMapper;
+import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
 
 @RestController
@@ -18,9 +19,14 @@ public class VideoController {
 	@Autowired
 	private VideoInfoMapper vm;
 	
+	@PostMapping(value = "/saveVideoComments")
+	public void saveVideoComments(@RequestBody VideoComments vc) {
+        vm.saveVideoComments(vc);
+	}
+	
 	@PostMapping(value = "/saveMedias")
 	public void saveMedia(@RequestBody VideoInfo vi) {
-        vm.saveMedia(vi);
+		vm.saveMedia(vi);
 	}
 
 	@GetMapping(value = "/findAllMedia")
@@ -41,6 +47,11 @@ public class VideoController {
 	@GetMapping(value = "/getVideosByUserId/{userId}")
 	public List<VideoInfo> getVideosByUserId(@PathVariable int userId) {
 		return vm.getVideosByUserId(userId);
+	}
+	
+	@GetMapping(value = "/getVideoCommentsByid/{videoid}")
+	public List<VideoComments> getVideoCommentsByid(@PathVariable int videoid) {
+		return vm.getVideoCommentsByid(videoid);
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
 
 @FeignClient(value = "service-db")
@@ -15,6 +16,9 @@ public interface VideoService {
 	
 	@PostMapping(value = "/saveMedias")
     void saveMedia(@RequestBody VideoInfo vi);
+	
+	@PostMapping(value = "/saveVideoComments")
+	void saveVideoComments(@RequestBody VideoComments vc);
     
 	@GetMapping(value = "/findAllMedia")
     List<VideoInfo> findAllMedia();
@@ -27,4 +31,8 @@ public interface VideoService {
 	
 	@GetMapping(value = "/getVideosByUserId/{userId}")
 	List<VideoInfo> getVideosByUserId(@PathVariable("userId") int userId);
+	
+	@GetMapping(value = "/getVideoCommentsByid/{videoid}")
+	List<VideoComments> getVideoCommentsByid(@PathVariable("videoid") int videoid);
+	
 }

@@ -60,3 +60,23 @@ create table if not exists usersession(
    isonline int(1),
    primary key (sessiontoken)
 ) engine=InnoDB default charset=utf8;
+
+
+
+----------------------评论表--------------------------
+create table if not exists videocomment(
+   id int unsigned auto_increment,
+   commentuserid int(10) not null,
+   videoid int(10) not null,
+   createuserid int(100),
+   msg varchar(100),
+   commentusername varchar(30),
+   createtime TIMESTAMP,
+   primary key (id)
+) engine=InnoDB default charset=utf8;
+
+
+
+
+
+

@@ -3,6 +3,7 @@
 <mapper namespace="com.itcast.dw.dao.VideoInfoMapper">
 
     <resultMap type="com.itcast.dw.model.VideoInfo" id="videoResultMap"></resultMap>
+    <resultMap type="com.itcast.dw.model.VideoComments" id="videoCommentResultMap"></resultMap>
 
 	<insert id="saveMedia"
 		parameterType="com.itcast.dw.model.VideoInfo" useGeneratedKeys="true"
@@ -21,8 +22,25 @@
 		)
 	</insert>
 	
+	<insert id="saveVideoComments"
+		parameterType="com.itcast.dw.model.VideoComments" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into videocomment(commentuserid, videoid,
+		msg, commentusername,createtime)
+		values(#{commentuserid,jdbcType=NUMERIC},
+		#{videoid,jdbcType=NUMERIC},
+		#{msg,jdbcType=VARCHAR},
+		#{commentusername,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
 	<select id="findAllMedia" resultMap="videoResultMap">
 	    select * from videoinfo
+	</select>
+	
+	<select id="getVideoCommentsByid" resultMap="videoCommentResultMap" parameterType="int">
+	    select * from videocomment where videoid = #{videoid} ORDER BY createtime DESC 
 	</select>
 	
 	<select id="getVideosByType" resultMap="videoResultMap" parameterType="string">
