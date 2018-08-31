@@ -68,7 +68,6 @@ create table if not exists videocomment(
    id int unsigned auto_increment,
    commentuserid int(10) not null,
    videoid int(10) not null,
-   createuserid int(100),
    msg varchar(100),
    commentusername varchar(30),
    createtime TIMESTAMP,
