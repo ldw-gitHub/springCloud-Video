@@ -11,6 +11,7 @@ public class VideoInfo implements Serializable{
 	private String title;
 	private String description;
 	private int createuserid;
+	private int click;
 	private String videoType;
 	private String imgpath;
 	private String videopath;
@@ -79,6 +80,12 @@ public class VideoInfo implements Serializable{
 	}
 	public void setIsown(String isown) {
 		this.isown = isown;
+	}
+	public int getClick() {
+		return click;
+	}
+	public void setClick(int click) {
+		this.click = click;
 	}
 	
 

@@ -138,6 +138,7 @@ public class UploadController {
     	vi.setUpdatetime(sdf.parse(nowDate));
     	vi.setDescription(description);
     	vi.setIsown(isown);
+    	vi.setClick(0);
     	
     	videoService.saveMedia(vi);
     	response.put("success", true);

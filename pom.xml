@@ -10,6 +10,7 @@
 		<module>videos</module>
 		<module>zuul</module>
 		<module>dbresource</module>
+		<module>config</module>
 	</modules>
 
 	<properties>

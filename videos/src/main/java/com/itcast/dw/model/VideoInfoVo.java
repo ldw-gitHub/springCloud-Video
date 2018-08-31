@@ -3,7 +3,7 @@ package com.itcast.dw.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class VideoInfo implements Serializable{
+public class VideoInfoVo implements Serializable{
 	
 	private static final long serialVersionUID = -2639829286599829185L;
 	
@@ -18,6 +18,7 @@ public class VideoInfo implements Serializable{
 	private Date createtime;
 	private Date updatetime;
 	private String isown;
+	private int commentsnumber;
 	public int getId() {
 		return id;
 	}
@@ -86,6 +87,12 @@ public class VideoInfo implements Serializable{
 	}
 	public void setClick(int click) {
 		this.click = click;
+	}
+	public int getCommentsnumber() {
+		return commentsnumber;
+	}
+	public void setCommentsnumber(int commentsnumber) {
+		this.commentsnumber = commentsnumber;
 	}
 	
 

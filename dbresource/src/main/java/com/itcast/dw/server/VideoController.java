@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.itcast.dw.dao.VideoInfoMapper;
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
+import com.itcast.dw.model.VideoInfoVo;
 
 @RestController
 public class VideoController {
@@ -28,14 +29,19 @@ public class VideoController {
 	public void saveMedia(@RequestBody VideoInfo vi) {
 		vm.saveMedia(vi);
 	}
+	
+	@PostMapping(value = "/updateVideoClick")
+	public void updateVideoClick(@RequestBody VideoInfo vi) {
+		vm.updateVideoClick(vi);
+	}
 
 	@GetMapping(value = "/findAllMedia")
-	public List<VideoInfo> findAllMedia() {
+	public List<VideoInfoVo> findAllMedia() {
 		return vm.findAllMedia();
 	}
 	
 	@GetMapping(value = "/getVideosByType/{videoType}")
-	public List<VideoInfo> getVideosByType(@PathVariable String videoType) {
+	public List<VideoInfoVo> getVideosByType(@PathVariable String videoType) {
 		return vm.getVideosByType(videoType);
 	}
 	
@@ -45,7 +51,7 @@ public class VideoController {
 	}
 	
 	@GetMapping(value = "/getVideosByUserId/{userId}")
-	public List<VideoInfo> getVideosByUserId(@PathVariable int userId) {
+	public List<VideoInfoVo> getVideosByUserId(@PathVariable int userId) {
 		return vm.getVideosByUserId(userId);
 	}
 	

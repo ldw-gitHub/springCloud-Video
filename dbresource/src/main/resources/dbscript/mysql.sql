@@ -22,6 +22,7 @@ create table if not exists videoinfo(
    title varchar(50) not null,
    description varchar(100),
    createuserid int(100),
+   click int(255),
    videoType varchar(10),
    imgpath varchar(50),
    videopath varchar(100),
@@ -34,7 +35,8 @@ select * from videoinfo;
 
 -- 增加某一列
 alter table videoinfo add column videopath varchar(100);
-alter table videoinfo add column isown varchar(1) DEFAULT '1' COMMENT;
+alter table videoinfo add column isown varchar(1) DEFAULT '1';
+alter table videoinfo add column click int(255) DEFAULT 0;
 -- 修改某一列的列名
 alter table videoinfo change column imgname imgpath varchar(50);
 

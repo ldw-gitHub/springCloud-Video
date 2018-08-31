@@ -1,6 +1,5 @@
 package com.itcast.dw.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
+import com.itcast.dw.model.VideoInfoVo;
 import com.itcast.dw.service.VideoService;
 
 @RestController
@@ -36,7 +36,7 @@ public class VideoController {
 	 */
 	@RequestMapping("/findAllVideos")
 	public String findAllVideos() {
-		List<VideoInfo> list = videoservice.findAllMedia();
+		List<VideoInfoVo> list = videoservice.findAllMedia();
 		Map<String, Object> rtMap = new HashMap<String, Object>();
 		rtMap.put("data", list);
 		rtMap.put("success", true);
@@ -58,7 +58,7 @@ public class VideoController {
 	@RequestMapping(value = "/findMyOwnVideos")
 	public String findMyOwnVideos(HttpServletRequest request) {
 		int userId = Integer.parseInt(request.getParameter("userId"));
-		List<VideoInfo> list = videoservice.getVideosByUserId(userId);
+		List<VideoInfoVo> list = videoservice.getVideosByUserId(userId);
 		Map<String, Object> rtMap = new HashMap<String, Object>();
 		rtMap.put("data", list);
 		rtMap.put("success", true);
@@ -80,7 +80,7 @@ public class VideoController {
 	@RequestMapping(value = "/findVideosByType")
 	public String findVideosByType(HttpServletRequest request) {
 		String videoType = request.getParameter("videoType");
-		List<VideoInfo> list = videoservice.getVideosByType(videoType);
+		List<VideoInfoVo> list = videoservice.getVideosByType(videoType);
 		Map<String, Object> rtMap = new HashMap<String, Object>();
 		rtMap.put("data", list);
 		rtMap.put("success", true);
@@ -102,9 +102,15 @@ public class VideoController {
 	@RequestMapping(value = "/findVideosById", method = RequestMethod.GET)
 	public String findVideosById(HttpServletRequest request) {
 		String videoId = request.getParameter("videoId");
-		VideoInfo list = videoservice.getVideosById(Integer.parseInt(videoId));
+		VideoInfo vi = videoservice.getVideosById(Integer.parseInt(videoId));
+		int click = vi.getClick();
+		
+		vi.setClick(click + 1);
+		
+		videoservice.updateVideoClick(vi);
+		
 		Map<String, Object> rtMap = new HashMap<String, Object>();
-		rtMap.put("video", list);
+		rtMap.put("video", vi);
 		rtMap.put("success", true);
 
 		String jsonString = null;

@@ -2,17 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itcast.dw.dao.VideoInfoMapper">
 
-    <resultMap type="com.itcast.dw.model.VideoInfo" id="videoResultMap"></resultMap>
-    <resultMap type="com.itcast.dw.model.VideoComments" id="videoCommentResultMap"></resultMap>
+	<resultMap type="com.itcast.dw.model.VideoInfoVo"
+		id="videoResultMap"></resultMap>
+	<resultMap type="com.itcast.dw.model.VideoComments"
+		id="videoCommentResultMap"></resultMap>
 
 	<insert id="saveMedia"
 		parameterType="com.itcast.dw.model.VideoInfo" useGeneratedKeys="true"
 		keyProperty="id">
-		insert into videoinfo(title, description, createuserid,
-		videoType, imgpath,videopath, createtime, updatetime,isown)
+		insert into videoinfo(title, description,
+		createuserid,click,
+		videoType, imgpath,videopath, createtime,
+		updatetime,isown)
 		values(#{title,jdbcType=VARCHAR},
 		#{description,jdbcType=VARCHAR},
 		#{createuserid,jdbcType=NUMERIC},
+		#{click,jdbcType=NUMERIC},
 		#{videoType,jdbcType=VARCHAR},
 		#{imgpath,jdbcType=VARCHAR},
 		#{videopath,jdbcType=VARCHAR},
@@ -21,11 +26,12 @@
 		#{isown,jdbcType=VARCHAR}
 		)
 	</insert>
-	
+
 	<insert id="saveVideoComments"
-		parameterType="com.itcast.dw.model.VideoComments" useGeneratedKeys="true"
-		keyProperty="id">
-		insert into videocomment(commentuserid, videoid,
+		parameterType="com.itcast.dw.model.VideoComments"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		videocomment(commentuserid, videoid,
 		msg, commentusername,createtime)
 		values(#{commentuserid,jdbcType=NUMERIC},
 		#{videoid,jdbcType=NUMERIC},
@@ -34,26 +40,84 @@
 		#{createtime,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	
+
 	<select id="findAllMedia" resultMap="videoResultMap">
-	    select * from videoinfo
+		select v.*,case when
+		c.commentsnumber is null then 0 else
+		c.commentsnumber END
+		commentsnumber
+		from
+		videoinfo
+		v left join (select
+		videoid,count(*)
+		commentsnumber from
+		videocomment
+		GROUP BY videoid) c
+		on v.id = c.videoid
+		GROUP BY v.id ORDER
+		BY
+		v.updatetime DESC
 	</select>
-	
-	<select id="getVideoCommentsByid" resultMap="videoCommentResultMap" parameterType="int">
-	    select * from videocomment where videoid = #{videoid} ORDER BY createtime DESC 
+
+	<select id="getVideoCommentsByid"
+		resultMap="videoCommentResultMap" parameterType="int">
+		select * from
+		videocomment where videoid = #{videoid} ORDER BY createtime
+		DESC
 	</select>
-	
-	<select id="getVideosByType" resultMap="videoResultMap" parameterType="string">
-	    select * from videoinfo where videoType = #{videoType} and isown = 0 ORDER BY updatetime DESC LIMIT 12
+
+	<select id="getVideosByType" resultMap="videoResultMap"
+		parameterType="string">
+		select v.*,case when
+		c.commentsnumber is null then 0 else
+		c.commentsnumber END commentsnumber from
+		videoinfo v left join (select
+		videoid,count(*) commentsnumber from
+		videocomment GROUP BY videoid) c
+		on v.id = c.videoid where v.videoType
+		= #{videoType} and v.isown = 0
+		GROUP BY v.id ORDER
+		BY v.updatetime DESC LIMIT
+		12
 	</select>
-	
-	<select id="getVideosByUserId" resultMap="videoResultMap" parameterType="int">
-	    select * from videoinfo where createuserid = #{userId} ORDER BY updatetime DESC LIMIT 12
+
+	<select id="getVideosByUserId" resultMap="videoResultMap"
+		parameterType="int">
+		select v.*,case when
+		c.commentsnumber is null then 0 else
+		c.commentsnumber
+		END commentsnumber from
+		videoinfo v left join (select
+		videoid,count(*)
+		commentsnumber
+		from
+		videocomment GROUP BY videoid) c on
+		v.id = c.videoid
+		where
+		v.createuserid
+		= #{userId} GROUP BY v.id ORDER
+		BY
+		v.updatetime DESC LIMIT
+		12
 	</select>
-	
-	<select id="getVideosById" resultType="com.itcast.dw.model.VideoInfo" parameterType="int">
-	    select * from videoinfo where id = #{videoId}
+
+	<select id="getVideosById"
+		resultType="com.itcast.dw.model.VideoInfo" parameterType="int">
+		select * from
+		videoinfo where id = #{videoId}
 	</select>
+
+
+	<update id="updateVideoClick"
+		parameterType="com.itcast.dw.model.VideoInfo">
+		update videoinfo
+		<set>
+			<if test="click != null">
+				click = #{click},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
 
 
 </mapper>
