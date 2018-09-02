@@ -97,8 +97,7 @@
 		v.createuserid
 		= #{userId} GROUP BY v.id ORDER
 		BY
-		v.updatetime DESC LIMIT
-		12
+		v.updatetime DESC 
 	</select>
 
 	<select id="getVideosById"
