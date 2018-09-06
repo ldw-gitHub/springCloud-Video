@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.model.VideoInfoVo;
+import com.itcast.dw.page.PageBean;
+import com.itcast.dw.page.PageModel;
 import com.itcast.dw.service.VideoService;
 
 @RestController
@@ -58,9 +60,22 @@ public class VideoController {
 	@RequestMapping(value = "/findMyOwnVideos")
 	public String findMyOwnVideos(HttpServletRequest request) {
 		int userId = Integer.parseInt(request.getParameter("userId"));
-		List<VideoInfoVo> list = videoservice.getVideosByUserId(userId);
+		String curPage = request.getParameter("currentPage");
+		String pageSize = request.getParameter("pageSize");
+		if (curPage == null || "".equals(curPage)) {
+			curPage = "1";
+		}
+		if (pageSize == null || "".equals(pageSize)) {
+			pageSize = "24";
+		}
+		
+		PageModel page = new PageModel(Integer.parseInt(curPage), Integer.parseInt(pageSize));
+		PageBean<VideoInfoVo> pageBean = videoservice.getVideosByUserId(page,userId);
 		Map<String, Object> rtMap = new HashMap<String, Object>();
-		rtMap.put("data", list);
+		rtMap.put("data", pageBean.getList());
+		rtMap.put("totalRows", pageBean.getTotal());//总记录数
+		rtMap.put("curPage", pageBean.getPageNum());//当前页
+		rtMap.put("pages", pageBean.getPages());//总页数
 		rtMap.put("success", true);
 
 		String jsonString = null;
@@ -80,11 +95,72 @@ public class VideoController {
 	@RequestMapping(value = "/findVideosByType")
 	public String findVideosByType(HttpServletRequest request) {
 		String videoType = request.getParameter("videoType");
-		List<VideoInfoVo> list = videoservice.getVideosByType(videoType);
+		String curPage = request.getParameter("currentPage");
+		String pageSize = request.getParameter("pageSize");
+		if (curPage == null || "".equals(curPage)) {
+			curPage = "1";
+		}
+		if (pageSize == null || "".equals(pageSize)) {
+			pageSize = "24";
+		}
+		
+		PageModel page = new PageModel(Integer.parseInt(curPage), Integer.parseInt(pageSize));
+		PageBean<VideoInfoVo> pageBean = videoservice.getVideosByType(page, videoType);
+		
+		Map<String, Object> rtMap = new HashMap<String, Object>();
+		rtMap.put("data", pageBean.getList());
+		rtMap.put("totalRows", pageBean.getTotal());//总记录数
+		rtMap.put("curPage", pageBean.getPageNum());//当前页
+		rtMap.put("pages", pageBean.getPages());//总页数
+		rtMap.put("success", true);
+
+		String jsonString = null;
+		try {
+			jsonString = mapper.writeValueAsString(rtMap);
+		} catch (Exception e) {
+			log.info("Error in getDataLists()", e);
+		}
+		return jsonString;
+	}
+	
+	/**
+	 * 根据视频类型获取数据12条
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/indexFindVideosByType")
+	public String indexFindVideosByType(HttpServletRequest request) {
+		String videoType = request.getParameter("videoType");
+		
+		List<VideoInfoVo> list = videoservice.getIndexVideosByType(videoType);
+		
 		Map<String, Object> rtMap = new HashMap<String, Object>();
 		rtMap.put("data", list);
 		rtMap.put("success", true);
 
+		String jsonString = null;
+		try {
+			jsonString = mapper.writeValueAsString(rtMap);
+		} catch (Exception e) {
+			log.info("Error in getDataLists()", e);
+		}
+		return jsonString;
+	}
+	
+	@RequestMapping(value = "/findRelateVideos")
+	public String findRelateVideos(HttpServletRequest request) {
+		String thisTitle = request.getParameter("thisTitle");
+		String thisDescription = request.getParameter("thisDescription");
+		Map<String,Object> parameterMap = new HashMap<String,Object>();
+		parameterMap.put("thisTitle", thisTitle);
+		parameterMap.put("thisDescription", thisDescription);
+		
+		List<VideoInfoVo> list = videoservice.findRelateVideos(parameterMap);
+		
+		Map<String, Object> rtMap = new HashMap<String, Object>();
+		rtMap.put("data", list);
+		rtMap.put("success", true);
+		
 		String jsonString = null;
 		try {
 			jsonString = mapper.writeValueAsString(rtMap);

@@ -1,6 +1,7 @@
 package com.itcast.dw.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
@@ -14,6 +15,10 @@ public interface VideoInfoMapper {
 	List<VideoInfoVo> findAllMedia();
 	
 	List<VideoInfoVo> getVideosByType(String videoType);
+	
+	List<VideoInfoVo> getIndexVideosByType(String videoType);
+	
+	List<VideoInfoVo> findRelateVideos(Map<String,Object> parameterMap);
 	
 	VideoInfo getVideosById(int videoId);
 	

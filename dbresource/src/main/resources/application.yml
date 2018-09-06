@@ -19,3 +19,18 @@ spring:
     filters: stat
     minEvictableIdleTimeMillis: 300000      # 配置一个连接在池中最小生存的时间，单位是毫秒
     poolPreparedStatements: true
+    
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+ribbon:
+  eureka:
+    enabled: true
+  
+  
+  
+  
