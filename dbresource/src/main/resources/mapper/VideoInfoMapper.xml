@@ -77,9 +77,9 @@
 		on v.id = c.videoid where v.videoType
 		= #{videoType} and v.isown = 0
 		GROUP BY v.id ORDER
-		BY v.updatetime DESC 
+		BY v.updatetime DESC
 	</select>
-	
+
 	<select id="getIndexVideosByType" resultMap="videoResultMap"
 		parameterType="string">
 		select v.*,case when
@@ -93,10 +93,12 @@
 		GROUP BY v.id ORDER
 		BY v.updatetime DESC LIMIT 12
 	</select>
-	
+
 	<select id="findRelateVideos" resultMap="videoResultMap"
 		parameterType="map">
-	   select * from videoinfo v where LOCATE(#{thisTitle},v.title) > 0 or LOCATE(#{thisDescription},v.description) > 0 ORDER BY v.updatetime DESC
+	   <![CDATA[select * from videoinfo v where (LOCATE(#{thisTitle},v.title) > 0 or LOCATE(#{thisDescription},v.description) > 0 ) 
+	     and v.id <> #{videoid}  
+	   ORDER BY v.updatetime DESC]]>
 	</select>
 
 	<select id="getVideosByUserId" resultMap="videoResultMap"
@@ -115,7 +117,7 @@
 		v.createuserid
 		= #{userId} GROUP BY v.id ORDER
 		BY
-		v.updatetime DESC 
+		v.updatetime DESC
 	</select>
 
 	<select id="getVideosById"

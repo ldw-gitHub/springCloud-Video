@@ -151,9 +151,11 @@ public class VideoController {
 	public String findRelateVideos(HttpServletRequest request) {
 		String thisTitle = request.getParameter("thisTitle");
 		String thisDescription = request.getParameter("thisDescription");
+		String videoid = request.getParameter("videoid");
 		Map<String,Object> parameterMap = new HashMap<String,Object>();
 		parameterMap.put("thisTitle", thisTitle);
 		parameterMap.put("thisDescription", thisDescription);
+		parameterMap.put("videoid", videoid);
 		
 		List<VideoInfoVo> list = videoservice.findRelateVideos(parameterMap);
 		
