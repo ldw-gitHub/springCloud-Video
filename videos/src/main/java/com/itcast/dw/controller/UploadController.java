@@ -108,7 +108,9 @@ public class UploadController {
 			ftp.changeDir("img"); 
 		} else if ("video".equals(tag)) {
 			ftp.changeDir("video");
-		} 
+		} else if("file".equals(tag)){
+			ftp.changeDir("file");
+		}
 		ftp.deleteFile(attachName);
 		ftp.close();
 		JSONObject response = new JSONObject();
@@ -125,9 +127,10 @@ public class UploadController {
     	String description = request.getParameter("description");
     	String filename = request.getParameter("filename");
     	String isown = request.getParameter("isown");
+    	String userId = request.getParameter("userId");
     	
     	VideoInfo vi = new VideoInfo();
-    	vi.setCreateuserid(1);
+    	vi.setCreateuserid(Integer.parseInt(userId));
     	vi.setImgpath("img/" + uploadImgPath);
     	vi.setVideopath("video/" + uploadVideoPath);
     	vi.setTitle(filename);

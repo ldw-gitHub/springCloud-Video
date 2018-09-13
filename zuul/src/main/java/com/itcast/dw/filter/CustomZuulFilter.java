@@ -1,11 +1,20 @@
 package com.itcast.dw.filter;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
+import com.itcast.dw.service.RedisService;
+import com.itcast.dw.util.IgnoreUrl;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -14,37 +23,56 @@ import com.netflix.zuul.exception.ZuulException;
 public class CustomZuulFilter extends ZuulFilter {
 
 	private Logger logger = Logger.getLogger(CustomZuulFilter.class);
-
+	
+	@Autowired
+	private RedisService redisService;
+	
 	@Override
 	public Object run() throws ZuulException {
 		RequestContext ctx = RequestContext.getCurrentContext();
 		HttpServletRequest request = ctx.getRequest();
-		logger.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
-		return null;
-	/*	String sessiontoken = request.getParameter("sessiontoken");
-		logger.info("sessiontoken:" + sessiontoken);
+		
+		 String url = request.getRequestURL().toString();
+		 url = url.substring(url.lastIndexOf("/") + 1,url.length());
+		 
+		 if((boolean) IgnoreUrl.filterUrl.get(url)){//判断请求是否需要验证登入
+				String sessionToken = request.getParameter("sessionToken");
+				int userId = Integer.parseInt(request.getParameter("userId"));
 
-		UserSession us = sessionservice.getOnlineSessionByToken(sessiontoken);
-		if (us != null) {
-			logger.info("token验证成功"); 
-			return null;
-		} else {
-			// 认证失败
-			logger.error("token验证失败");
-			HttpServletResponse response = ctx.getResponse();
-			response.setCharacterEncoding("utf-8"); // 设置字符集
-			response.setContentType("text/html; charset=utf-8"); // 设置相应格式
-			response.setStatus(401);
-			ctx.setSendZuulResponse(false); // 不进行路由
-			try {
-				response.getWriter().write("token 验证失败"); // 响应体
-			} catch (IOException e) {
-				logger.error("response io异常");
-				e.printStackTrace();
-			}
-			ctx.setResponse(response);
-			return null;
-		}*/
+				Map<String,Object> parameterMap = new HashMap<String,Object>();
+				parameterMap.put("sessionToken", sessionToken);
+				parameterMap.put("userId", userId);
+				JSONObject redisResponse = redisService.judgeTokenId(parameterMap);
+				
+				HttpServletResponse response = ctx.getResponse();
+				response.setCharacterEncoding("utf-8"); // 设置字符集
+				response.setContentType("text/html; charset=utf-8"); // 设置相应格式
+				if (redisResponse.getBoolean("success")) {
+					logger.info("token验证成功"); 
+					response.setStatus(200);
+					ctx.setSendZuulResponse(true); //路由
+					ctx.set("isSuccess", true);//其他filter可以看到状态
+					return null;
+				} else {
+					// 认证失败
+					logger.error("token验证失败");
+					response.setStatus(401);
+					ctx.setSendZuulResponse(false); // 不进行路由
+					ctx.set("isSuccess", false);
+					try {
+						response.getWriter().write("token 验证失败"); // 响应体
+					} catch (IOException e) {
+						logger.error(parameterMap.get("error"));
+						e.printStackTrace();
+					}
+					ctx.setResponse(response);
+					return null;
+				}
+		 }else{
+			 return null;
+		 }
+		
+	
 
 	}
 

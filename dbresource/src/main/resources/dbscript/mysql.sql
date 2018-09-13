@@ -3,7 +3,7 @@ create database if not exists shop default charset utf8 collate utf8_general_ci;
 
 use shop;
 
--- 创建用户表，表字段以后做扩充
+-- 用户表，表字段以后做扩充
 create table if not exists userinfo (
     id int unsigned auto_increment,
     username varchar(30) not null,
@@ -16,7 +16,7 @@ insert into userinfo (username,password) values ('ldw','123456');
 
 select * from userinfo;
 
--- 创建视频信息表
+------------------ 视频信息表---------------------------
 create table if not exists videoinfo(
    id int unsigned auto_increment,
    title varchar(50) not null,
@@ -75,6 +75,50 @@ create table if not exists videocomment(
    createtime TIMESTAMP,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
+
+
+--------------------------日志表-------------------------
+create table if not exists loginfo(
+   id int unsigned auto_increment,
+   oprateModule int(8) not null,
+   oprateuserid int(8),
+   createtime TIMESTAMP,
+   primary key (id)
+)engine=InnoDB default charset=utf8;
+
+
+--------------------------- 文件信息表---------------------
+create table if not exists fileinfo(
+   id int unsigned auto_increment,
+   filename varchar(50) not null,
+   filesize decimal(30),
+   createuserid int(100),
+   download int(1) DEFAULT 1,
+   downloadNumber int(100) DEFAULT 0,
+   filepath varchar(100),
+   createtime TIMESTAMP,
+   updatetime TIMESTAMP,
+   primary key (id)
+) engine=InnoDB default charset=utf8;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
