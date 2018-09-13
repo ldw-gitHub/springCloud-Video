@@ -56,15 +56,10 @@ public class CustomZuulFilter extends ZuulFilter {
 				} else {
 					// 认证失败
 					logger.error("token验证失败");
-					response.setStatus(401);
+					response.setStatus(200);
 					ctx.setSendZuulResponse(false); // 不进行路由
 					ctx.set("isSuccess", false);
-					try {
-						response.getWriter().write("token 验证失败"); // 响应体
-					} catch (IOException e) {
-						logger.error(parameterMap.get("error"));
-						e.printStackTrace();
-					}
+					ctx.setResponseBody("{\"success\":false,\"msg\":\"0002\"}");
 					ctx.setResponse(response);
 					return null;
 				}

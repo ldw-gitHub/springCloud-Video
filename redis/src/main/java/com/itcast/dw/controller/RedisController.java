@@ -43,7 +43,7 @@ public class RedisController {
 		int userId = Integer.parseInt(parameterMap.get("userId") + "");
 		
 		String tokenIdValue = String.valueOf(vOps.get(getsessionToken));
-		if(tokenIdValue == null || "nil".equals(tokenIdValue)){//tokenId已过期
+		if(tokenIdValue == null || "null".equals(tokenIdValue)){//tokenId已过期
 			response.put("msg", "0002");
 			response.put("success", false);
 			return response;
@@ -57,7 +57,7 @@ public class RedisController {
 			response.put("success", true);
 		}else{
 			response.put("success", false);
-			response.put("msg", "0003"); //userId与value不等
+			response.put("msg", "0002"); //userId与value不等
 		}
 		
 		return response;
