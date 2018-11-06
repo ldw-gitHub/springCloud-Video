@@ -8,8 +8,15 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<groupId>com.itcast.dw</groupId>
+	<packaging>jar</packaging>
 	<artifactId>videos</artifactId>
+	<version>1.0.0</version>
+	<name>videos</name>
+	<description>Getting started with videos and Docker</description>
 
+    <properties>
+		<docker.image.prefix>dw</docker.image.prefix>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -76,7 +83,6 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-pool2</artifactId>
-			<version>2.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
 		<dependency>
@@ -88,5 +94,39 @@
 
 
 	</dependencies>
+
+	
+	<build>
+		<plugins>
+			<!-- 使用该插件打包 -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.3</version>
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+			
+		</plugins>
+		<finalName>videos</finalName>
+	</build>
 
 </project>

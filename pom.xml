@@ -19,6 +19,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+	    <failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
 
 	<parent>
@@ -29,6 +30,18 @@
 	</parent>
 
 	<dependencies>
+		<!--   <dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-web</artifactId>
+	      去除内嵌tomcat,打成war包可以去除
+	      <exclusions>
+	        <exclusion>
+	          <groupId>org.springframework.boot</groupId>
+	          <artifactId>spring-boot-starter-tomcat</artifactId>
+	        </exclusion>
+	      </exclusions>
+	    </dependency> -->
+	    
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -72,15 +85,17 @@
 
 	<build>
 		<plugins>
-			<!--使用该插件打包 -->
+			<!-- 使用该插件打包 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+				    <fork>false</fork>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	
 </project>

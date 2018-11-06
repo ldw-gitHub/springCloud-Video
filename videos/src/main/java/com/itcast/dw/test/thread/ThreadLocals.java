@@ -20,10 +20,12 @@ public class ThreadLocals {
 	};
 	
 	public static final void begin(){
-		TIME_THREADLOCAL.set(System.currentTimeMillis());
+		//TIME_THREADLOCAL.set(System.currentTimeMillis());
+		TIME_THREADLOCAL.set((long) 10000);
 	}
 	
 	public static final long end(){
+		System.out.println(TIME_THREADLOCAL.get());
 		return System.currentTimeMillis() - TIME_THREADLOCAL.get();
 	}
 	

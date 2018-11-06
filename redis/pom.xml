@@ -5,8 +5,13 @@
 		<groupId>com.itcast</groupId>
 		<artifactId>video-springcloud</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
+	<packaging>jar</packaging>
 	<artifactId>redis</artifactId>
+	<version>1.0.0</version>
+	<name>redis</name>
+	<description>Getting started with redis and Docker</description>
 
 	<dependencies>
 		<dependency>
@@ -17,21 +22,44 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
 		</dependency>
 	</dependencies>
+	<properties>
+		<docker.image.prefix>dw</docker.image.prefix>
+	</properties>
 
 	<build>
 		<plugins>
+			<!-- 使用该插件打包 -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+				    <fork>false</fork>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.3</version>
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
 				</configuration>
 			</plugin>
 		</plugins>
 		<finalName>redis</finalName>
 	</build>
+	
+	
 </project>
