@@ -1,0 +1,39 @@
+eureka-server:
+  image:  dw/eureka
+  hostname: eureka-server
+  ports:
+    - "8761:8761"
+ 
+service-zuul:
+  image:  dw/zuul
+  ports:
+    - "8081:8081"
+  links:
+    - "eureka-server"
+ 
+service-redis:
+  image:  dw/redis
+  ports:
+    - "8765:8765"
+  links:
+    - "eureka-server"
+    - "service-zuul"
+    
+service-db:
+  image:  dw/dbresource
+  ports:
+    - "8763:8763"
+  links:
+    - "eureka-server"
+    - "service-zuul"
+    
+service-video:
+  image:  dw/videos
+  ports:
+    - "8762:8762"
+  links:
+    - "eureka-server"
+    - "service-zuul"
+    - "service-redis"
+    - "service-db"
+    

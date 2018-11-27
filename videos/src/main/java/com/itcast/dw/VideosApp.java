@@ -1,5 +1,7 @@
 package com.itcast.dw;
 
+import java.io.File;
+
 import javax.servlet.MultipartConfigElement;
 
 import org.springframework.boot.SpringApplication;
@@ -29,6 +31,11 @@ public class VideosApp {
         MultipartConfigFactory factory = new MultipartConfigFactory();  
         //缓存路径
        //factory.setLocation("E:/uploadIoTmp");
+        File file = new File("/uploadIoTmp");
+        file.setWritable(true,false); 
+        if(!file.exists()){
+        	file.mkdirs();
+        }
         factory.setLocation("/uploadIoTmp");//linux
         //单个文件最大  
         factory.setMaxFileSize("2097152KB"); //KB,MB   2G

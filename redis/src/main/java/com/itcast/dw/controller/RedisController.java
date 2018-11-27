@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +21,7 @@ public class RedisController {
 	
 	private Logger log = LoggerFactory.getLogger(RedisController.class);
 	
-	@Autowired
+	@Resource
 	private RedisTemplate<String, String> redisTemplate;
 	
 	@Resource(name = "redisTemplate")

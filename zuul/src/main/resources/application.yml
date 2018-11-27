@@ -1,10 +1,16 @@
 eureka:
+  instance:
+    hostname: service-zuul
+    prefer-ip-address: true
   client:
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
-      defaultZone: http://172.18.62.91:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
 server:
   port: 8081
 spring:
+  profiles: docker
   application:
     name: service-zuul
 
@@ -14,7 +20,7 @@ zuul:
       path: /video/**
       sensitiveHeaders: Cookie,Set-Cookie,Authorization
       service-id: service-video
-      stripPrefix: false
+      stripPrefix: true
   sensitiveHeaders:
   ignoreSecurityHeaders: false 
   
@@ -22,7 +28,7 @@ zuul:
 #我们就需要让Hystrix的超时时间大于Ribbon的超时时间，否则Hystrix命令超时后，该命令直接熔断，重试机制就没有任何意义了
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 300000 
 ribbon:
-  ConnectTimeout: 6000
+  ConnectTimeout: 60000
   ReadTimeout: 300000
   okhttp:
     enabled: true

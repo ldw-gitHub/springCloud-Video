@@ -3,13 +3,17 @@ server:
 
 eureka:
   instance:
-    hostname: 172.18.62.91
+    hostname: eureka-server
+    prefer-ip-address: true
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://eureka-server:${server.port}/eureka/
+  server:
+    enable-self-preservation: false
 
 spring:
+  profiles: docker
   application:
     name: eurka-server

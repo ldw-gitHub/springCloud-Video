@@ -61,7 +61,7 @@ public class UploadController {
 		}
 		if(total == 1 && isLast){//只有一个文件
 			
-		}else if(total > 1){ //切割上传的文件
+		}else if(total > 1){ //切割上传的文件,文件目录不放在ftp文件夹下
 			String pathName = name.substring(0, name.indexOf("."));
 			path = tag + "/" + pathName;
 		}
@@ -69,21 +69,16 @@ public class UploadController {
 		attachName = "[" + CommonUtil.getDataFormat(new Date(), "yyyyMMddHHmmssSSS") + "]" + attachName;
 		
 		UploadFile ftp = new UploadFile();
-		boolean flag = ftp.UploadFileToServer(stream,attachName, path);
-	/*	boolean flag = false;
-		try {
-			String savefilePathName = path + "/" + attachName;
-			if(ftpClientHelper.haveDirectory(savefilePathName)){
-				flag = ftpClientHelper.storeFile(savefilePathName, stream);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
+		boolean flag = ftp.UploadFileToServer(stream,attachName, path.trim());
 		
-		if(total > 1 && isLast){
-			String resultPath = "/" + path.substring(0,path.lastIndexOf("/")) + "/" + attachName;
-			flag = ftp.mergeFiles(path,resultPath);
+		if(flag){
+			if(total > 1 && isLast){
+				//String resultPath = "/" + path.substring(0,path.lastIndexOf("/")) + "/" + attachName;
+				String resultPath = path.substring(0,path.lastIndexOf("/"));
+				flag = ftp.mergeFiles(path.trim(),resultPath.trim(),attachName);
+			}
 		}
+		ftp.close();
 		
 		response.put("success", flag);
 		response.put("uploadFileName", attachName);

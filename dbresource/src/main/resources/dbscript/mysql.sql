@@ -39,6 +39,7 @@ alter table videoinfo add column isown varchar(1) DEFAULT '1';
 alter table videoinfo add column click int(255) DEFAULT 0;
 -- 修改某一列的列名
 alter table videoinfo change column imgname imgpath varchar(50);
+alter table videoinfo modify column imgpath varchar(100) ;
 
 -- 删除所有表中的数据，有事务
 delete from videoinfo;

@@ -16,7 +16,6 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -149,7 +148,7 @@ public class UploadFile {
 				isChangeWork = ftpClient.changeWorkingDirectory(path);
 			}
 
-			uploadFlag = ftpClient.storeFile(newFileName, in);
+			uploadFlag = ftpClient.storeFile(newFileName, in);//java.net.NoRouteToHostException: No route to host (Host unreachable)
 			if (uploadFlag) {
 				log.info("file upload success");
 			} else {
@@ -159,34 +158,61 @@ public class UploadFile {
 		} catch (Exception e) {
 			log.info("fail upload!!!");
 			e.printStackTrace();
-			try {
-				in.close();
-				ftpClient.logout();
-				ftpClient.disconnect();
-			} catch (IOException e1) {
-				log.info("close io stream error");
-				e1.printStackTrace();
-			}
-		} finally {
-			try {
-				in.close();
-				ftpClient.logout();
-				ftpClient.disconnect();
-			} catch (IOException e1) {
-				log.info("close io stream error");
-				e1.printStackTrace();
-			}
-		}
+			uploadFlag = false;
+		} 
 		return uploadFlag;
 	}
 	
-	public static boolean mergeFiles(String fpaths, String resultPath) {
-		resultPath = ftpPath + resultPath;
-		fpaths = ftpPath + "/" + fpaths;
-		File file = new File(fpaths);
-	    File[] fileList = file.listFiles();
+	public boolean mergeFiles(String fpaths, String resultPath,String attachName){
+		try {
+			ftpClient.enterLocalPassiveMode();// 设置passiveMode传输
+			ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
+			// 设置以二进制流的方式传输
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			
+			int reply = ftpClient.getReplyCode();
+			if (!FTPReply.isPositiveCompletion(reply)) {
+				log.info("连接ftp服务器失败");
+				return false;
+			}
+			log.info("connect ftp success");
+			log.info("fpaths = " + fpaths + " ---resultPath = " + resultPath + "---attachName = " +attachName);
+			
+			ftpClient.changeWorkingDirectory(resultPath);
+			
+			fpaths = ftpPath + "/" + fpaths;
+			File file = new File(fpaths);
+			File[] fileList = file.listFiles();
+			log.info("fileList.length = " + fileList.length);
+			int bufSize = 1024;
+			byte[] buffer = new byte[bufSize];
+			for(int i = 0; i < fileList.length; i ++){
+				BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(fileList[i]));
+				while (inputStream.read(buffer) > 0) {
+					ftpClient.storeFile(attachName, inputStream);
+				}
+				inputStream.close();
+				//ftpClient.deleteFile(fileList[i].getName());
+				
+			}
+			
+			
+		} catch (IOException e) {
+			log.info("fail mergeFiles!!!");
+			log.error(e.getMessage());
+			return false;
+		}
 
-	    File resultFile = new File(resultPath);
+	/*    File resultFile = new File(resultPath);
+	    if(!resultFile.exists()){
+	    	try {
+				resultFile.createNewFile();
+				resultFile.setWritable(true, false);
+			} catch (IOException e) {
+				e.printStackTrace();
+				log.error(e.getMessage());
+			}
+	    }
 
 	    try {
 	        int bufSize = 1024;
@@ -201,6 +227,7 @@ public class UploadFile {
 	            }
 	            inputStream.close();
 	        }
+	        outputStream.flush();
 	        deleteDirAndFile(file);
 	        outputStream.close();
 	    } catch (FileNotFoundException e) {
@@ -209,7 +236,7 @@ public class UploadFile {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        return false;
-	    }
+	    }*/
 
 	    return true;
 	}
@@ -227,5 +254,6 @@ public class UploadFile {
 		}
 		return dir.delete(); // 目录此时为空，可以删除
 	}
+	
 
 }
