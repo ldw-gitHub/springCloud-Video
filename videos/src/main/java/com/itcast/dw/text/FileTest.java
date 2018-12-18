@@ -9,24 +9,8 @@ import java.io.IOException;
 public class FileTest {
 
 	public static void main(String[] args) throws IOException {
-		String path = "E:/ftp/ldw.txt";
-		File files = new File(path);
-	/*	if(!files.exists()){
-			try {
-				files.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}*/
-		System.out.println(files.getAbsolutePath());
-		try {
-			BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(files));
-			outputStream.write("test".getBytes());
-			outputStream.flush();
-			outputStream.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	   String path = "video/VID_20181122_192905";
+	   System.out.println(path.substring(path.indexOf("/")+1, path.length()));
 		
 	}
 }

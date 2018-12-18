@@ -1,23 +1,18 @@
 package com.itcast.dw.common;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class UploadFile {
 
@@ -44,7 +39,7 @@ public class UploadFile {
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(UploadFile.class);
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UploadFile.class);
 
 	public UploadFile() {
 		this.ftpClient = new FTPClient();
@@ -169,6 +164,7 @@ public class UploadFile {
 			ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
 			// 设置以二进制流的方式传输
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			ftpClient.setControlEncoding("UTF-8");
 			
 			int reply = ftpClient.getReplyCode();
 			if (!FTPReply.isPositiveCompletion(reply)) {
@@ -176,30 +172,40 @@ public class UploadFile {
 				return false;
 			}
 			log.info("connect ftp success");
-			log.info("fpaths = " + fpaths + " ---resultPath = " + resultPath + "---attachName = " +attachName);
+			log.info("resultPath = " + resultPath + "---attachName = " +attachName);// video  [20181212033239299]VID_20181122_192905.mp4
 			
-			ftpClient.changeWorkingDirectory(resultPath);
+			ftpClient.changeWorkingDirectory(fpaths);// video/VID_20181122_192905
+			FTPFile[] listFiles = ftpClient.listFiles();
 			
-			fpaths = ftpPath + "/" + fpaths;
-			File file = new File(fpaths);
-			File[] fileList = file.listFiles();
-			log.info("fileList.length = " + fileList.length);
-			int bufSize = 1024;
-			byte[] buffer = new byte[bufSize];
-			for(int i = 0; i < fileList.length; i ++){
-				BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(fileList[i]));
-				while (inputStream.read(buffer) > 0) {
-					ftpClient.storeFile(attachName, inputStream);
-				}
-				inputStream.close();
-				//ftpClient.deleteFile(fileList[i].getName());
+			String folderName = fpaths.substring(fpaths.indexOf("/")+1, fpaths.length());
+			for(int i = 0; i < listFiles.length; i ++){
+				byte[] bytes=listFiles[i].getName().getBytes("iso-8859-1");
+ 			    String fn=new String(bytes,"GBK");
+ 			    log.info(fn);
 				
+				InputStream retrieveFileStream = ftpClient.retrieveFileStream(fn);
+				byte[] bytews = IOUtils.toByteArray(retrieveFileStream);
+				InputStream FileStream = new ByteArrayInputStream(bytews);
+				boolean savechangeWorkingDirectory = ftpClient.changeWorkingDirectory("..");
+				log.info(savechangeWorkingDirectory);
+				
+				retrieveFileStream.close();
+				ftpClient.completePendingCommand();
+				
+				boolean appendFile = ftpClient.appendFile(new String(attachName.getBytes("GBK"),"iso-8859-1"), FileStream);
+				log.info(appendFile);
+				FileStream.close();
+				
+				boolean changeWorkingDirectorys = ftpClient.changeWorkingDirectory(folderName);
+				log.info(changeWorkingDirectorys);
+				ftpClient.deleteFile(fn);
 			}
-			
+			log.info("合并完成！");
+			ftpClient.changeWorkingDirectory("..");
+			ftpClient.removeDirectory(folderName);
 			
 		} catch (IOException e) {
-			log.info("fail mergeFiles!!!");
-			log.error(e.getMessage());
+			log.error(e,e);
 			return false;
 		}
 
