@@ -1,0 +1,45 @@
+eureka:
+  instance:
+    hostname: service-zuul
+    prefer-ip-address: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+server:
+  port: 8081
+spring:
+  profiles: docker
+  application:
+    name: service-zuul
+
+zuul:
+  routes:
+    service-video:
+      path: /video/**
+      sensitiveHeaders: Cookie,Set-Cookie,Authorization
+      service-id: service-video
+      stripPrefix: true
+  sensitiveHeaders:
+  ignoreSecurityHeaders: false 
+  
+#熔断时间Ribbon超时与Hystrix超时问题，为了确保Ribbon重试的时候不被熔断，
+#我们就需要让Hystrix的超时时间大于Ribbon的超时时间，否则Hystrix命令超时后，该命令直接熔断，重试机制就没有任何意义了
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 300000 
+ribbon:
+  ConnectTimeout: 60000
+  ReadTimeout: 300000
+  okhttp:
+    enabled: true
+    
+    
+#单独为video文件上传设置
+
+# 打印日志
+logging:
+  level:
+    root: INFO
+    com.springms: DEBUG
+    com.netflix: debug    
+    
