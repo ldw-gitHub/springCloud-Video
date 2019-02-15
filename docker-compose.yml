@@ -27,6 +27,15 @@ service-db:
     - "eureka-server"
     - "service-zuul"
     
+service-elasticsearch:
+  image:  dw/elasticsearch
+  ports:
+    - "8764:8764"
+  links:
+    - "eureka-server"
+    - "service-zuul"
+    - "service-db"
+    
 service-video:
   image:  dw/videos
   ports:

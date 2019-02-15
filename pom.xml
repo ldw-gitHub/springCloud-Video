@@ -12,6 +12,7 @@
 		<module>dbresource</module>
 		<module>config</module>
 		<module>redis</module>
+		<module>elasticsearch</module>
 	</modules>
 
 	<properties>
