@@ -3,16 +3,18 @@ server:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: eureka-server
     prefer-ip-address: true
   client:
     registerWithEureka: false
-    fetchRegistry: false
+    fetchRegistry: false    #检索服务
     serviceUrl:
-      defaultZone: http://localhost:${server.port}/eureka/
+      defaultZone: http://eureka-server:${server.port}/eureka/
   server:
-    enable-self-preservation: false
+    enable-self-preservation: false  #关闭自我保护机制
+    eviction-interval-timer-in-ms: 10000 #每隔10s扫描服务列表，移除失效服务
 
 spring:
+  profiles: docker
   application:
     name: eurka-server

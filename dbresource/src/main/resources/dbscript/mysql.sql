@@ -22,30 +22,31 @@ create table if not exists videoinfo(
    title varchar(50) not null,
    description varchar(100),
    createuserid int(100),
-   click int(255),
+   click int(5),
    videoType varchar(10),
-   imgpath varchar(50),
+   imgpath varchar(100),
    videopath varchar(100),
+   isown varchar(1) DEFAULT '1',
    createtime TIMESTAMP,
    updatetime TIMESTAMP,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
 
-select * from videoinfo;
+--select * from videoinfo;
 
 -- 增加某一列
-alter table videoinfo add column videopath varchar(100);
-alter table videoinfo add column isown varchar(1) DEFAULT '1';
-alter table videoinfo add column click int(255) DEFAULT 0;
+--alter table videoinfo add column videopath varchar(100);
+--alter table videoinfo add column isown varchar(1) DEFAULT '1';
+--alter table videoinfo add column click int(255) DEFAULT 0;
 -- 修改某一列的列名
-alter table videoinfo change column imgname imgpath varchar(50);
-alter table videoinfo modify column imgpath varchar(100) ;
+--alter table videoinfo change column imgname imgpath varchar(50);
+--alter table videoinfo modify column imgpath varchar(100) ;
 
 -- 删除所有表中的数据，有事务
-delete from videoinfo;
+--delete from videoinfo;
 
 -- 直接删除表中的所有数据
-truncate table videoinfo;
+--truncate table videoinfo;
 
 
 

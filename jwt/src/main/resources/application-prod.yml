@@ -1,0 +1,24 @@
+eureka:
+  instance:
+    hostname: service-jwt
+    prefer-ip-address: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+server:
+  port: 8767
+  
+spring:
+  profiles: docker
+  application:
+    name: service-jwt
+
+ribbon:
+  eureka:
+    enabled: true
+  
+  
+  
+  
