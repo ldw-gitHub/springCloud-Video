@@ -1,6 +1,7 @@
 package com.itcast.dw.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -14,7 +15,7 @@ import com.itcast.dw.service.FileService;
 @Service
 public class FileServiceImpl implements FileService {
 	
-	@Autowired
+	@Resource
 	private FileMapper fileMapper;
 
 	@Override

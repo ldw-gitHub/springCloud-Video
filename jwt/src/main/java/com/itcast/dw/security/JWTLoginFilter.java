@@ -2,6 +2,7 @@ package com.itcast.dw.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.FilterChain;
@@ -17,18 +18,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.framework.config.ProjectConfig;
-import com.framework.config.RedisUtils;
-import com.framework.constants.ActionType;
-import com.framework.constants.FunctionType;
-import com.framework.constants.RedisKey;
-import com.framework.info.ResultInfo;
-import com.framework.model.system.SystemLogModel;
-import com.framework.service.system.LoginService;
-import com.framework.service.system.SystemLogService;
-import com.framework.utils.IPUtils;
-import com.framework.utils.JWTTokenUtils;
-import com.framework.utils.JsonFormater;
+import com.itcast.dw.config.RedisUtils;
+import com.itcast.dw.constants.RedisKey;
+import com.itcast.dw.info.ResultInfo;
+import com.itcast.dw.model.User;
+import com.itcast.dw.service.UserService;
+import com.itcast.dw.util.IPUtils;
+import com.itcast.dw.util.JsonFormater;
+
 
 /**
  * 验证用户名密码正确后，生成一个token，并将token返回给客户端
@@ -43,16 +40,14 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
 	private AuthenticationManager authenticationManager;
 	private RedisUtils redisUtils;
-	private LoginService loginService;
+	private UserService userService;
 	private ProjectConfig projectConfig;
-	private SystemLogService systemLogService;
 	
-	public JWTLoginFilter(AuthenticationManager authenticationManager, RedisUtils redisUtils, LoginService loginService,ProjectConfig projectConfig,SystemLogService systemLogService) {
+	public JWTLoginFilter(AuthenticationManager authenticationManager, RedisUtils redisUtils, UserService userService,ProjectConfig projectConfig) {
 		this.authenticationManager = authenticationManager;
 		this.redisUtils = redisUtils;
-		this.loginService = loginService;
+		this.userService = userService;
 		this.projectConfig = projectConfig;
-		this.systemLogService = systemLogService;
 	}
 	
 	/**
@@ -91,12 +86,15 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 		logger.info("进入JWTLoginFilter-successfulAuthentication");
-		JWTUser jwtUser = (com.framework.security.JWTUser) auth.getPrincipal();
-//		BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+		JWTUser jwtUser = (com.itcast.dw.security.JWTUser) auth.getPrincipal();
 
 		//再修改
-		Map<String, Object> redisUserMap = loginService.queryMapByAccount(jwtUser.getUsername());
-		String userId = (String)redisUserMap.get("userId");
+		User userByName = userService.getUserByName(jwtUser.getUsername());
+		Map<String, Object> redisUserMap = new HashMap<String,Object>();
+		redisUserMap.put("userId", userByName.getId());
+		redisUserMap.put("userName", userByName.getUsername());
+		
+		String userId = userByName.getId() + "";
 		String token = JWTTokenUtils.generateToken(userId, projectConfig.getJwtTtl(), projectConfig.getJwtSecurt());
 		redisUserMap.put("token", token);
 		redisUserMap.put("loginIp", IPUtils.getIpAddr(req));
@@ -108,12 +106,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		JsonFormater.writeJsonValue(res, new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS, redisUserMap));
 		logger.info("==jwtUser.getUsername()=" + jwtUser.getUsername() + "=========登录成功===");
 		
-		try {
-			systemLogService.insert(new SystemLogModel(FunctionType.USER_LOGIN.getValue(),ActionType.LOGIN.getName(),IPUtils.getIpAddr(req),
-					"用户登入",Long.parseLong(userId),(String)redisUserMap.get("userName")));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return;
 	}
 

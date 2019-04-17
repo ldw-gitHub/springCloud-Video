@@ -50,12 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	
 	/**
-	 * 无权访问处理
-	 */
-	@Autowired
-	private RestAccessDeniedHandler restAccessDeniedHandler;
-
-	/**
 	 * 登出处理
 	 */
 	@Autowired
@@ -102,13 +96,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		        .anyRequest().authenticated()
 				.and().formLogin()
 				// 登出控制,自定义myLogoutHandler,clearAuthentication清除上下文
-				.and().logout().addLogoutHandler(myLogoutHandler).logoutSuccessUrl("/").clearAuthentication(true)
+				.and().logout().addLogoutHandler(myLogoutHandler).logoutSuccessUrl("/").clearAuthentication(true);
 				// 登录拦截器处理
 				//.and().addFilter(new JWTLoginFilter(authenticationManager(), redisUtils, loginService, projectConfig,systemLogService))
 				// 请求授权拦截器处理
 				//.addFilter(new JWTAuthenticationFilter(authenticationManager(), redisUtils, projectConfig))
 				// 处理权限不足的情况
-				.exceptionHandling().accessDeniedHandler(restAccessDeniedHandler);
+				
 		
 	}
 	

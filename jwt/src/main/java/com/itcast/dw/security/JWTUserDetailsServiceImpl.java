@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.framework.model.system.SystemUserModel;
-import com.framework.service.system.LoginService;
+import com.itcast.dw.model.User;
+import com.itcast.dw.service.UserService;
 
 /**
  * 
@@ -29,14 +29,14 @@ public class JWTUserDetailsServiceImpl implements UserDetailsService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	LoginService loginService;
+	UserService userService;
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-		SystemUserModel loginUser = loginService.queryLoginByAccount(account);
-		if (loginUser == null || null == loginUser.getUserId()) {
+		User loginUser = userService.getUserByName(account);
+		if (loginUser == null) {
 			throw new UsernameNotFoundException(String.format("找不到账户 '%s'.", account));
 		} else {
 			// TODO 查询权限列表放入 查询用户对应的角色id
@@ -55,7 +55,7 @@ public class JWTUserDetailsServiceImpl implements UserDetailsService {
 				logger.error("Spring-security 登录验证异常！！！！！！！！！！！！");
 				e.printStackTrace();
 			}
-			return new JWTUser(loginUser.getAccount(), bCryptPasswordEncoder.encode(loginUser.getPassword()),
+			return new JWTUser(loginUser.getUsername(), bCryptPasswordEncoder.encode(loginUser.getPassword()),
 					list.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 		}
 	}

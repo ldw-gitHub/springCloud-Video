@@ -1,4 +1,4 @@
-package com.itcast.dw.text;
+package com.itcast.dw.test.thread;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

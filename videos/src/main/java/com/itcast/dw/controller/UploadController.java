@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
-import com.itcast.dw.common.FTPClientHelper;
 import com.itcast.dw.common.UploadFile;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.service.VideoService;
@@ -31,9 +30,6 @@ public class UploadController {
 	
 	@Autowired
 	private VideoService videoService;
-	
-	@Autowired
-	private FTPClientHelper ftpClientHelper;
 	
 	@RequestMapping(value = "/uploadFile")
 	@HystrixCommand(fallbackMethod="uploadFallback")

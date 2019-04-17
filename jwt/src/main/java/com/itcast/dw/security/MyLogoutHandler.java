@@ -1,5 +1,10 @@
 package com.itcast.dw.security;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,22 +15,12 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
 
-import com.framework.config.ProjectConfig;
-import com.framework.config.RedisUtils;
-import com.framework.constants.ActionType;
-import com.framework.constants.FunctionType;
-import com.framework.constants.RedisKey;
-import com.framework.info.ResultInfo;
-import com.framework.model.system.SystemLogModel;
-import com.framework.service.system.SystemLogService;
-import com.framework.utils.IPUtils;
-import com.framework.utils.JWTTokenUtils;
-import com.framework.utils.JsonFormater;
-
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.itcast.dw.config.RedisUtils;
+import com.itcast.dw.constants.RedisKey;
+import com.itcast.dw.info.ResultInfo;
+import com.itcast.dw.util.IPUtils;
+import com.itcast.dw.util.JsonFormater;
+import com.netflix.appinfo.InstanceInfo.ActionType;
 
 /**
  * 退出登录后的拦截处理
@@ -41,8 +36,6 @@ public class MyLogoutHandler implements LogoutHandler {
 	RedisUtils redisUtils;
 	@Autowired
 	ProjectConfig projectConfig;
-	@Autowired
-	SystemLogService systemLogService;
 
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
@@ -91,8 +84,6 @@ public class MyLogoutHandler implements LogoutHandler {
 			@Override
 			public void run() {
 				try {
-					systemLogService.insert(new SystemLogModel(FunctionType.USER_LOGOUT.getValue(),ActionType.LOGOUT.getName(),ip,
-							"用户登出",userId,userName));
 					System.err.println(account + "====" + userName + "=====" + ip );
 //					operateLogService.addLog(new OperateLogModel(userId, userName, OperateLogType.LOGOUT.getValue(), "用户操作", account + "-用户退出系统", ip));
 				} catch (Exception e) {

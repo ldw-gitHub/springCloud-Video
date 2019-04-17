@@ -1,4 +1,4 @@
-package com.itcast.dw.config;
+/*package com.itcast.dw.config;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -57,3 +57,4 @@ public class MysqlConnect implements EnvironmentAware {
 	
 
 }
+*/

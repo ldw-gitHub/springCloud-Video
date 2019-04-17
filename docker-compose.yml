@@ -10,17 +10,9 @@ service-zuul:
     - "8081:8081"
   links:
     - "eureka-server"
- 
-service-redis:
-  image:  dw/redis
-  ports:
-    - "8765:8765"
-  links:
-    - "eureka-server"
-    - "service-zuul"
     
-service-db:
-  image:  dw/dbresource
+service-jwt:
+  image:  dw/jwt
   ports:
     - "8763:8763"
   links:
@@ -34,7 +26,6 @@ service-elasticsearch:
   links:
     - "eureka-server"
     - "service-zuul"
-    - "service-db"
     
 service-video:
   image:  dw/videos
@@ -43,6 +34,4 @@ service-video:
   links:
     - "eureka-server"
     - "service-zuul"
-    - "service-redis"
-    - "service-db"
     

@@ -31,6 +31,8 @@ ribbon:
   ReadTimeout: 300000
   okhttp:
     enabled: true
+  eureka:
+    enabled: true
     
     
 #单独为video文件上传设置

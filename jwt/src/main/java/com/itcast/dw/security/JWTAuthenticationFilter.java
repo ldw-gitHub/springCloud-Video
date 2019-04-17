@@ -38,11 +38,12 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 	 * 集成redis,来判断是否存在或者销毁，避免无状态的token非法请求
 	 */
 	RedisUtils redisUtils;
+	ProjectConfig projectConfig;
 	
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, RedisUtils redisUtils) {
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, RedisUtils redisUtils,ProjectConfig projectConfig) {
 		super(authenticationManager);
 		this.redisUtils = redisUtils;
-		
+		this.projectConfig = projectConfig;
 	}
 
 

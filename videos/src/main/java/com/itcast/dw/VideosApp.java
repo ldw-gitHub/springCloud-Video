@@ -4,19 +4,18 @@ import java.io.File;
 
 import javax.servlet.MultipartConfigElement;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
 @EnableEurekaClient
 @EnableFeignClients
-@ComponentScan("com.itcast.dw")
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@MapperScan("com.itcast.dw.dao")
+@SpringBootApplication()
 public class VideosApp {
 	public static void main(String[] args) {
 		SpringApplication.run(VideosApp.class, args);	
@@ -31,12 +30,12 @@ public class VideosApp {
         MultipartConfigFactory factory = new MultipartConfigFactory();  
         //缓存路径
        //factory.setLocation("E:/uploadIoTmp");
-        File file = new File("/uploadIoTmp");
+        File file = new File("E:/uploadIoTmp");
         file.setWritable(true,false); 
         if(!file.exists()){
         	file.mkdirs();
         }
-        factory.setLocation("/uploadIoTmp");//linux
+        factory.setLocation("E:/uploadIoTmp");//linux
         //单个文件最大  
         factory.setMaxFileSize("2097152KB"); //KB,MB   2G
         /// 设置总上传数据总大小  

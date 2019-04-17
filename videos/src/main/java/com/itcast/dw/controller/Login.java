@@ -1,8 +1,6 @@
 package com.itcast.dw.controller;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
+import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.model.User;
 import com.itcast.dw.model.UserSession;
-import com.itcast.dw.service.RedisService;
 import com.itcast.dw.service.SessionService;
 import com.itcast.dw.service.UserService;
 
@@ -31,7 +29,7 @@ public class Login {
 	private SessionService sessionService;
 	
 	@Autowired
-	private RedisService redisService;
+	private RedisUtils redisUtils;
 	
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) {
@@ -49,8 +47,7 @@ public class Login {
 		
 		sessionService.updateSession(us);
 		//删除redis sessionToken
-		redisService.logoutDeleteRedisKey(sessionToken);
-		
+		redisUtils.remove(sessionToken);
 		obj.put("success", true);
 		return obj.toJSONString();
 	}
@@ -80,10 +77,7 @@ public class Login {
 			String sessionToken = CommonUtil.getSessionKey();
 			
 			//redis存入登入信息
-			Map<String,Object> parameterMap = new HashMap<String,Object>();
-			parameterMap.put("userId", user.getId());
-			parameterMap.put("sessionToken",sessionToken);
-			redisService.loginAddRedisKey(parameterMap);
+			redisUtils.set(sessionToken, user.getId()+"", 1800L);
 			
 			//将用户信息存入session
 			UserSession us = new UserSession();

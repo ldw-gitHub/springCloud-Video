@@ -3,7 +3,8 @@ package com.itcast.dw.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -18,7 +19,7 @@ import com.itcast.dw.service.VideoService;
 @Service
 public class VideoServiceImpl implements VideoService {
 
-	@Autowired
+	@Resource
 	private VideoInfoMapper vm;
 	
 	@Override

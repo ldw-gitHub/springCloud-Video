@@ -8,11 +8,11 @@
   </parent>
   
    	<packaging>jar</packaging>
-    <artifactId>common</artifactId>
+    <artifactId>v-common</artifactId>
 	<groupId>com.itcast.dw</groupId>
 	<version>${project.version}</version>
-	<name>common</name>
-	<description>common utils</description>
+	<name>v-common</name>
+	<description>v-common utils</description>
   
   <dependencies>
    	<dependency>
@@ -50,6 +50,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.3</version>
+        </dependency>
   </dependencies>
   
   	<build>

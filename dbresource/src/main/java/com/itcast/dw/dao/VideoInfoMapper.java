@@ -3,6 +3,8 @@ package com.itcast.dw.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.model.VideoInfoVo;
@@ -14,17 +16,17 @@ public interface VideoInfoMapper {
 	
 	List<VideoInfoVo> findAllMedia();
 	
-	List<VideoInfoVo> getVideosByType(String videoType);
+	List<VideoInfoVo> getVideosByType(@Param("videoType") String videoType);
 	
-	List<VideoInfoVo> getIndexVideosByType(String videoType);
+	List<VideoInfoVo> getIndexVideosByType(@Param("videoType") String videoType);
 	
 	List<VideoInfoVo> findRelateVideos(Map<String,Object> parameterMap);
 	
-	VideoInfo getVideosById(int videoId);
+	VideoInfo getVideosById(@Param("videoId") int videoId);
 	
-	List<VideoInfoVo> getVideosByUserId(int userId);
+	List<VideoInfoVo> getVideosByUserId(@Param("userId") int userId);
 	
-	List<VideoComments> getVideoCommentsByid(int videoid);
+	List<VideoComments> getVideoCommentsByid(@Param("videoId") int videoid);
 	
 	void updateVideoClick(VideoInfo vi);
 }

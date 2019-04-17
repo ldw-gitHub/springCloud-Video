@@ -9,16 +9,21 @@
 	</parent>
 	<groupId>com.itcast.dw</groupId>
 	<packaging>jar</packaging>
-	<artifactId>dbresource</artifactId>
-	<version>1.0.0</version>
-	<name>dbresource</name>
-	<description>Getting started with dbresource and Docker</description>
+	<artifactId>v-service</artifactId>
+	<version>${project.version}</version>
+	<name>v-service</name>
+	<description>common service</description>
 
     <properties>
 		<docker.image.prefix>dw</docker.image.prefix>
 	</properties>
 
 	<dependencies>
+	   <dependency>
+			<groupId>com.itcast.dw</groupId>
+			<artifactId>v-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- Mybatis依赖 -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -43,20 +48,16 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-		<!-- 添加druid连接池包 -->
+		<!-- 添加JDBC依赖 -->
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.1.0</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-
-		<dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-		
+			<dependency>
+			<groupId>tk.mybatis</groupId>
+			<artifactId>mapper-spring-boot-starter</artifactId>
+			<version>${mapper.version}</version>
+		</dependency>
 	</dependencies>
 	
 	<build>
@@ -89,7 +90,7 @@
 			</plugin>
 			
 		</plugins>
-		<finalName>dbresource</finalName>
+		<finalName>v-service</finalName>
 	</build>
 	
 </project>

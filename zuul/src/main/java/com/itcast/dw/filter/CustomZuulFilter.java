@@ -12,7 +12,8 @@ import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
-import com.itcast.dw.service.RedisService;
+import com.itcast.dw.config.RedisUtils;
+import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.util.IgnoreUrl;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -24,7 +25,7 @@ public class CustomZuulFilter extends ZuulFilter {
 	private Logger logger = Logger.getLogger(CustomZuulFilter.class);
 	
 	@Autowired
-	private RedisService redisService;
+	private RedisUtils redisUtils;
 	
 	@Override
 	public Object run() throws ZuulException {
@@ -38,21 +39,19 @@ public class CustomZuulFilter extends ZuulFilter {
 				String sessionToken = request.getParameter("sessionToken");
 				int userId = Integer.parseInt(request.getParameter("userId"));
 
-				Map<String,Object> parameterMap = new HashMap<String,Object>();
-				parameterMap.put("sessionToken", sessionToken);
-				parameterMap.put("userId", userId);
-				JSONObject redisResponse = redisService.judgeTokenId(parameterMap);
-				
+				String sUserId = redisUtils.get(sessionToken);
 				HttpServletResponse response = ctx.getResponse();
 				response.setCharacterEncoding("utf-8"); // 设置字符集
 				response.setContentType("text/html; charset=utf-8"); // 设置相应格式
-				if (redisResponse.getBoolean("success")) {
+				if(sUserId != null && sUserId.equals(userId+"")){
+					redisUtils.set(sessionToken, sUserId, RedisKey.expriedSessionTime);
+					
 					logger.info("token验证成功"); 
 					response.setStatus(200);
 					ctx.setSendZuulResponse(true); //路由
 					ctx.set("isSuccess", true);//其他filter可以看到状态
 					return null;
-				} else {
+				}else{
 					// 认证失败
 					logger.error("token验证失败");
 					response.setStatus(200);
@@ -62,6 +61,7 @@ public class CustomZuulFilter extends ZuulFilter {
 					ctx.setResponse(response);
 					return null;
 				}
+				
 		 }else{
 			 return null;
 		 }

@@ -15,6 +15,7 @@
 		<module>elasticsearch</module>
 		<module>jwt</module>
 		<module>common</module>
+		<module>v-model</module>
 	</modules>
 
 	<properties>
@@ -25,6 +26,7 @@
 	    <failOnMissingWebXml>false</failOnMissingWebXml>
 	    <project.version>1.0.0</project.version>
 		<jwt.version>0.9.1</jwt.version>
+		<mapper.version>1.1.4</mapper.version>
 	</properties>
 
 	<parent>
@@ -46,7 +48,11 @@
 	        </exclusion>
 	      </exclusions>
 	    </dependency> -->
-	    
+	     <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -64,10 +70,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
-	<!-- 	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-		</dependency> -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>

@@ -1,6 +1,7 @@
 package com.itcast.dw.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.itcast.dw.dao.SessionMapper;
@@ -10,7 +11,7 @@ import com.itcast.dw.service.SessionService;
 @Service
 public class SessionServiceImpl implements SessionService {
 	
-	@Autowired
+	@Resource
 	private SessionMapper sessionMapper;
 
 	@Override
