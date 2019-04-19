@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
 import com.itcast.dw.common.UploadFile;
+import com.itcast.dw.info.ResultInfo;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.service.VideoService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -31,9 +32,9 @@ public class UploadController {
 	@Autowired
 	private VideoService videoService;
 	
-	@RequestMapping(value = "/uploadFile")
+	@PostMapping(value = "/uploadFile")
 	@HystrixCommand(fallbackMethod="uploadFallback")
-	public String uploadFile(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
+	public ResultInfo<?> uploadFile(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
 		JSONObject response = new JSONObject();
 		
 		String count = request.getParameter("count");
@@ -76,21 +77,18 @@ public class UploadController {
 		}
 		ftp.close();
 		
-		response.put("success", flag);
 		response.put("uploadFileName", attachName);
 		
-		return response.toString();
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS, response);
 	}
 	
-	public String uploadFallback(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
-		JSONObject response = new JSONObject();
-		response.put("error", "upload error");
-		return response.toJSONString();
+	public ResultInfo<?> uploadFallback(@RequestParam("uploadfile") MultipartFile uploadFile,HttpServletRequest request) throws IOException {
+		return new ResultInfo<>(ResultInfo.FAILURE, ResultInfo.MSG_FAILURE);
 	}
 	
 	
-	@RequestMapping(value = "/deleteFile",method = RequestMethod.POST,produces = "application/json")
-    public String deleteFile(HttpServletRequest request) throws Exception {    	
+	@PostMapping(value = "/deleteFile")
+    public ResultInfo<?> deleteFile(HttpServletRequest request) throws Exception {    	
 		String attachName = request.getParameter("attachName");
 		String tag = request.getParameter("tag");
 		
@@ -104,14 +102,11 @@ public class UploadController {
 		}
 		ftp.deleteFile(attachName);
 		ftp.close();
-		JSONObject response = new JSONObject();
-		response.put("success", true);
-		return response.toString();
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
 	}
     
-    @RequestMapping(value = "/saveMedia",method = RequestMethod.POST,produces = "application/json")
-    public String saveMedia(HttpServletRequest request) throws Exception {    	
-    	JSONObject response = new JSONObject();
+	@PostMapping(value = "/saveMedia")
+    public ResultInfo<?> saveMedia(HttpServletRequest request) throws Exception {    	
     	String uploadImgPath = request.getParameter("uploadImgPath");
     	String uploadVideoPath = request.getParameter("uploadVideoPath");
     	String videoType = request.getParameter("videoType");
@@ -135,8 +130,7 @@ public class UploadController {
     	vi.setClick(0);
     	
     	videoService.saveMedia(vi);
-    	response.put("success", true);
     	
-    	return response.toString();
+    	return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
     }
 }

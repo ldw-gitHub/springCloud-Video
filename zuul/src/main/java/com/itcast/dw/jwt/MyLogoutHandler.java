@@ -1,4 +1,4 @@
-package com.itcast.dw.security;
+package com.itcast.dw.jwt;
 
 import java.util.Map;
 
@@ -15,12 +15,12 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
 
+import com.itcast.dw.config.ProjectConfig;
 import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.info.ResultInfo;
-import com.itcast.dw.util.IPUtils;
+import com.itcast.dw.util.JWTTokenUtils;
 import com.itcast.dw.util.JsonFormater;
-import com.netflix.appinfo.InstanceInfo.ActionType;
 
 /**
  * 退出登录后的拦截处理
@@ -73,23 +73,9 @@ public class MyLogoutHandler implements LogoutHandler {
 					new UsernamePasswordAuthenticationToken(principal, null));
 		}
 		String account = null != userMap?(null != userMap.get("account")?(String)userMap.get("account"):null):null; 
-		String userName = null != userMap?(null != userMap.get("userName")?(String)userMap.get("userName"):null):null; 
 		logger.info(account+"======退出登录成功========");
 		JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS));
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String ip = IPUtils.getIpAddr(request);
-		//记录登出记录
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					System.err.println(account + "====" + userName + "=====" + ip );
-//					operateLogService.addLog(new OperateLogModel(userId, userName, OperateLogType.LOGOUT.getValue(), "用户操作", account + "-用户退出系统", ip));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
 	}
 }

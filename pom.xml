@@ -9,12 +9,10 @@
 		<module>eureka</module>
 		<module>videos</module>
 		<module>zuul</module>
-		<module>dbresource</module>
+		<module>v-service</module>
 		<module>config</module>
-		<module>redis</module>
 		<module>elasticsearch</module>
-		<module>jwt</module>
-		<module>common</module>
+		<module>v-common</module>
 		<module>v-model</module>
 	</modules>
 

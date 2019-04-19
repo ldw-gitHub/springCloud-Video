@@ -1,4 +1,4 @@
-package com.itcast.dw.security;
+package com.itcast.dw.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,8 +8,6 @@ import java.util.Collection;
 
 /**
  * 安全用户模型
- *
- * @author sky_luan Created on 2017/12/8 9:20.
  */
 public class JWTUser implements UserDetails {
 

@@ -1,4 +1,4 @@
-package com.itcast.dw.security;
+package com.itcast.dw.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

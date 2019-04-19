@@ -1,4 +1,4 @@
-package com.itcast.dw.security;
+package com.itcast.dw.jwt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,12 +18,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.itcast.dw.config.ProjectConfig;
 import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.info.ResultInfo;
 import com.itcast.dw.model.User;
 import com.itcast.dw.service.UserService;
 import com.itcast.dw.util.IPUtils;
+import com.itcast.dw.util.JWTTokenUtils;
 import com.itcast.dw.util.JsonFormater;
 
 
@@ -65,7 +67,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		response.setHeader("Access-Control-Allow-Headers", "Authorization,Content-Type");
 		response.setHeader("Access-Control-Allow-Methods", "*");
 		response.setHeader("X-Frame-Options", "SAMEORIGIN");// 解决IFrame拒绝的问题(同源)
-		logger.info("进入JWTLoginFilter-attemptAuthentication,getMethod=" + request.getMethod());
+		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>进入JWTLoginFilter-attemptAuthentication,getMethod=" + request.getMethod());
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
 		// TODO 登录前置处理 如登入次数判断等等
@@ -85,8 +87,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
-		logger.info("进入JWTLoginFilter-successfulAuthentication");
-		JWTUser jwtUser = (com.itcast.dw.security.JWTUser) auth.getPrincipal();
+		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>进入JWTLoginFilter-successfulAuthentication");
+		JWTUser jwtUser = (com.itcast.dw.jwt.JWTUser) auth.getPrincipal();
 
 		//再修改
 		User userByName = userService.getUserByName(jwtUser.getUsername());

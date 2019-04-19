@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcast.dw.info.ResultInfo;
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.model.VideoInfoVo;
 import com.itcast.dw.page.PageBean;
 import com.itcast.dw.page.PageModel;
+import com.itcast.dw.page.Paging;
 import com.itcast.dw.service.VideoService;
 
 @RestController
@@ -36,7 +36,7 @@ public class VideoController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/findAllVideos")
+	@PostMapping("/findAllVideos")
 	public String findAllVideos() {
 		List<VideoInfoVo> list = videoservice.findAllMedia();
 		Map<String, Object> rtMap = new HashMap<String, Object>();
@@ -57,8 +57,8 @@ public class VideoController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/findMyOwnVideos")
-	public String findMyOwnVideos(HttpServletRequest request) {
+	@PostMapping(value = "/findMyOwnVideos")
+	public ResultInfo<?> findMyOwnVideos(HttpServletRequest request) {
 		int userId = Integer.parseInt(request.getParameter("userId"));
 		String curPage = request.getParameter("currentPage");
 		String pageSize = request.getParameter("pageSize");
@@ -71,20 +71,7 @@ public class VideoController {
 		
 		PageModel page = new PageModel(Integer.parseInt(curPage), Integer.parseInt(pageSize));
 		PageBean<VideoInfoVo> pageBean = videoservice.getVideosByUserId(page,userId);
-		Map<String, Object> rtMap = new HashMap<String, Object>();
-		rtMap.put("data", pageBean.getList());
-		rtMap.put("totalRows", pageBean.getTotal());//总记录数
-		rtMap.put("curPage", pageBean.getPageNum());//当前页
-		rtMap.put("pages", pageBean.getPages());//总页数
-		rtMap.put("success", true);
-
-		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(rtMap);
-		} catch (Exception e) {
-			log.info("Error in getDataLists()", e);
-		}
-		return jsonString;
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS,new Paging(pageBean));
 	}
 
 	/**
@@ -92,8 +79,8 @@ public class VideoController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/findVideosByType")
-	public String findVideosByType(HttpServletRequest request) {
+	@PostMapping(value = "/findVideosByType")
+	public ResultInfo<?> findVideosByType(HttpServletRequest request) {
 		String videoType = request.getParameter("videoType");
 		String curPage = request.getParameter("currentPage");
 		String pageSize = request.getParameter("pageSize");
@@ -107,20 +94,7 @@ public class VideoController {
 		PageModel page = new PageModel(Integer.parseInt(curPage), Integer.parseInt(pageSize));
 		PageBean<VideoInfoVo> pageBean = videoservice.getVideosByType(page, videoType);
 		
-		Map<String, Object> rtMap = new HashMap<String, Object>();
-		rtMap.put("data", pageBean.getList());
-		rtMap.put("totalRows", pageBean.getTotal());//总记录数
-		rtMap.put("curPage", pageBean.getPageNum());//当前页
-		rtMap.put("pages", pageBean.getPages());//总页数
-		rtMap.put("success", true);
-
-		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(rtMap);
-		} catch (Exception e) {
-			log.info("Error in getDataLists()", e);
-		}
-		return jsonString;
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS,new Paging(pageBean));
 	}
 	
 	/**
@@ -128,27 +102,17 @@ public class VideoController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/indexFindVideosByType")
-	public String indexFindVideosByType(HttpServletRequest request) {
+	@PostMapping(value = "/indexFindVideosByType")
+	public ResultInfo<?> indexFindVideosByType(HttpServletRequest request) {
 		String videoType = request.getParameter("videoType");
 		
 		List<VideoInfoVo> list = videoservice.getIndexVideosByType(videoType);
 		
-		Map<String, Object> rtMap = new HashMap<String, Object>();
-		rtMap.put("data", list);
-		rtMap.put("success", true);
-
-		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(rtMap);
-		} catch (Exception e) {
-			log.info("Error in getDataLists()", e);
-		}
-		return jsonString;
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS,list);
 	}
 	
-	@RequestMapping(value = "/findRelateVideos")
-	public String findRelateVideos(HttpServletRequest request) {
+	@PostMapping(value = "/findRelateVideos")
+	public ResultInfo<?> findRelateVideos(HttpServletRequest request) {
 		String thisTitle = request.getParameter("thisTitle");
 		String thisDescription = request.getParameter("thisDescription");
 		String videoid = request.getParameter("videoid");
@@ -159,17 +123,7 @@ public class VideoController {
 		
 		List<VideoInfoVo> list = videoservice.findRelateVideos(parameterMap);
 		
-		Map<String, Object> rtMap = new HashMap<String, Object>();
-		rtMap.put("data", list);
-		rtMap.put("success", true);
-		
-		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(rtMap);
-		} catch (Exception e) {
-			log.info("Error in getDataLists()", e);
-		}
-		return jsonString;
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS,list);
 	}
 
 	/**
@@ -177,8 +131,8 @@ public class VideoController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/findVideosById", method = RequestMethod.GET)
-	public String findVideosById(HttpServletRequest request) {
+	@PostMapping(value = "/findVideosById")
+	public ResultInfo<?> findVideosById(HttpServletRequest request) {
 		String videoId = request.getParameter("videoId");
 		VideoInfo vi = videoservice.getVideosById(Integer.parseInt(videoId));
 		int click = vi.getClick();
@@ -187,17 +141,7 @@ public class VideoController {
 		
 		videoservice.updateVideoClick(vi);
 		
-		Map<String, Object> rtMap = new HashMap<String, Object>();
-		rtMap.put("video", vi);
-		rtMap.put("success", true);
-
-		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(rtMap);
-		} catch (Exception e) {
-			log.info("Error in getDataLists()", e);
-		}
-		return jsonString;
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS,vi);
 	}
 
 	/**
@@ -205,21 +149,11 @@ public class VideoController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/getVideoCommentsByid", method = RequestMethod.GET)
-	public String getVideoCommentsByid(HttpServletRequest request) {
+	@PostMapping(value = "/getVideoCommentsByid")
+	public ResultInfo<?> getVideoCommentsByid(HttpServletRequest request) {
 		String videoId = request.getParameter("videoId");
 		List<VideoComments> list = videoservice.getVideoCommentsByid(Integer.parseInt(videoId));
-		Map<String, Object> rtMap = new HashMap<String, Object>();
-		rtMap.put("data", list);
-		rtMap.put("success", true);
-
-		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(rtMap);
-		} catch (Exception e) {
-			log.info("Error in getDataLists()", e);
-		}
-		return jsonString;
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS,list);
 	}
 
 	/**
@@ -228,9 +162,8 @@ public class VideoController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/saveVideoComments", method = RequestMethod.POST, produces = "application/json")
-	public String saveVideoComments(HttpServletRequest request) throws Exception {
-		JSONObject response = new JSONObject();
+	@PostMapping(value = "/saveVideoComments")
+	public ResultInfo<?> saveVideoComments(HttpServletRequest request) throws Exception {
 		String videoId = request.getParameter("videoId");
 		String userId = request.getParameter("userId");
 		String comments = request.getParameter("comments");
@@ -244,9 +177,7 @@ public class VideoController {
 		vc.setVideoid(Integer.parseInt(videoId));
 
 		videoservice.saveVideoComments(vc);
-		response.put("success", true);
-
-		return response.toString();
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
 	}
 
 }

@@ -12,6 +12,31 @@ server:
 spring:
   application:
     name: service-zuul
+  datasource:
+    driverclassname: com.mysql.jdbc.Driver
+    username: root
+    password: Aa123456
+    url: jdbc:mysql://localhost:3306/shop?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20   
+    maxWait: 60000  
+    filters: stat
+    minEvictableIdleTimeMillis: 300000      # 配置一个连接在池中最小生存的时间，单位是毫秒
+    poolPreparedStatements: true
+    
+mybatis:
+  type-aliases-package: com.itcast.dw.model
+  mapper-locations: classpath:mapper/*.xml
+  mappers: com.itcast.dw.baseDao.BaseMapper
+  not-empty: false
+
+# 分页配置
+pagehelper:
+  offset-as-page-num: true
+  row-bounds-with-count: false
+  reasonable: true
+  page-size-zero : true
 
 zuul:
   routes:

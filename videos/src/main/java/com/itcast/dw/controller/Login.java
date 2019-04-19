@@ -7,12 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
 import com.itcast.dw.config.RedisUtils;
+import com.itcast.dw.info.ResultInfo;
 import com.itcast.dw.model.User;
 import com.itcast.dw.model.UserSession;
 import com.itcast.dw.service.SessionService;
@@ -31,15 +32,14 @@ public class Login {
 	@Autowired
 	private RedisUtils redisUtils;
 	
-	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request) {
+	@PostMapping("/logout")
+	public ResultInfo<?> logout(HttpServletRequest request) {
 		JSONObject obj = new JSONObject();
 		String sessionToken  = request.getParameter("sessionToken");
 		UserSession us = sessionService.getOnlineSessionByToken(sessionToken);
 		
 		if(us == null) {
-			obj.put("success", true);
-			return obj.toJSONString();
+			return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
 		}
 		
 		us.setIsonline(0);
@@ -48,12 +48,11 @@ public class Login {
 		sessionService.updateSession(us);
 		//删除redis sessionToken
 		redisUtils.remove(sessionToken);
-		obj.put("success", true);
-		return obj.toJSONString();
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
 	}
 	
-	@RequestMapping("/login")
-	public String login(HttpServletRequest request) {
+	@PostMapping("/login")
+	public ResultInfo<?> login(HttpServletRequest request) {
 		
 		JSONObject obj = new JSONObject();
 		
@@ -65,13 +64,11 @@ public class Login {
 		User user = userService.getUserByName(name);
 		
 		if(user == null){
-			obj.put("msg", "username error");
-			return obj.toJSONString();
+			return new ResultInfo<>(ResultInfo.FAILURE, "用户不存在");
 			
 		}else{
 			if(!(password.equals(user.getPassword()))){
-				obj.put("msg", "password error");
-				return obj.toJSONString();
+				return new ResultInfo<>(ResultInfo.FAILURE, "密码错误");
 			}
 			
 			String sessionToken = CommonUtil.getSessionKey();
@@ -92,13 +89,12 @@ public class Login {
 			
 			user.setPassword("");
 			log.info("login success" + user.getUsername());
-			obj.put("msg", "0001");
 			obj.put("user", user);
 			obj.put("accessToken", sessionToken);
 			
 		}
 		
-		return obj.toJSONString();
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS,obj);
 	}
 	
 

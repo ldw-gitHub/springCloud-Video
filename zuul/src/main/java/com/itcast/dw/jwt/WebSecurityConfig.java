@@ -1,5 +1,6 @@
-package com.itcast.dw.security;
+package com.itcast.dw.jwt;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,22 +17,28 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.itcast.dw.config.ProjectConfig;
 import com.itcast.dw.config.RedisUtils;
+import com.itcast.dw.service.UserService;
 
 /**
  * SpringSecurity的配置
  * 通过SpringSecurity的配置，将JWTLoginFilter，JWTAuthenticationFilter组合在一起
- * 
- * @author sky_luan
  */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	private Logger logger = Logger.getLogger(WebSecurityConfig.class);
 
 	@Autowired
 	RedisUtils redisUtils;
+	@Autowired
+	UserService userService;
+	@Autowired
+	ProjectConfig projectConfig;
 	
     /**
      * spring-security加密
@@ -48,6 +55,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	/**
+	 * 无权访问处理
+	 */
+	@Autowired
+	private RestAccessDeniedHandler restAccessDeniedHandler;
 	
 	/**
 	 * 登出处理
@@ -74,7 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 进入核心配置 ");
 		// 跨域控制
 		http.cors().and().csrf().disable()
 		       //请求授权
@@ -92,16 +105,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		    		   "/webjars/**",
 		    		   "favicon.ico"
 		    		   ).permitAll()
+		       .antMatchers(
+		    		   HttpMethod.POST,
+		    		   "/zuul/video/uploadFile",
+		    		   "/video/findVideosByType",
+		    		   "/video/findRelateVideos",
+		    		   "/video/findVideosById",
+		    		   "/video/getVideoCommentsByid",
+		    		   "/video/indexFindVideosByType"
+		    		   ).permitAll()
 				// 其余所有请求,登录控制,创建UsernamePasswordAuthenticationFilter
 		        .anyRequest().authenticated()
 				.and().formLogin()
 				// 登出控制,自定义myLogoutHandler,clearAuthentication清除上下文
-				.and().logout().addLogoutHandler(myLogoutHandler).logoutSuccessUrl("/").clearAuthentication(true);
+				.and().logout().addLogoutHandler(myLogoutHandler).logoutSuccessUrl("/").clearAuthentication(true)
 				// 登录拦截器处理
-				//.and().addFilter(new JWTLoginFilter(authenticationManager(), redisUtils, loginService, projectConfig,systemLogService))
+				.and().addFilter(new JWTLoginFilter(authenticationManager(), redisUtils, userService, projectConfig))
 				// 请求授权拦截器处理
-				//.addFilter(new JWTAuthenticationFilter(authenticationManager(), redisUtils, projectConfig))
+				.addFilter(new JWTAuthenticationFilter(authenticationManager(), redisUtils, projectConfig))
 				// 处理权限不足的情况
+		        .exceptionHandling().accessDeniedHandler(restAccessDeniedHandler);
 				
 		
 	}
@@ -118,6 +141,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
                 "/csrf",
                 "/");
+        web.ignoring().antMatchers("/zuul/video/uploadFile");
+        web.ignoring().antMatchers("/video/findVideosByType");
+        web.ignoring().antMatchers("/video/indexFindVideosByType");
+        web.ignoring().antMatchers("/video/findRelateVideos");
+        web.ignoring().antMatchers("/video/findVideosById");
+        web.ignoring().antMatchers("/video/getVideoCommentsByid");
 	}
 	
 	

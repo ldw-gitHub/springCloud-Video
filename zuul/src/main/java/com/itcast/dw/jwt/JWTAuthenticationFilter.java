@@ -1,4 +1,4 @@
-package com.itcast.dw.security;
+package com.itcast.dw.jwt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.itcast.dw.config.ProjectConfig;
 import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.info.ResultInfo;
@@ -83,6 +84,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 		 * 检查redis缓存中是否存在
 		 */
 		String token = JWTTokenUtils.authorizationToToken(header);
+		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>token==" + token);
 		String username = JWTTokenUtils.getUsernameFromToken(token, projectConfig.getJwtSecurt());
 		if (StringUtils.isBlank(username) || !redisUtils.exists(RedisKey.ADMIN_JWT_TOKEN + username)) {
 			logger.error(request.getRequestURI()+"===username=" + username);
@@ -101,6 +103,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 			return;
 		}
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+		logger.info(">>>>>>>>>>>>>>>>>>>>>>authentication = " + authentication);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		chain.doFilter(request, response);
 	}
@@ -117,7 +120,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 		String Authorization = request.getHeader(JWTTokenUtils.AUTHORIZATION);
 		if (StringUtils.isNotBlank(Authorization) && Authorization.startsWith(JWTTokenUtils.BEARER)) {
 			// parse the token.
-			String username = JWTTokenUtils.getUsernameFromToken(JWTTokenUtils.authorizationToToken(Authorization), "");
+			String username = JWTTokenUtils.getUsernameFromToken(JWTTokenUtils.authorizationToToken(Authorization), projectConfig.getJwtSecurt());
 			if (StringUtils.isNotBlank(username)) {
 				List<String> list = new ArrayList<>();
 				return new UsernamePasswordAuthenticationToken(username, null,

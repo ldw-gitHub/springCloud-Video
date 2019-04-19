@@ -13,3 +13,13 @@ spring:
       max-wait: 1000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
       min-idle: 5 # 连接池中的最小空闲连接
       timeout: 1000 # 连接超时时间（毫秒）
+  cloud:
+    refresh:
+      refreshable: none
+      
+#jwt密钥与有效时长
+project:
+  config:
+    jwt-securt: Fl9UOH7Q3&ut4Qtr-szbdc
+    jwt-ttl: 604800
+    token-ttl: 1800
