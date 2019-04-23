@@ -13,10 +13,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
 /**
- * 
  * RedisUtils 工具类
- * 
- * @author sky_luan
  */
 @SuppressWarnings("unchecked")
 @Component

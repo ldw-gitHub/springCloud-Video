@@ -42,7 +42,7 @@ zuul:
   routes:
     service-video:
       path: /video/**
-      sensitiveHeaders: Cookie,Set-Cookie,Authorization
+      sensitiveHeaders: Cookie,Set-Cookie
       service-id: service-video
       stripPrefix: true
   sensitiveHeaders:

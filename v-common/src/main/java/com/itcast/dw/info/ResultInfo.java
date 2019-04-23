@@ -39,6 +39,10 @@ public class ResultInfo<T> {
     public static final String MSG_REGISTERED = "账号已被注册";
     public static final String MSG_ERROR_LOGIN = "账号或者密码错误";
     public static final String MSG_NOT_REAL = "账号未实名，请您实名后再试";
+    public static final String KAPTCHA_EXPRRIE = "验证码已过期，请刷新后再试";
+    public static final String KAPTCHA_NOT_REAL = "验证码错误";
+    public static final String KAPTCHA_IS_NULL = "请填写验证码";
+    public static final String MSG_LOGIN_FAILED = "登录失败超过限定次数，请一天后在试";
     
     //================叫号系统=提示信息============================================
     public static final String MSG_INVALID_REQUEST = "请求已过期";

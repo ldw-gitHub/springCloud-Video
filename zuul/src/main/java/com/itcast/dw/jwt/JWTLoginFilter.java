@@ -71,6 +71,36 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
 		// TODO 登录前置处理 如登入次数判断等等
+		
+		//验证码判断
+		String kaptchaToken = request.getHeader(JWTTokenUtils.AUTHORIZATION);
+		String kaptcha = request.getParameter("kaptcha");
+		if(kaptchaToken == null || kaptcha == null){
+			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_PARAM, ResultInfo.KAPTCHA_IS_NULL));
+			return null;
+		}
+		String saveKaptcha = redisUtils.get(RedisKey.KAPTCHA + kaptchaToken);
+		if(saveKaptcha == null){
+			logger.info("saveKaptcha == " + saveKaptcha);
+			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_PARAM, ResultInfo.KAPTCHA_EXPRRIE));
+			return null;
+		}
+		if(!saveKaptcha.equalsIgnoreCase(kaptcha)){
+			logger.info("saveKaptcha  equalsIgnoreCase == " + saveKaptcha);
+			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_PARAM, ResultInfo.KAPTCHA_NOT_REAL));
+			return null;
+		}
+		//登入错误次数判断
+		String failedNumber = redisUtils.get(RedisKey.LOGIN_FAILED_NUMBER + username);
+		
+		if(failedNumber != null){
+			Long failedNumbers = redisUtils.incr(RedisKey.LOGIN_FAILED_NUMBER + username,0);
+			if(failedNumbers > projectConfig.getLoginFailedNumber() ){
+				JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_PARAM, ResultInfo.MSG_LOGIN_FAILED));
+				return null;
+			}
+		}
+		
 		// ...
 		logger.info("loginUser==" + username + "=========开始登录======================");
 		return authenticationManager
@@ -105,6 +135,11 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		redisUtils.hset(RedisKey.ADMIN_JWT_TOKEN + userId, redisUserMap, projectConfig.getTokenTtl());
 		res.addHeader(JWTTokenUtils.AUTHORIZATION, JWTTokenUtils.tokenToAuthorization(token));
 		redisUserMap.remove("token");
+		
+		//删除验证码
+		String kaptchaToken = req.getHeader(JWTTokenUtils.AUTHORIZATION);
+		redisUtils.remove(RedisKey.KAPTCHA + kaptchaToken);
+				
 		JsonFormater.writeJsonValue(res, new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS, redisUserMap));
 		logger.info("==jwtUser.getUsername()=" + jwtUser.getUsername() + "=========登录成功===");
 		
@@ -118,6 +153,20 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		// TODO Auto-generated method stub
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+		
+		//在redis中存储用户登入失败次数
+		String username = obtainUsername(request);
+		String failedNumber = redisUtils.get(RedisKey.LOGIN_FAILED_NUMBER + username);
+		try {
+			if(failedNumber != null){
+				redisUtils.incr(RedisKey.LOGIN_FAILED_NUMBER + username, 1);
+			}else{
+				redisUtils.set(RedisKey.LOGIN_FAILED_NUMBER + username, 1 + "", projectConfig.getLoginFailedNumberTtl());
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.FAILURE, ResultInfo.MSG_ERROR_LOGIN));
 		// 调回上一次页面 super.unsuccessfulAuthentication(request, response, failed);
 	}

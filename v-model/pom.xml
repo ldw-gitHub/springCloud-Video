@@ -3,22 +3,21 @@
   <parent>
     <groupId>com.itcast</groupId>
     <artifactId>video-springcloud</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   
-    <groupId>com.itcast.dw</groupId>
 	<packaging>jar</packaging>
     <artifactId>v-model</artifactId>
-	<version>${project.version}</version>
 	<name>v-model</name>
 	<description>common model</description>
 	
 	<dependencies>
 	   <dependency>
-			<groupId>com.itcast.dw</groupId>
+			<groupId>com.itcast</groupId>
 			<artifactId>v-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
+	
 </project>

@@ -30,12 +30,12 @@ public class VideosApp {
         MultipartConfigFactory factory = new MultipartConfigFactory();  
         //缓存路径
        //factory.setLocation("E:/uploadIoTmp");
-        File file = new File("E:/uploadIoTmp");
+        File file = new File("/uploadIoTmp");
         file.setWritable(true,false); 
         if(!file.exists()){
         	file.mkdirs();
         }
-        factory.setLocation("E:/uploadIoTmp");//linux
+        factory.setLocation("/uploadIoTmp");//linux
         //单个文件最大  
         factory.setMaxFileSize("2097152KB"); //KB,MB   2G
         /// 设置总上传数据总大小  

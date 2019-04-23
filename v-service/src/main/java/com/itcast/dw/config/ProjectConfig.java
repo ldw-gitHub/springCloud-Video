@@ -21,7 +21,43 @@ public class ProjectConfig {
 	 * JWT有效期
 	 */
 	private Long jwtTtl;
+	/**
+	 * 验证码有效时间
+	 */
+	private Long kaptchaTokenTtl;
+	/**
+	 * 用户登入失败次数，统计时长
+	 */
+	private Long loginFailedNumberTtl;
+	/**
+	 * 用户登入失败次数
+	 */
+	private Long loginFailedNumber;
 
+
+	public Long getKaptchaTokenTtl() {
+		return kaptchaTokenTtl;
+	}
+
+	public void setKaptchaTokenTtl(Long kaptchaTokenTtl) {
+		this.kaptchaTokenTtl = kaptchaTokenTtl;
+	}
+
+	public Long getLoginFailedNumberTtl() {
+		return loginFailedNumberTtl;
+	}
+
+	public void setLoginFailedNumberTtl(Long loginFailedNumberTtl) {
+		this.loginFailedNumberTtl = loginFailedNumberTtl;
+	}
+
+	public Long getLoginFailedNumber() {
+		return loginFailedNumber;
+	}
+
+	public void setLoginFailedNumber(Long loginFailedNumber) {
+		this.loginFailedNumber = loginFailedNumber;
+	}
 
 	public String getJwtSecurt() {
 		return jwtSecurt;

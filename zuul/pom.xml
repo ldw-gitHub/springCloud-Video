@@ -6,14 +6,12 @@
 	<parent>
 		<groupId>com.itcast</groupId>
 		<artifactId>video-springcloud</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<packaging>jar</packaging>
 	<artifactId>zuul</artifactId>
-	<groupId>com.itcast.dw</groupId>
-	<version>1.0.0</version>
 	<name>zuul</name>
 	<description>Getting started with zuul and Docker</description>
 
@@ -22,7 +20,7 @@
 	</properties>
 	<dependencies>
 	    <dependency>
-			<groupId>com.itcast.dw</groupId>
+			<groupId>com.itcast</groupId>
 			<artifactId>v-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>

@@ -4,13 +4,11 @@
 	<parent>
 		<groupId>com.itcast</groupId>
 		<artifactId>video-springcloud</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<groupId>com.itcast.dw</groupId>
 	<packaging>jar</packaging>
 	<artifactId>v-service</artifactId>
-	<version>${project.version}</version>
 	<name>v-service</name>
 	<description>common service</description>
 
@@ -20,9 +18,9 @@
 
 	<dependencies>
 	   <dependency>
-			<groupId>com.itcast.dw</groupId>
+			<groupId>com.itcast</groupId>
 			<artifactId>v-model</artifactId>
-			<version>${project.version}</version>
+			<version>1.0</version>
 		</dependency>
 		<!-- Mybatis依赖 -->
 		<dependency>
@@ -58,11 +56,18 @@
 			<artifactId>mapper-spring-boot-starter</artifactId>
 			<version>${mapper.version}</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.github.penggle/kaptcha -->
+		<dependency>
+		    <groupId>com.github.penggle</groupId>
+		    <artifactId>kaptcha</artifactId>
+		    <version>2.3.2</version>
+		</dependency>
 	</dependencies>
 	
-	<build>
+<!-- 	<build>
 		<plugins>
-			<!-- 使用该插件打包 -->
+			使用该插件打包
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -91,6 +96,6 @@
 			
 		</plugins>
 		<finalName>v-service</finalName>
-	</build>
+	</build> -->
 	
 </project>

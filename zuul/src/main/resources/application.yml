@@ -23,3 +23,6 @@ project:
     jwt-securt: Fl9UOH7Q3&ut4Qtr-szbdc
     jwt-ttl: 604800
     token-ttl: 1800
+    kaptcha-token-ttl: 120
+    login-failed-number-ttl: 86400
+    login-failed-number: 5
