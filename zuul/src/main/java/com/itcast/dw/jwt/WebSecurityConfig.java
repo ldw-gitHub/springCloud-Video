@@ -107,13 +107,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		    		   ).permitAll()
 		       .antMatchers(
 		    		   HttpMethod.POST,
-		    		   "/zuul/video/uploadFile",
-		    		   "/video/findVideosByType",
-		    		   "/video/findRelateVideos",
-		    		   "/video/findVideosById",
-		    		   "/video/getVideoCommentsByid",
-		    		   "/video/indexFindVideosByType",
-		    		   "/video/kaptcha"
+		    		   "/zuul/videos/uploadFile",
+		    		   "/videos/findVideosByType",
+		    		   "/videos/findRelateVideos",
+		    		   "/videos/findVideosById",
+		    		   "/videos/getVideoCommentsByid",
+		    		   "/videos/indexFindVideosByType",
+		    		   "/videos/kaptcha"
 		    		   ).permitAll()
 				// 其余所有请求,登录控制,创建UsernamePasswordAuthenticationFilter
 		        .anyRequest().authenticated()
@@ -142,13 +142,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
                 "/csrf",
                 "/");
-        web.ignoring().antMatchers("/zuul/video/uploadFile");
-        web.ignoring().antMatchers("/video/findVideosByType");
-        web.ignoring().antMatchers("/video/indexFindVideosByType");
-        web.ignoring().antMatchers("/video/findRelateVideos");
-        web.ignoring().antMatchers("/video/findVideosById");
-        web.ignoring().antMatchers("/video/getVideoCommentsByid");
-        web.ignoring().antMatchers("/video/kaptcha");
+        web.ignoring().antMatchers("/zuul/videos/uploadFile");
+        web.ignoring().antMatchers("/videos/findVideosByType");
+        web.ignoring().antMatchers("/videos/indexFindVideosByType");
+        web.ignoring().antMatchers("/videos/findRelateVideos");
+        web.ignoring().antMatchers("/videos/findVideosById");
+        web.ignoring().antMatchers("/videos/getVideoCommentsByid");
+        web.ignoring().antMatchers("/videos/kaptcha");
 	}
 	
 	

@@ -41,7 +41,7 @@ pagehelper:
 zuul:
   routes:
     service-video:
-      path: /video/**
+      path: /videos/**
       sensitiveHeaders: Cookie,Set-Cookie
       service-id: service-video
       stripPrefix: true
