@@ -3,6 +3,7 @@ package com.itcast.dw.controller;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.dw.info.ResultInfo;
+import com.itcast.dw.model.AdminUser;
 import com.itcast.dw.model.FileModel;
 import com.itcast.dw.model.FileModelVo;
 import com.itcast.dw.page.PageBean;
@@ -21,7 +23,7 @@ import com.itcast.dw.page.Paging;
 import com.itcast.dw.service.FileService;
 
 @RestController
-public class FileController {
+public class FileController extends BaseController{
 	
 	private Logger log = LoggerFactory.getLogger(FileController.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -57,8 +59,9 @@ public class FileController {
 	}
 	
 	@PostMapping(value = "/getFilesByUserId")
-	public ResultInfo<?> getFilesByUserId(HttpServletRequest request) {
-		int userId = Integer.parseInt(request.getParameter("userId"));
+	public ResultInfo<?> getFilesByUserId(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		AdminUser currentUserInfo = getCurrentUserInfo(request,response);
+		int userId = currentUserInfo.getUserId();
 		String curPage = request.getParameter("currentPage");
 		String pageSize = request.getParameter("pageSize");
 		if (curPage == null || "".equals(curPage)) {

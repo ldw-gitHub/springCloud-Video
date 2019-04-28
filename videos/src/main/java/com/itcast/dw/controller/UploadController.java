@@ -121,10 +121,8 @@ public class UploadController {
     	vi.setVideopath("video/" + uploadVideoPath);
     	vi.setTitle(filename);
     	vi.setVideoType(videoType);
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    	String nowDate = sdf.format(new Date());
-    	vi.setCreatetime(sdf.parse(nowDate));
-    	vi.setUpdatetime(sdf.parse(nowDate));
+    	vi.setCreatetime(new Date());
+    	vi.setUpdatetime(new Date());
     	vi.setDescription(description);
     	vi.setIsown(isown);
     	vi.setClick(0);

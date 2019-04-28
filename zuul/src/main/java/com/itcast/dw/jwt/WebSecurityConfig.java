@@ -113,7 +113,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		    		   "/videos/findVideosById",
 		    		   "/videos/getVideoCommentsByid",
 		    		   "/videos/indexFindVideosByType",
-		    		   "/videos/kaptcha"
+		    		   "/videos/kaptcha",
+		    		   "/videos/saveVideoComments"
 		    		   ).permitAll()
 				// 其余所有请求,登录控制,创建UsernamePasswordAuthenticationFilter
 		        .anyRequest().authenticated()
@@ -149,6 +150,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/videos/findVideosById");
         web.ignoring().antMatchers("/videos/getVideoCommentsByid");
         web.ignoring().antMatchers("/videos/kaptcha");
+        web.ignoring().antMatchers("/videos/saveVideoComments");
 	}
 	
 	

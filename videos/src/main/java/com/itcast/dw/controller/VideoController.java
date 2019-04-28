@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.dw.info.ResultInfo;
+import com.itcast.dw.model.AdminUser;
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.model.VideoInfoVo;
@@ -24,7 +26,7 @@ import com.itcast.dw.page.Paging;
 import com.itcast.dw.service.VideoService;
 
 @RestController
-public class VideoController {
+public class VideoController extends BaseController{
 
 	private Logger log = LoggerFactory.getLogger(VideoController.class);
 	@Autowired
@@ -56,10 +58,12 @@ public class VideoController {
 	 * 根据视频类型获取数据
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
 	@PostMapping(value = "/findMyOwnVideos")
-	public ResultInfo<?> findMyOwnVideos(HttpServletRequest request) {
-		int userId = Integer.parseInt(request.getParameter("userId"));
+	public ResultInfo<?> findMyOwnVideos(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		AdminUser currentUserInfo = getCurrentUserInfo(request,response);
+		int userId = currentUserInfo.getUserId();
 		String curPage = request.getParameter("currentPage");
 		String pageSize = request.getParameter("pageSize");
 		if (curPage == null || "".equals(curPage)) {
@@ -163,15 +167,21 @@ public class VideoController {
 	 * @throws Exception
 	 */
 	@PostMapping(value = "/saveVideoComments")
-	public ResultInfo<?> saveVideoComments(HttpServletRequest request) throws Exception {
+	public ResultInfo<?> saveVideoComments(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String videoId = request.getParameter("videoId");
-		String userId = request.getParameter("userId");
 		String comments = request.getParameter("comments");
-		String username = request.getParameter("username");
-
+		
+		AdminUser currentUserInfo = getCurrentUserInfo(request,response);
+		int userId = -1;
+		String userName = "游客";
+		if(currentUserInfo != null){
+			userId = currentUserInfo.getUserId();
+			userName = currentUserInfo.getUserName();
+		}
+		
 		VideoComments vc = new VideoComments();
-		vc.setCommentuserid(Integer.parseInt(userId));
-		vc.setCommentusername(username);
+		vc.setCommentuserid(userId);
+		vc.setCommentusername(userName);
 		vc.setCreatetime(new Date());
 		vc.setMsg(comments);
 		vc.setVideoid(Integer.parseInt(videoId));
