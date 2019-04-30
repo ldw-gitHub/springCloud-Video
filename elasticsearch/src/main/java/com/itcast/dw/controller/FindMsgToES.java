@@ -1,5 +1,7 @@
 package com.itcast.dw.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.elasticsearch.index.query.QueryBuilder;
@@ -27,10 +29,10 @@ public class FindMsgToES {
      * @param pageable page = 第几页参数, value = 每页显示条数
      */
     @GetMapping("search")
-    public List<TotalPopulation> search(String title,@PageableDefault(page = 1, value = 10) Pageable pageable){
+    public List<TotalPopulation> search(String count,@PageableDefault(page = 1, value = 10) Pageable pageable){
 
         //按标题进行搜索
-        QueryBuilder queryBuilder = QueryBuilders.matchQuery("title", title);
+        QueryBuilder queryBuilder = QueryBuilders.matchQuery("count", count);
 
         //如果实体和数据的名称对应就会自动封装，pageable分页参数
         Iterable<TotalPopulation> listIt =  noticeRespository.search(queryBuilder,pageable);
@@ -40,5 +42,17 @@ public class FindMsgToES {
         
         return list;
     }
+    
+    @GetMapping("save")
+    public String save(){
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	TotalPopulation totalPopulation = new TotalPopulation(System.currentTimeMillis()+ "",
+                "1","40.46263016645814","110.60160122023507",sdf.format(new Date()));
+    	noticeRespository.save(totalPopulation);
+        return "success";
+    }
+
+    //http://localhost:8888/delete?id=1525415333329
+
 
 }

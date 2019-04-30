@@ -6,13 +6,21 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 server:
   port: 8764
 spring:
-  profiles: docker
+  #profiles: docker
   application:
     name: service-elastic
+  cloud:
+    refresh:
+      refreshable: none
+  data:
+    elasticsearch:
+      clusterNodes: 47.107.95.112:9300
+      clusterName: my-application
+     
     
 ribbon:
   eureka:
