@@ -26,3 +26,9 @@ project:
     kaptcha-token-ttl: 120
     login-failed-number-ttl: 86400
     login-failed-number: 5
+    
+logging:
+  config: classpath:logback.xml
+  path: ./logs/videos
+  level:
+    org.springframework.web: DEBUG
