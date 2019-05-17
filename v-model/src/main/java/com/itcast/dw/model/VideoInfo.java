@@ -3,20 +3,38 @@ package com.itcast.dw.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+@Entity
+@Table(name="videoinfo")
 public class VideoInfo implements Serializable{
 	
 	private static final long serialVersionUID = -2639829286599829185L;
 	
+	@Id
+	@Column(name = "id")
 	private int id;
+	@Column(name = "title")
 	private String title;
+	@Column(name = "description")
 	private String description;
+	@Column(name = "createuserid")
 	private int createuserid;
+	@Column(name = "click")
 	private int click;
+	@Column(name = "videoType")
 	private String videoType;
+	@Column(name = "imgpath")
 	private String imgpath;
+	@Column(name = "videopath")
 	private String videopath;
+	@Column(name = "createtime")
 	private Date createtime;
+	@Column(name = "updatetime")
 	private Date updatetime;
+	@Column(name = "isown")
 	private String isown;
 	public int getId() {
 		return id;

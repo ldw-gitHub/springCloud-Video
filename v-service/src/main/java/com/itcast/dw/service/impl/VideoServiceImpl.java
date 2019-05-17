@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.itcast.dw.baseDao.BaseServiceImpl;
 import com.itcast.dw.dao.VideoInfoMapper;
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
@@ -17,7 +18,7 @@ import com.itcast.dw.page.PageModel;
 import com.itcast.dw.service.VideoService;
 
 @Service
-public class VideoServiceImpl implements VideoService {
+public class VideoServiceImpl extends BaseServiceImpl<VideoInfo> implements VideoService {
 
 	@Resource
 	private VideoInfoMapper vm;

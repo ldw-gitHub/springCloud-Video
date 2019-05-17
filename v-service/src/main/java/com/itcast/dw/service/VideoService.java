@@ -5,13 +5,14 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.itcast.dw.baseDao.BaseService;
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.model.VideoInfoVo;
 import com.itcast.dw.page.PageBean;
 import com.itcast.dw.page.PageModel;
 
-public interface VideoService {
+public interface VideoService extends BaseService<VideoInfo>{
 	
     void saveMedia(VideoInfo vi);
 	
