@@ -35,7 +35,7 @@ public class JWTTokenUtils implements Serializable {
      * @param Authorization
      * @return token
      * @date 2018年5月31日
-     * @author sky_luan
+     * @author ldw
      */
 	public static String authorizationToToken(String Authorization){
 		return Authorization.replace(BEARER, "");
@@ -46,7 +46,7 @@ public class JWTTokenUtils implements Serializable {
 	 * @param token
 	 * @return 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public static String tokenToAuthorization(String token){
 		return BEARER + token;

@@ -5,27 +5,39 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.itcast.dw.baseDao.BaseServiceImpl;
 import com.itcast.dw.dao.VideoInfoMapper;
+import com.itcast.dw.feign.ESFeign;
 import com.itcast.dw.model.VideoComments;
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.model.VideoInfoVo;
 import com.itcast.dw.page.PageBean;
 import com.itcast.dw.page.PageModel;
 import com.itcast.dw.service.VideoService;
+import com.itcast.dw.vo.VideoVo;
 
 @Service
 public class VideoServiceImpl extends BaseServiceImpl<VideoInfo> implements VideoService {
 
 	@Resource
 	private VideoInfoMapper vm;
+	@Autowired
+	private ESFeign esFeign;
 	
 	@Override
 	public void saveMedia(VideoInfo vi) {
 		vm.saveMedia(vi);
+		
+		new Thread(() -> esFeign.saveVideoToES(new VideoVo(vi.getId(),
+				vi.getTitle(),
+				vi.getDescription(),
+				vi.getClick(),
+				vi.getImgpath(),
+				vi.getVideopath()))).start();
 	}
 
 	@Override

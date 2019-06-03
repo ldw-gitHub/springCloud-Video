@@ -5,7 +5,7 @@ debug: 当此属性设置为true时，将打印出logback内部日志信息，�
  -->
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<property resource="application.yml" />
-	<property name="LOG_FILE" value="./logs/videos" />
+	<property name="LOG_FILE" value="./logs/zuul" />
 	<!-- appender负责写日志的组件，它有两个必要属性name和class。name指定appender名称，class指定appender的全限定名 -->
 	<!-- 把日志都输出到控制台 -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

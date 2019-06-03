@@ -1,4 +1,4 @@
-package com.itcast.dw;
+/*package com.itcasts;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.itcast.dw.model.VideoInfo;
 import com.itcast.dw.service.VideoService;
+
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,3 +27,4 @@ public class JPATest {
 	
 
 }
+*/

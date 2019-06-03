@@ -11,7 +11,7 @@ import tk.mybatis.mapper.entity.Example;
 
 /**
  * 模板service层,service实现可继承
- * @author sky_luan
+ * @author ldw
  */
 public class BaseServiceImpl<T> implements BaseService<T>{
 	
@@ -26,7 +26,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return boolean
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public boolean insert(T t) throws Exception{
 		int count = baseMapper.insertSelective(t);
@@ -39,7 +39,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return boolean
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public boolean updateById(T t) throws Exception{
 		int count = baseMapper.updateByPrimaryKeySelective(t);
@@ -53,7 +53,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return boolean
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	@Transactional
 	public boolean updateByExampleSelective(Example example, T t) throws Exception{
@@ -67,7 +67,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return boolean
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	@Transactional
 	public boolean delete(T t) throws Exception{
@@ -81,7 +81,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return boolean
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	@Transactional
 	public boolean deleteByPrimaryKey(Object key) throws Exception{
@@ -95,7 +95,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return boolean
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	@Transactional
 	public boolean deleteByExample(Example example) throws Exception{
@@ -109,7 +109,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return boolean
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public boolean existsWithPrimaryKey(Object key) throws Exception{
 		return baseMapper.existsWithPrimaryKey(key);
@@ -121,7 +121,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return List
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public List<T> select(T t) throws Exception{
 		List<T> list = baseMapper.select(t);
@@ -135,7 +135,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return List
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public List<T> select(Example example) throws Exception{
 		List<T> list = baseMapper.selectByExample(example);
@@ -148,7 +148,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return T
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public T selectByPrimaryKey(Object key) throws Exception{
 		T t = baseMapper.selectByPrimaryKey(key);
@@ -161,7 +161,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return T
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public T selectOne(T t) throws Exception{
 		t = baseMapper.selectOne(t);
@@ -174,7 +174,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return int
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public int selectCount(T t) throws Exception{
 		return baseMapper.selectCount(t);
@@ -186,7 +186,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	 * @return int
 	 * @throws Exception 
 	 * @date 2018年5月31日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	public int selectCountByExample(Example example) throws Exception{
 		return baseMapper.selectCountByExample(example);

@@ -112,5 +112,18 @@ public class ESTemplateController {
 		return new ResultInfo<>(ResultInfo.ERROR, "fallbackMethod-->ES查询失败");
 	}
 	
+	@HystrixCommand(fallbackMethod = "deleteError")
+    @PostMapping("delete")
+    public ResultInfo<?> delete(String id) throws Exception{
+        String rt = elasticsearchTemplate.delete("video","videoInfo", id);
+        logger.info("es 删除id = " + id + ":return" + rt);
+        return new ResultInfo<>(ResultInfo.SUCCESS,ResultInfo.MSG_SUCCESS);
+    }
+	
+	public ResultInfo<?> deleteError(String id) throws Exception {
+		logger.info("====================ES删除失败=======================");
+		return new ResultInfo<>(ResultInfo.ERROR, "fallbackMethod-->ES删除失败");
+	}
+	
 
 }

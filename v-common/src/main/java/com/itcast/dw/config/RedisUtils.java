@@ -1,12 +1,19 @@
 package com.itcast.dw.config;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import javax.transaction.Transaction;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -32,7 +39,11 @@ public class RedisUtils {
 		redisTemplate.setHashValueSerializer(stringSerializer);
 		this.redisTemplate = redisTemplate;
 	}
-
+	
+	public Object execute(SessionCallback<String> sessionCallback){
+		return redisTemplate.execute(sessionCallback);
+	}
+	
 	// ======================================================================================
 	// ======================================================================================
 	// =================================Keys=================================================
@@ -47,6 +58,28 @@ public class RedisUtils {
 		for (String key : keys) {
 			remove(key);
 		}
+	}
+	
+	/**
+	 * redis提供了基于incr命令来操作一个整数型数值的原子递增
+	 * @param key 
+	 * @date 2019年5月31日
+	 * @author liudawei
+	 */
+	public void watch(final String key) {
+		redisTemplate.watch(key);
+	}
+	public void unwatch() {
+		redisTemplate.unwatch();
+	}
+	
+	public void multi() {
+		redisTemplate.setEnableTransactionSupport(true);
+		redisTemplate.multi();
+	}
+	
+	public List exec() {
+		return redisTemplate.exec();
 	}
 
 	/**
@@ -284,6 +317,30 @@ public class RedisUtils {
 	/**
 	 * Set相关操作
 	 */
+	
+	/**
+	 * 
+	 * set集合中存入值
+	 * @param key
+	 * @param value 
+	 * @date 2019年5月31日
+	 * @author liudawei
+	 */
+	public void sadd(final String key,final String value){
+		redisTemplate.opsForSet().add(key, value);
+	}
+	
+	/**
+	 * 
+	 * 获取key得set集合
+	 * @param key
+	 * @return 
+	 * @date 2019年5月31日
+	 * @author liudawei
+	 */
+	public Set smembers(final String key){
+		return redisTemplate.opsForSet().members(key);
+	}
 
 	// ======================================================================================
 	// ======================================================================================

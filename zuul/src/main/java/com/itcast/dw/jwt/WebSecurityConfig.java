@@ -43,7 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * spring-security加密
      * @return BCryptPasswordEncoder
-     * @author sky_luan
      */
     @Bean  
     public BCryptPasswordEncoder bCryptPasswordEncoder() {  

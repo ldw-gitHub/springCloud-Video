@@ -51,7 +51,7 @@ public class RobotsApplicationTests {
 				"click", 1 + "");//搜索名字中含有tet的文档  
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();  
 		//name中含有jack或者interest含有read，相当于or  
-		boolQueryBuilder.should(queryBuilder1);  
+		//boolQueryBuilder.should(queryBuilder1);  
 		boolQueryBuilder.should(queryBuilder2);  
 		boolQueryBuilder.should(queryBuilder3);  
         //高亮处理

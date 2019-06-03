@@ -31,7 +31,7 @@ import com.itcast.dw.util.JsonFormater;
  * 从http头的Authorization 项读取token数据，然后用Jwts包提供的方法校验token的合法性。
  * 如果校验通过，就认为这是一个取得授权的合法请求
  * 
- * @author sky_luan
+ * @author ldw
  */
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
@@ -114,7 +114,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 	 * @param request
 	 * @return
 	 * @date 2018年5月30日
-	 * @author sky_luan
+	 * @author ldw
 	 */
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
 		String Authorization = request.getHeader(JWTTokenUtils.AUTHORIZATION);

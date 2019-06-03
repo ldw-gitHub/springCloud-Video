@@ -3,7 +3,7 @@ package com.itcast.dw.constants;
 /**
  * redis键
  * 
- * @author sky_luan
+ * @author ldw
  */
 public class RedisKey {
 

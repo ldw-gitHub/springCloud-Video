@@ -34,7 +34,7 @@ import com.itcast.dw.util.JsonFormater;
  * 该类继承自UsernamePasswordAuthenticationFilter，重写了其中的2个方法 attemptAuthentication
  * ：接收并解析用户凭证。 successfulAuthentication ：用户成功登录后，这个方法会被调用，我们在这个方法里生成token。
  * 
- * @author sky_luan
+ * @author ldw
  */
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 

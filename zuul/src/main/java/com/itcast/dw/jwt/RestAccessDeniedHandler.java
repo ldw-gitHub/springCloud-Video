@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 自定403返回值
  * 在自定义拦截器里做了处理,此处不执行
- * @author sky_luan Created on 2017/12/9 20:10.
+ * @author ldw Created on 2017/12/9 20:10.
  */
 @Component
 public class RestAccessDeniedHandler implements AccessDeniedHandler {

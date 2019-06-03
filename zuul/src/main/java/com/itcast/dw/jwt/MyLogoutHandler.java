@@ -25,7 +25,7 @@ import com.itcast.dw.util.JsonFormater;
 /**
  * 退出登录后的拦截处理
  * 
- * @author sky_luan
+ * @author ldw
  */
 @Component("myLogoutHandler")
 public class MyLogoutHandler implements LogoutHandler {

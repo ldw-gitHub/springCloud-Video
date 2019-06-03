@@ -38,7 +38,7 @@ public class BaseController {
 	 * 
 	 * @param request
 	 * @return SysUserModel
-	 * @author sky_luan
+	 * @author ldw
 	 * @throws Exception
 	 */
 	protected AdminUser getCurrentUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {

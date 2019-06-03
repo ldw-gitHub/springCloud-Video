@@ -45,6 +45,11 @@ zuul:
       sensitiveHeaders: Cookie,Set-Cookie
       service-id: service-video
       stripPrefix: true
+    service-elastic:
+      path: /elastic/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      service-id: service-elastic
+      stripPrefix: true
   sensitiveHeaders:
   ignoreSecurityHeaders: false 
   
