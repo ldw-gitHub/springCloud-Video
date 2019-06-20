@@ -1,4 +1,4 @@
-package com.itcast.dw.test;
+package com.itcast.dw.test.email;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;

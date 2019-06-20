@@ -1,4 +1,4 @@
-package com.itcast.dw.test;
+package com.itcast.dw.test.jdk8;
 
 public class Reversal {
 	

@@ -88,7 +88,7 @@ public class DefaultThreadPool<Job extends Runnable> implements ThreadPool<Job>{
 	}
 	
 	//初始化线程工作者
-	private void initializeWorkers(int num){
+	public void initializeWorkers(int num){
 		for(int i = 0;i < num; i++){
 			Worker worker = new Worker();
 			workers.add(worker);

@@ -1,12 +1,12 @@
-package com.itcast.dw.test;
+package com.itcast.dw.test.jdk8;
 
-public class A {
+public class TheStaticLoadOrder {
 	
 	static{
 		c = 5;
 		b = 5;
-		System.out.println(A.c);
-		System.out.println(A.b);
+		System.out.println(TheStaticLoadOrder.c);
+		System.out.println(TheStaticLoadOrder.b);
 	}
 
 	private static int b = 1;

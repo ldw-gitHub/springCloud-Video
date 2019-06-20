@@ -1,4 +1,4 @@
-package com.itcast.dw.test;
+package com.itcast.dw.test.redis;
 
 import java.util.List;
 

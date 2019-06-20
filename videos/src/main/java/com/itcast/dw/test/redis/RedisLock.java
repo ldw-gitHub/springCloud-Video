@@ -1,4 +1,4 @@
-package com.itcast.dw.test;
+package com.itcast.dw.test.redis;
 
 import java.util.List;
 import java.util.Set;
@@ -27,6 +27,13 @@ public class RedisLock {
 		String key = "number";
 	}*/
 	
+	/**
+	 * 
+	 * redis实现商品抢购
+	 * @throws InterruptedException 
+	 * @date 2019年6月20日
+	 * @author liudawei
+	 */
 	@Test
 	public void doBuySome() throws InterruptedException {
 		long starTime = System.currentTimeMillis();
