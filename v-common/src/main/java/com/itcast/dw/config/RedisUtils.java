@@ -81,7 +81,7 @@ public class RedisUtils {
 	public List exec() {
 		return redisTemplate.exec();
 	}
-
+	
 	/**
 	 * 批量删除key
 	 * 
@@ -208,6 +208,15 @@ public class RedisUtils {
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean expire(final String key,int expireTime){
+		try {
+			redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
+			return true;
+		} catch (Exception e) {
 			return false;
 		}
 	}

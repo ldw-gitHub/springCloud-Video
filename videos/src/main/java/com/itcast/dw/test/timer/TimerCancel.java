@@ -6,9 +6,12 @@ import java.util.TimerTask;
 public class TimerCancel {
 	
 	public static void main(String[] args) {
-		Timer timer = new Timer();
+		/*Timer timer = new Timer();
 		Task task = new Task(timer,1);
-		timer.schedule(task,3000);
+		timer.schedule(task,3000);*/
+		for(int i = 0;i < 1000000;i++){
+			System.out.println(i/100000);
+		}
 	}
 
 }

@@ -69,7 +69,7 @@ public class SteamToOther {
 			System.out.println(g.getUserName());
 		}
 		
-		//5、list遍历
+		//5、list遍历s
 		list.stream().forEach(e -> {e.setMobile(e.getMobile().substring(0, 3) + "****" + e.getMobile().substring(7));});
 		list.stream().distinct().forEach(e -> {System.out.println(e.getMobile());});
 	

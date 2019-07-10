@@ -1,39 +1,26 @@
 package com.itcast.dw.test.redis;
 
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.itcast.dw.config.RedisUtils;
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class RedisLock {
+/*@RunWith(SpringRunner.class)
+@SpringBootTest*/
+public class RedisLock {/*
 
 	@Autowired
 	RedisUtils redis;
 	@Autowired
 	RedisService redisService;
 	
-/*	@Test
+	@Test
 	public void tests(){
 		String key = "number";
-	}*/
+	}
 	
-	/**
+	*//**
 	 * 
 	 * redis实现商品抢购
 	 * @throws InterruptedException 
 	 * @date 2019年6月20日
 	 * @author liudawei
-	 */
+	 *//*
 	@Test
 	public void doBuySome() throws InterruptedException {
 		long starTime = System.currentTimeMillis();
@@ -86,9 +73,9 @@ public class RedisLock {
 		redis.set(key, String.valueOf(prdNum));// 初始化RedisUtil.returnResource(jedis);}}
 	}
 
-}
+*/}
 
-class ClientThread implements Runnable {
+/*class ClientThread implements Runnable {
 	
 	public ClientThread(){}
 	String key = "prdNum";// 商品主键
@@ -109,7 +96,7 @@ class ClientThread implements Runnable {
 		} catch (InterruptedException e1) {
 		}
 		redisService.redisTranction(key, clientName);
-	/*	while (true) {
+		while (true) {
 			System.out.println("顾客:" + clientName + "开始抢商品");
 			try {
 				redis.watch(key);
@@ -135,6 +122,7 @@ class ClientThread implements Runnable {
 			} finally {
 				redis.unwatch();
 			}
-		}*/
+		}
 	}
 }
+*/

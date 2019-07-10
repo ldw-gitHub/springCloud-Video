@@ -1,17 +1,7 @@
 package com.itcast.dw.test.redis;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.data.redis.core.SessionCallback;
-import org.springframework.stereotype.Service;
-
-import com.itcast.dw.config.RedisUtils;
-
-@Service
-public class RedisService {
+//@Service
+public class RedisService {/*
 	
 	@Autowired
 	RedisUtils rediss;
@@ -52,4 +42,4 @@ public class RedisService {
 		return null;
 	}
 
-}
+*/}
