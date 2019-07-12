@@ -4,20 +4,23 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import org.springframework.stereotype.Component;
-
+import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.test.annotation.CacheLock;
 import com.itcast.dw.test.annotation.LockedComplexObject;
 import com.itcast.dw.test.annotation.LockedObject;
 import com.itcast.dw.test.exception.CacheLockException;
-@Component
 public class CacheLockInterceptor implements InvocationHandler {
-
+	
 	public static int ERROR_COUNT = 0;
+	public static int RIGHT_COUNT = 0;
+	public static int TOTAL_COUNT = 0;
+	
 	private Object proxied;
+	private JedisUtils jedisUtils;
 
-	public CacheLockInterceptor(Object proxied) {
+	public CacheLockInterceptor(Object proxied,JedisUtils jedisUtils) {
 		this.proxied = proxied;
+		this.jedisUtils = jedisUtils;
 	}
 
 	@Override
@@ -37,13 +40,21 @@ public class CacheLockInterceptor implements InvocationHandler {
 
 		// 新建一个锁
 		String lockedPrefix = cacheLock.lockedPrefix();
-		RedisLock lock = new RedisLock(lockedPrefix, objectValue);
+		
+		RedisLock lock = new RedisLock(objectValue, lockedPrefix,jedisUtils);
 		// 加锁
 		boolean result = lock.lock(cacheLock.timeOut(), cacheLock.expireTime());
+		TOTAL_COUNT += 1;
 		if (!result) {// 取锁失败
 			ERROR_COUNT += 1;
-			throw new CacheLockException("get lock fail");
+			//throw new CacheLockException("get lock fail");
+			System.out.println("当前操作人过多，请稍后再试！");
+			return null;
+		}else{
+			RIGHT_COUNT += 1;
 		}
+		
+		
 		try {
 			// 加锁成功，执行方法
 			return method.invoke(proxied, args);

@@ -6,6 +6,8 @@ package com.itcast.dw.constants;
  * @author ldw
  */
 public class RedisKey {
+	
+	public static final int indexDB = 1;
 
 	/**
 	 * 父键名:szbdc-onlinebook简写

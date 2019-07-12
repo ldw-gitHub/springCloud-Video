@@ -60,7 +60,7 @@ public class JWTTokenUtils implements Serializable {
      * @param secret 令牌秘钥
      * @return 令牌
      */
-    private static String generateToken(Map<String, Object> claims, Long ttl, String secret) {
+    private static String generateToken(Map<String, Object> claims, int ttl, String secret) {
     	Date expirationDate = new Date(System.currentTimeMillis() + ttl * 1000);
     	return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, secret).compact();
     }
@@ -88,7 +88,7 @@ public class JWTTokenUtils implements Serializable {
      * @param username 用户名
      * @return 令牌
      */
-    public static String generateToken(String username, Long ttl, String secret) {
+    public static String generateToken(String username, int ttl, String secret) {
         Map<String, Object> claims = new HashMap<>(2);
         claims.put("sub", username);
         claims.put("created", new Date());
@@ -138,7 +138,7 @@ public class JWTTokenUtils implements Serializable {
      * @param secret 秘钥
      * @return 新令牌
      */
-    public static String refreshToken(String token, Long ttl, String secret) {
+    public static String refreshToken(String token, int ttl, String secret) {
         String refreshedToken;
         try {
             Claims claims = getClaimsFromToken(token, secret);

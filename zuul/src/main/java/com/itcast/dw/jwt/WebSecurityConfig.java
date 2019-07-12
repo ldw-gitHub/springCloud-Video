@@ -17,8 +17,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.config.ProjectConfig;
-import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.service.UserService;
 
 /**
@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private Logger logger = Logger.getLogger(WebSecurityConfig.class);
 
 	@Autowired
-	RedisUtils redisUtils;
+	JedisUtils jedisUtils;
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -121,9 +121,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登出控制,自定义myLogoutHandler,clearAuthentication清除上下文
 				.and().logout().addLogoutHandler(myLogoutHandler).logoutSuccessUrl("/").clearAuthentication(true)
 				// 登录拦截器处理
-				.and().addFilter(new JWTLoginFilter(authenticationManager(), redisUtils, userService, projectConfig))
+				.and().addFilter(new JWTLoginFilter(authenticationManager(), jedisUtils, userService, projectConfig))
 				// 请求授权拦截器处理
-				.addFilter(new JWTAuthenticationFilter(authenticationManager(), redisUtils, projectConfig))
+				.addFilter(new JWTAuthenticationFilter(authenticationManager(), jedisUtils, projectConfig))
 				// 处理权限不足的情况
 		        .exceptionHandling().accessDeniedHandler(restAccessDeniedHandler);
 				

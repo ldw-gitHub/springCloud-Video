@@ -388,13 +388,13 @@ public class JedisUtils {
 	 * @param value
 	 * @return 成功返回1 如果存在 和 发生异常 返回 0
 	 */
-	public Long setnx(String key, String value) {
+	public Long setnx(String key, String value,int indexdb) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
+			jedis.select(indexdb);
 			return jedis.setnx(key, value);
 		} catch (Exception e) {
-
 			log.error(e.getMessage());
 			return 0L;
 		} finally {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.itcast.dw.common.CommonUtil;
-import com.itcast.dw.config.RedisUtils;
+import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.info.ResultInfo;
 import com.itcast.dw.model.User;
 import com.itcast.dw.model.UserSession;
@@ -30,7 +30,7 @@ public class Login {
 	private SessionService sessionService;
 	
 	@Autowired
-	private RedisUtils redisUtils;
+	protected JedisUtils jedisUtils;
 	
 	@PostMapping("/logout")
 	public ResultInfo<?> logout(HttpServletRequest request) {
@@ -47,7 +47,7 @@ public class Login {
 		
 		sessionService.updateSession(us);
 		//删除redis sessionToken
-		redisUtils.remove(sessionToken);
+		jedisUtils.del(sessionToken);
 		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
 	}
 	
@@ -74,7 +74,7 @@ public class Login {
 			String sessionToken = CommonUtil.getSessionKey();
 			
 			//redis存入登入信息
-			redisUtils.set(sessionToken, user.getId()+"", 1800L);
+			jedisUtils.setex(sessionToken, 1800, user.getId()+"");
 			
 			//将用户信息存入session
 			UserSession us = new UserSession();

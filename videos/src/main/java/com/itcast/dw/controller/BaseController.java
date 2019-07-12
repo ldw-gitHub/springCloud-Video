@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.config.ProjectConfig;
-import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.info.BusinessException;
 import com.itcast.dw.info.ResultInfo;
@@ -31,7 +31,7 @@ public class BaseController {
 	@Autowired
 	protected ProjectConfig projectConfig;
 	@Autowired
-	protected RedisUtils redisUtils;
+	protected JedisUtils jedisUtils;
 	
 	/**
 	 * 根据JWT Token获取当前登录对象 未找到或者未查询到则会抛出异常
@@ -49,7 +49,7 @@ public class BaseController {
 		String token = JWTTokenUtils.authorizationToToken(header);
 		String userId = JWTTokenUtils.getUsernameFromToken(token, projectConfig.getJwtSecurt());
 		// String userId = "-1";
-		Map<String, Object> map = redisUtils.hgetAll(RedisKey.ADMIN_JWT_TOKEN + userId);
+		Map<String, String> map = jedisUtils.hgetall(RedisKey.ADMIN_JWT_TOKEN + userId,RedisKey.indexDB);
 		if (null == map || map.isEmpty()) {
 			throw new BusinessException(ResultInfo.INVALID_TOKEN, ResultInfo.MSG_INVALID_TOKEN);
 			// TODO redis缓存中如果不存在则从mysql中查找（测试）

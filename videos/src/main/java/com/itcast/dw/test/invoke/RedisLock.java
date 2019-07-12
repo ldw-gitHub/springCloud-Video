@@ -1,25 +1,20 @@
 package com.itcast.dw.test.invoke;
 
-import org.apache.commons.lang3.RandomUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.itcast.dw.config.JedisUtils;
-
+import com.itcast.dw.constants.RedisKey;
 public class RedisLock {
-	
-	@Autowired
-	JedisUtils jedisUtils;
 
-	public static long MILLI_NANO_TIME = 3000;
-	private String LOCKED;
+	public static long MILLI_NANO_TIME = 1000;
+	private JedisUtils jedisUtils;
 	
 	private String key;
-	
+	private String LOCKED;
 	private boolean lock;
 	
-	public RedisLock(String key,String LOCKED){
+	public RedisLock(String key,String LOCKED,JedisUtils jedisUtils){
 		this.key = key;
 		this.LOCKED = LOCKED;
+		this.jedisUtils = jedisUtils;
 	}
 	
 
@@ -33,21 +28,22 @@ public class RedisLock {
 	 * @return 成功 or 失败
 	 */
 	public boolean lock(long timeout, int expire) {
-		long nanoTime = System.nanoTime();
+		long nanoTime = System.currentTimeMillis();
 		timeout *= MILLI_NANO_TIME;
 		try {
 			// 在timeout的时间范围内不断轮询锁
-			while (System.nanoTime() - nanoTime < timeout) {
+			while (System.currentTimeMillis() - nanoTime < timeout) {
 				// 锁不存在的话，设置锁并设置锁过期时间，即加锁
-				if (this.jedisUtils.setnx(this.key, LOCKED) == 1) {
-					this.jedisUtils.expire(key, expire,expire);// 设置锁过期时间是为了在没有释放
+				//jedisUtils.set(Thread.currentThread().getName(), System.currentTimeMillis()+"", RedisKey.indexDB);
+				if (this.jedisUtils.setnx(LOCKED, this.key,RedisKey.indexDB) == 1) {
+					this.jedisUtils.expire(LOCKED, expire,RedisKey.indexDB);// 设置锁过期时间是为了在没有释放
 					// 锁的情况下锁过期后消失，不会造成永久阻塞
 					this.lock = true;
 					return this.lock;
 				}
-				System.out.println("出现锁等待");
+				//System.out.println("出现锁等待");
 				// 短暂休眠，避免可能的活锁
-				Thread.sleep(3, RandomUtils.nextInt(0, 30));
+				Thread.sleep(1000);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("locking error", e);
@@ -57,9 +53,8 @@ public class RedisLock {
 
 	public void unlock() {
 		try {
-			if (this.lock) {
-				jedisUtils.del(key);// 直接删除
-			}
+			//System.out.println("删除key ===== " + this.LOCKED);
+			jedisUtils.del(this.LOCKED);// 直接删除
 		} catch (Throwable e) {
 
 		}

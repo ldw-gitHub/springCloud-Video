@@ -18,8 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.config.ProjectConfig;
-import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.info.ResultInfo;
 import com.itcast.dw.model.User;
@@ -41,13 +41,13 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	private AuthenticationManager authenticationManager;
-	private RedisUtils redisUtils;
+	private JedisUtils jedisUtils;
 	private UserService userService;
 	private ProjectConfig projectConfig;
 	
-	public JWTLoginFilter(AuthenticationManager authenticationManager, RedisUtils redisUtils, UserService userService,ProjectConfig projectConfig) {
+	public JWTLoginFilter(AuthenticationManager authenticationManager, JedisUtils jedisUtils, UserService userService,ProjectConfig projectConfig) {
 		this.authenticationManager = authenticationManager;
-		this.redisUtils = redisUtils;
+		this.jedisUtils = jedisUtils;
 		this.userService = userService;
 		this.projectConfig = projectConfig;
 	}
@@ -79,7 +79,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_PARAM, ResultInfo.KAPTCHA_IS_NULL));
 			return null;
 		}
-		String saveKaptcha = redisUtils.get(RedisKey.KAPTCHA + kaptchaToken);
+		String saveKaptcha = jedisUtils.get(RedisKey.KAPTCHA + kaptchaToken,RedisKey.indexDB);
 		if(saveKaptcha == null){
 			logger.info("saveKaptcha == " + saveKaptcha);
 			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_PARAM, ResultInfo.KAPTCHA_EXPRRIE));
@@ -91,10 +91,10 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 			return null;
 		}
 		//登入错误次数判断
-		String failedNumber = redisUtils.get(RedisKey.LOGIN_FAILED_NUMBER + username);
+		String failedNumber = jedisUtils.get(RedisKey.LOGIN_FAILED_NUMBER + username,RedisKey.indexDB);
 		
 		if(failedNumber != null){
-			Long failedNumbers = redisUtils.incr(RedisKey.LOGIN_FAILED_NUMBER + username,0);
+			Long failedNumbers = jedisUtils.incr(RedisKey.LOGIN_FAILED_NUMBER + username);
 			if(failedNumbers > projectConfig.getLoginFailedNumber() ){
 				JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_PARAM, ResultInfo.MSG_LOGIN_FAILED));
 				return null;
@@ -122,8 +122,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
 		//再修改
 		User userByName = userService.getUserByName(jwtUser.getUsername());
-		Map<String, Object> redisUserMap = new HashMap<String,Object>();
-		redisUserMap.put("userId", userByName.getId());
+		Map<String, String> redisUserMap = new HashMap<String,String>();
+		redisUserMap.put("userId", userByName.getId() + "");
 		redisUserMap.put("userName", userByName.getUsername());
 		
 		String userId = userByName.getId() + "";
@@ -132,13 +132,13 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		redisUserMap.put("loginIp", IPUtils.getIpAddr(req));
 		redisUserMap.put("loginTime", System.currentTimeMillis()+"");
 		logger.info("==redisUserMap=" + redisUserMap);
-		redisUtils.hset(RedisKey.ADMIN_JWT_TOKEN + userId, redisUserMap, projectConfig.getTokenTtl());
+		jedisUtils.hmset(RedisKey.ADMIN_JWT_TOKEN + userId, redisUserMap, projectConfig.getTokenTtl());
 		res.addHeader(JWTTokenUtils.AUTHORIZATION, JWTTokenUtils.tokenToAuthorization(token));
 		redisUserMap.remove("token");
 		
 		//删除验证码
 		String kaptchaToken = req.getHeader(JWTTokenUtils.AUTHORIZATION);
-		redisUtils.remove(RedisKey.KAPTCHA + kaptchaToken);
+		jedisUtils.del(RedisKey.KAPTCHA + kaptchaToken);
 				
 		JsonFormater.writeJsonValue(res, new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS, redisUserMap));
 		logger.info("==jwtUser.getUsername()=" + jwtUser.getUsername() + "=========登录成功===");
@@ -156,12 +156,12 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		
 		//在redis中存储用户登入失败次数
 		String username = obtainUsername(request);
-		String failedNumber = redisUtils.get(RedisKey.LOGIN_FAILED_NUMBER + username);
+		String failedNumber = jedisUtils.get(RedisKey.LOGIN_FAILED_NUMBER + username,RedisKey.indexDB);
 		try {
 			if(failedNumber != null){
-				redisUtils.incr(RedisKey.LOGIN_FAILED_NUMBER + username, 1);
+				jedisUtils.incr(RedisKey.LOGIN_FAILED_NUMBER + username);
 			}else{
-				redisUtils.set(RedisKey.LOGIN_FAILED_NUMBER + username, 1 + "", projectConfig.getLoginFailedNumberTtl());
+				jedisUtils.setex(RedisKey.LOGIN_FAILED_NUMBER + username, 1 + "", projectConfig.getLoginFailedNumberTtl());
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

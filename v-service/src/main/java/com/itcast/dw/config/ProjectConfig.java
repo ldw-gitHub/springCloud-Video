@@ -12,7 +12,7 @@ public class ProjectConfig {
 	/**
 	 * Token登录的有效期
 	 */
-	private Long tokenTtl;
+	private int tokenTtl;
 	/**
 	 * JWT秘钥
 	 */
@@ -20,42 +20,42 @@ public class ProjectConfig {
 	/**
 	 * JWT有效期
 	 */
-	private Long jwtTtl;
+	private int jwtTtl;
 	/**
 	 * 验证码有效时间
 	 */
-	private Long kaptchaTokenTtl;
+	private int kaptchaTokenTtl;
 	/**
 	 * 用户登入失败次数，统计时长
 	 */
-	private Long loginFailedNumberTtl;
+	private int loginFailedNumberTtl;
 	/**
 	 * 用户登入失败次数
 	 */
-	private Long loginFailedNumber;
+	private int loginFailedNumber;
 
 
-	public Long getKaptchaTokenTtl() {
+	public int getKaptchaTokenTtl() {
 		return kaptchaTokenTtl;
 	}
 
-	public void setKaptchaTokenTtl(Long kaptchaTokenTtl) {
+	public void setKaptchaTokenTtl(int kaptchaTokenTtl) {
 		this.kaptchaTokenTtl = kaptchaTokenTtl;
 	}
 
-	public Long getLoginFailedNumberTtl() {
+	public int getLoginFailedNumberTtl() {
 		return loginFailedNumberTtl;
 	}
 
-	public void setLoginFailedNumberTtl(Long loginFailedNumberTtl) {
+	public void setLoginFailedNumberTtl(int loginFailedNumberTtl) {
 		this.loginFailedNumberTtl = loginFailedNumberTtl;
 	}
 
-	public Long getLoginFailedNumber() {
+	public int getLoginFailedNumber() {
 		return loginFailedNumber;
 	}
 
-	public void setLoginFailedNumber(Long loginFailedNumber) {
+	public void setLoginFailedNumber(int loginFailedNumber) {
 		this.loginFailedNumber = loginFailedNumber;
 	}
 
@@ -67,19 +67,19 @@ public class ProjectConfig {
 		this.jwtSecurt = jwtSecurt;
 	}
 
-	public Long getJwtTtl() {
+	public int getJwtTtl() {
 		return jwtTtl;
 	}
 
-	public void setJwtTtl(Long jwtTtl) {
+	public void setJwtTtl(int jwtTtl) {
 		this.jwtTtl = jwtTtl;
 	}
 
-	public Long getTokenTtl() {
+	public int getTokenTtl() {
 		return tokenTtl;
 	}
 
-	public void setTokenTtl(Long tokenTtl) {
+	public void setTokenTtl(int tokenTtl) {
 		this.tokenTtl = tokenTtl;
 	}
 

@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 public @interface CacheLock {
 	
 	String lockedPrefix() default "";//redis锁key的前缀
-	long timeOut() default 2000;//轮询锁的时间
-	int expireTime() default 1000;//key在redis里存在的时间
+	long timeOut() default 10;//轮询锁的时间,单位秒
+	int expireTime() default 1;//key在redis里存在的时间,单位秒
 
 }

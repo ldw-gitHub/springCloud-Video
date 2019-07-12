@@ -9,8 +9,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.config.ProjectConfig;
-import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.service.KaptchaService;
 
@@ -22,7 +22,7 @@ import com.itcast.dw.service.KaptchaService;
 public class KaptchaServiceImpl implements KaptchaService {
 	
 	@Autowired
-	RedisUtils redisUtils;
+	JedisUtils jedisUtils;
 	@Autowired
 	ProjectConfig projectConfig;
 
@@ -30,13 +30,13 @@ public class KaptchaServiceImpl implements KaptchaService {
 	public String createToken(String kaptcha) {
 		//生成一个token
 		String token = UUID.randomUUID().toString();
-		redisUtils.set(RedisKey.KAPTCHA + token, kaptcha, projectConfig.getKaptchaTokenTtl());
+		jedisUtils.setex(RedisKey.KAPTCHA + token, projectConfig.getKaptchaTokenTtl(), kaptcha);
 		return token;
 	}
 
 	@Override
 	public void deleteByToken(String kaptchaToken) {
-		redisUtils.remove(kaptchaToken);
+		jedisUtils.del(kaptchaToken);
 	}
 
 }

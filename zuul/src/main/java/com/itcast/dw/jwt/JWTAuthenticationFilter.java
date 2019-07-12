@@ -18,8 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.config.ProjectConfig;
-import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.info.ResultInfo;
 import com.itcast.dw.util.JWTTokenUtils;
@@ -38,12 +38,12 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 	/**
 	 * 集成redis,来判断是否存在或者销毁，避免无状态的token非法请求
 	 */
-	RedisUtils redisUtils;
+	JedisUtils jedisUtils;
 	ProjectConfig projectConfig;
 	
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, RedisUtils redisUtils,ProjectConfig projectConfig) {
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JedisUtils jedisUtils,ProjectConfig projectConfig) {
 		super(authenticationManager);
-		this.redisUtils = redisUtils;
+		this.jedisUtils = jedisUtils;
 		this.projectConfig = projectConfig;
 	}
 
@@ -86,12 +86,12 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 		String token = JWTTokenUtils.authorizationToToken(header);
 		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>token==" + token);
 		String username = JWTTokenUtils.getUsernameFromToken(token, projectConfig.getJwtSecurt());
-		if (StringUtils.isBlank(username) || !redisUtils.exists(RedisKey.ADMIN_JWT_TOKEN + username)) {
+		if (StringUtils.isBlank(username) || !jedisUtils.exists(RedisKey.ADMIN_JWT_TOKEN + username)) {
 			logger.error(request.getRequestURI()+"===username=" + username);
 			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_TOKEN, ResultInfo.MSG_ADMIN_INVALID_TOKEN));
 			return;
 		}
-		String redisToken = redisUtils.hget(RedisKey.ADMIN_JWT_TOKEN + username, "token");
+		String redisToken = jedisUtils.hget(RedisKey.ADMIN_JWT_TOKEN + username, "token");
 		if (!token.equals(redisToken)) {
 			logger.error(request.getRequestURI()+"===token不相等=");
 			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_TOKEN, ResultInfo.MSG_ADMIN_INVALID_TOKEN));

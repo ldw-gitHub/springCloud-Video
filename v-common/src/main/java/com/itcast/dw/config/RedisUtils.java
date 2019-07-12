@@ -1,4 +1,4 @@
-package com.itcast.dw.config;
+/*package com.itcast.dw.config;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,9 +19,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
-/**
+*//**
  * RedisUtils 工具类
- */
+ *//*
 @SuppressWarnings("unchecked")
 @Component
 public class RedisUtils {
@@ -49,23 +49,23 @@ public class RedisUtils {
 	// =================================Keys=================================================
 	// ======================================================================================
 	// ======================================================================================
-	/**
+	*//**
 	 * 批量删除对应的value
 	 * 
 	 * @param keys
-	 */
+	 *//*
 	public void remove(final String... keys) {
 		for (String key : keys) {
 			remove(key);
 		}
 	}
 	
-	/**
+	*//**
 	 * redis提供了基于incr命令来操作一个整数型数值的原子递增
 	 * @param key 
 	 * @date 2019年5月31日
 	 * @author liudawei
-	 */
+	 *//*
 	public void watch(final String key) {
 		redisTemplate.watch(key);
 	}
@@ -82,11 +82,11 @@ public class RedisUtils {
 		return redisTemplate.exec();
 	}
 	
-	/**
+	*//**
 	 * 批量删除key
 	 * 
 	 * @param pattern
-	 */
+	 *//*
 	@Deprecated
 	public void removePattern(final String pattern) {
 		Set<Serializable> keys = redisTemplate.keys(pattern);
@@ -95,35 +95,35 @@ public class RedisUtils {
 		}
 	}
 
-	/**
+	*//**
 	 * 删除对应的value
 	 * 
 	 * @param key
-	 */
+	 *//*
 	public void remove(final String key) {
 		if (exists(key)) {
 			redisTemplate.delete(key);
 		}
 	}
 
-	/**
+	*//**
 	 * 判断缓存中是否有对应的value
 	 * 
 	 * @param key
 	 * @return
-	 */
+	 *//*
 	public boolean exists(final String key) {
 		return redisTemplate.hasKey(key);
 	}
 
-	/**
+	*//**
 	 * 设置ttl
 	 * 
 	 * @param key
 	 * @param expireTime
 	 *            单位秒
 	 * @return
-	 */
+	 *//*
 	public boolean setTTL(final String key, Long expireTime) {
 		boolean resultInfo = false;
 		try {
@@ -135,26 +135,26 @@ public class RedisUtils {
 		return resultInfo;
 	}
 	
-	/**
+	*//**
 	 * 递增操作
 	 * 
 	 * @param key
 	 * @param delta
 	 *            增量
 	 * @return
-	 */
+	 *//*
 	public Long incr(String key, long delta) {
 		return redisTemplate.opsForValue().increment(key, delta);
 	}
 
-	/**
+	*//**
 	 * 递减操作
 	 * 
 	 * @param key
 	 * @param delta
 	 *            减量
 	 * @return
-	 */
+	 *//*
 	public Long decr(String key, long delta) {
 		return redisTemplate.opsForValue().increment(key, -delta);
 	}
@@ -164,12 +164,12 @@ public class RedisUtils {
 	// =================================Strings==============================================
 	// ======================================================================================
 	// ======================================================================================
-	/**
+	*//**
 	 * 读取缓存
 	 * 
 	 * @param key
 	 * @return
-	 */
+	 *//*
 	public String get(final String key) {
 		Object resultInfo = null;
 		ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
@@ -177,13 +177,13 @@ public class RedisUtils {
 		return (String) resultInfo;
 	}
 
-	/**
+	*//**
 	 * 写入缓存
 	 * 
 	 * @param key
 	 * @param value
 	 * @return
-	 */
+	 *//*
 	public void set(final String key, String value) {
 		try {
 			ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
@@ -193,13 +193,13 @@ public class RedisUtils {
 		}
 	}
 
-	/**
+	*//**
 	 * 写入缓存
 	 * 
 	 * @param key
 	 * @param value
 	 * @return
-	 */
+	 *//*
 	public boolean set(final String key, String value, Long expireTime) {
 		try {
 			ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
@@ -226,7 +226,7 @@ public class RedisUtils {
 	// =================================Hashs================================================
 	// ======================================================================================
 	// ======================================================================================
-	/**
+	*//**
 	 * 设置hash的某个字段
 	 * 
 	 * @param key
@@ -234,7 +234,7 @@ public class RedisUtils {
 	 * @param value
 	 * @param expireTime
 	 * @return
-	 */
+	 *//*
 	public boolean hset(final String key, String field, String value, Long expireTime) {
 		boolean resultInfo = false;
 		try {
@@ -250,14 +250,14 @@ public class RedisUtils {
 		return resultInfo;
 	}
 
-	/**
+	*//**
 	 * 设置整个hash
 	 * 
 	 * @param key
 	 * @param map
 	 * @param expireTime
 	 * @return
-	 */
+	 *//*
 	public boolean hset(final String key, Map<String, Object> map, Long expireTime) {
 		boolean resultInfo = false;
 		try {
@@ -283,13 +283,13 @@ public class RedisUtils {
 		return resultInfo;
 	}
 
-	/**
+	*//**
 	 * 
 	 * hash获取整个Map
 	 * 
 	 * @param key
 	 * @return
-	 */
+	 *//*
 	public Map<String, Object> hgetAll(final String key) {
 		try {
 			HashOperations<String, String, Object> operations = redisTemplate.opsForHash();
@@ -301,14 +301,14 @@ public class RedisUtils {
 		}
 	}
 
-	/**
+	*//**
 	 * 
 	 * 获取hash map中的某一个key对应的值
 	 * 
 	 * @param key
 	 * @param field
 	 * @return
-	 */
+	 *//*
 	public String hget(final String key, final String field) {
 		try {
 			HashOperations<String, String, String> operations = redisTemplate.opsForHash();
@@ -323,30 +323,30 @@ public class RedisUtils {
 	// =================================Sets================================================
 	// ======================================================================================
 	// ======================================================================================
-	/**
+	*//**
 	 * Set相关操作
-	 */
+	 *//*
 	
-	/**
+	*//**
 	 * 
 	 * set集合中存入值
 	 * @param key
 	 * @param value 
 	 * @date 2019年5月31日
 	 * @author liudawei
-	 */
+	 *//*
 	public void sadd(final String key,final String value){
 		redisTemplate.opsForSet().add(key, value);
 	}
 	
-	/**
+	*//**
 	 * 
 	 * 获取key得set集合
 	 * @param key
 	 * @return 
 	 * @date 2019年5月31日
 	 * @author liudawei
-	 */
+	 *//*
 	public Set smembers(final String key){
 		return redisTemplate.opsForSet().members(key);
 	}
@@ -356,8 +356,8 @@ public class RedisUtils {
 	// =================================Lists================================================
 	// ======================================================================================
 	// ======================================================================================
-	/**
+	*//**
 	 * List相关操作
-	 */
+	 *//*
 
-}
+}*/

@@ -15,8 +15,8 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
 
+import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.config.ProjectConfig;
-import com.itcast.dw.config.RedisUtils;
 import com.itcast.dw.constants.RedisKey;
 import com.itcast.dw.info.ResultInfo;
 import com.itcast.dw.util.JWTTokenUtils;
@@ -33,7 +33,7 @@ public class MyLogoutHandler implements LogoutHandler {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	RedisUtils redisUtils;
+	JedisUtils jedisUtils;
 	@Autowired
 	ProjectConfig projectConfig;
 
@@ -63,10 +63,10 @@ public class MyLogoutHandler implements LogoutHandler {
 		/**
 		 * 业务处理 删除Redis的缓存和security的信息
 		 */
-		Map<String, Object> userMap = null;
+		Map<String, String> userMap = null;
 		if (null != userId) {
-			userMap = redisUtils.hgetAll(RedisKey.ADMIN_JWT_TOKEN + userId);
-			redisUtils.remove(RedisKey.ADMIN_JWT_TOKEN + userId);
+			userMap = jedisUtils.hgetall(RedisKey.ADMIN_JWT_TOKEN + userId,RedisKey.indexDB);
+			jedisUtils.del(RedisKey.ADMIN_JWT_TOKEN + userId);
 		}
 		if (StringUtils.isNotBlank(principal)) {
 			new SecurityContextLogoutHandler().logout(request, response,
