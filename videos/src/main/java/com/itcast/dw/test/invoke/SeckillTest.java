@@ -1,4 +1,4 @@
-package com.itcast.dw.test.invoke;
+/*package com.itcast.dw.test.invoke;
 
 import java.lang.reflect.Proxy;
 import java.util.concurrent.ExecutorService;
@@ -17,6 +17,9 @@ public class SeckillTest {
 	
 	@Autowired
 	JedisUtils jedisUtils;
+	
+	public static void main(String[] args) {
+	}
 	
 	@Test
 	public void testSecKill() {
@@ -65,7 +68,7 @@ public class SeckillTest {
 		
 		
 		
-		/*int threadCount = 500;
+		int threadCount = 500;
 		int splitPoint = 500;
 		CountDownLatch endCount = new CountDownLatch(threadCount);
 		CountDownLatch beginCount = new CountDownLatch(1);
@@ -133,7 +136,8 @@ public class SeckillTest {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 }
+*/

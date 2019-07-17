@@ -54,6 +54,7 @@ public class KaptchaController {
 		ImageIO.write(image, "jpg", outputStream);  
 	    
 		// 对字节数组Base64编码  
+		@SuppressWarnings("restriction")
 		BASE64Encoder encoder = new BASE64Encoder();  
 	    
 		// 生成captcha的token

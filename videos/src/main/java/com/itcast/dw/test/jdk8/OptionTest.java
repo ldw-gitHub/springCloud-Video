@@ -1,4 +1,4 @@
-package com.itcast.dw.test.jdk8;
+/*package com.itcast.dw.test.jdk8;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -7,13 +7,13 @@ import com.itcast.dw.test.model.People;
 
 public class OptionTest {
 	
-	/**
+	*//**
 	 * 
 	 * 判断对象是否为null
 	 * @param args 
 	 * @date 2019年6月20日
 	 * @author liudawei
-	 */
+	 *//*
 	public static void main(String[] args) {
 		Optional<People> op = Optional.of(new People("ldw",18,"man","18674051111"));
 		Optional<People> op1 = Optional.ofNullable(null);
@@ -58,3 +58,4 @@ public class OptionTest {
 	}
 
 }
+*/

@@ -250,10 +250,11 @@ public class JedisUtils {
 	 * @param key
 	 * @return true OR false
 	 */
-	public Boolean exists(String key) {
+	public Boolean exists(String key,int indexdb) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
+			jedis.select(indexdb);
 			return jedis.exists(key);
 		} catch (Exception e) {
 
@@ -365,10 +366,11 @@ public class JedisUtils {
 	 * @param value
 	 * @return 设置成功时返回 OK 。当 seconds 参数不合法时，返回一个错误。
 	 */
-	public String setex(String key, int seconds, String value) {
+	public String setex(String key, int seconds, String value,int indexdb) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
+			jedis.select(indexdb);
 			return jedis.setex(key, seconds, value);
 		} catch (Exception e) {
 
@@ -810,13 +812,14 @@ public class JedisUtils {
 	 * @param hash
 	 * @return 返回OK 异常返回null
 	 */
-	public String hmset(String key, Map<String, String> hash, int indexdb) {
+	public String hmset(String key, Map<String, String> hash, int indexdb,int seconds) {
 		Jedis jedis = null;
 		String res = null;
 		try {
 			jedis = jedisPool.getResource();
 			jedis.select(indexdb);
 			res = jedis.hmset(key, hash);
+			jedis.expire(key, seconds);
 		} catch (Exception e) {
 
 			log.error(e.getMessage());
@@ -835,11 +838,12 @@ public class JedisUtils {
 	 * @param field
 	 * @return 没有返回null
 	 */
-	public String hget(String key, String field) {
+	public String hget(String key, String field,int indexdb) {
 		Jedis jedis = null;
 		String res = null;
 		try {
 			jedis = jedisPool.getResource();
+			jedis.select(indexdb);
 			res = jedis.hget(key, field);
 		} catch (Exception e) {
 

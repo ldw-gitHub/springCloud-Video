@@ -126,13 +126,13 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		redisUserMap.put("userId", userByName.getId() + "");
 		redisUserMap.put("userName", userByName.getUsername());
 		
-		String userId = userByName.getId() + "";
-		String token = JWTTokenUtils.generateToken(userId, projectConfig.getJwtTtl(), projectConfig.getJwtSecurt());
+		String userName = userByName.getUsername() + "";
+		String token = JWTTokenUtils.generateToken(userName, projectConfig.getJwtTtl(), projectConfig.getJwtSecurt());
 		redisUserMap.put("token", token);
 		redisUserMap.put("loginIp", IPUtils.getIpAddr(req));
 		redisUserMap.put("loginTime", System.currentTimeMillis()+"");
 		logger.info("==redisUserMap=" + redisUserMap);
-		jedisUtils.hmset(RedisKey.ADMIN_JWT_TOKEN + userId, redisUserMap, projectConfig.getTokenTtl());
+		jedisUtils.hmset(RedisKey.ADMIN_JWT_TOKEN + userByName.getUsername(), redisUserMap, RedisKey.indexDB,projectConfig.getTokenTtl());
 		res.addHeader(JWTTokenUtils.AUTHORIZATION, JWTTokenUtils.tokenToAuthorization(token));
 		redisUserMap.remove("token");
 		

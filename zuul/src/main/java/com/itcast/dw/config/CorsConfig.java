@@ -1,4 +1,4 @@
-package com.itcast.dw.config;
+/*package com.itcast.dw.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +19,8 @@ public class CorsConfig {
 	        config.setMaxAge(18000L);// 预检请求的缓存时间（秒），即在这个时间段里，对于相同的跨域请求不会再预检了
 	        config.addAllowedMethod("*");// 允许提交请求的方法，*表示全部允许
 	        source.registerCorsConfiguration("/**", config);
+	        System.out.println("==============================跨域=======================================");
 	        return new CorsFilter(source);
 	    }
 }
+*/

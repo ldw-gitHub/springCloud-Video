@@ -68,9 +68,9 @@ ribbon:
 #单独为video文件上传设置
 
 # 打印日志
-logging:
-  level:
-    root: INFO
-    com.springms: DEBUG
-    com.netflix: debug    
+#logging:
+  #level:
+    #root: INFO
+    #com.springms: DEBUG
+    #com.netflix: debug    
     

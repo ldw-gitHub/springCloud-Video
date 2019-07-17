@@ -86,12 +86,12 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 		String token = JWTTokenUtils.authorizationToToken(header);
 		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>token==" + token);
 		String username = JWTTokenUtils.getUsernameFromToken(token, projectConfig.getJwtSecurt());
-		if (StringUtils.isBlank(username) || !jedisUtils.exists(RedisKey.ADMIN_JWT_TOKEN + username)) {
+		if (StringUtils.isBlank(username) || !jedisUtils.exists(RedisKey.ADMIN_JWT_TOKEN + username,RedisKey.indexDB)) {
 			logger.error(request.getRequestURI()+"===username=" + username);
 			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_TOKEN, ResultInfo.MSG_ADMIN_INVALID_TOKEN));
 			return;
 		}
-		String redisToken = jedisUtils.hget(RedisKey.ADMIN_JWT_TOKEN + username, "token");
+		String redisToken = jedisUtils.hmget(RedisKey.ADMIN_JWT_TOKEN + username, RedisKey.indexDB,"token").get(0);
 		if (!token.equals(redisToken)) {
 			logger.error(request.getRequestURI()+"===token不相等=");
 			JsonFormater.writeJsonValue(response, new ResultInfo<>(ResultInfo.INVALID_TOKEN, ResultInfo.MSG_ADMIN_INVALID_TOKEN));

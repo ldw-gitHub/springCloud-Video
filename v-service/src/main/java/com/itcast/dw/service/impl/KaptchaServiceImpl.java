@@ -30,7 +30,7 @@ public class KaptchaServiceImpl implements KaptchaService {
 	public String createToken(String kaptcha) {
 		//生成一个token
 		String token = UUID.randomUUID().toString();
-		jedisUtils.setex(RedisKey.KAPTCHA + token, projectConfig.getKaptchaTokenTtl(), kaptcha);
+		jedisUtils.setex(RedisKey.KAPTCHA + token, projectConfig.getKaptchaTokenTtl(), kaptcha,RedisKey.indexDB);
 		return token;
 	}
 

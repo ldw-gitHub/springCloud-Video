@@ -29,6 +29,6 @@ project:
     
 logging:
   config: classpath:logback.xml
-  path: ./logs/videos
-  level:
-    org.springframework.web: DEBUG
+  path: ./logs/zuul
+  #level:
+    #org.springframework.web: DEBUG
