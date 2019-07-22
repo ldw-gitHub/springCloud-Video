@@ -1,4 +1,4 @@
-package com.itcast.dw.controller;
+/*package com.itcast.dw.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,8 +74,10 @@ public class UploadController {
 				String resultPath = path.substring(0,path.lastIndexOf("/"));
 				flag = ftp.mergeFiles(path.trim(),resultPath.trim(),attachName);
 			}
+			ftp.close();
+		}else{
+			return new ResultInfo<>(ResultInfo.FAILURE, "上传失败！");
 		}
-		ftp.close();
 		
 		response.put("uploadFileName", attachName);
 		
@@ -100,7 +102,10 @@ public class UploadController {
 		} else if("file".equals(tag)){
 			ftp.changeDir("file");
 		}
-		ftp.deleteFile(attachName);
+		boolean deleteFile = ftp.deleteFile(attachName);
+		if(!deleteFile){
+			return new ResultInfo<>(ResultInfo.FAILURE, "删除失败！");
+		}
 		ftp.close();
 		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
 	}
@@ -132,3 +137,4 @@ public class UploadController {
     	return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
     }
 }
+*/

@@ -1,5 +1,6 @@
 package com.itcast.dw.controller;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +33,13 @@ public class VideoController extends BaseController{
 	private Logger log = LoggerFactory.getLogger(VideoController.class);
 	@Autowired
 	private VideoService videoservice;
+	
+	@Value("${video.path}")
+	private String videoPath; 
+	
+	@Autowired
+	private VideoService videoService;
+	
 	private static final ObjectMapper mapper = new ObjectMapper();
 
 	/**
@@ -189,5 +198,24 @@ public class VideoController extends BaseController{
 		videoservice.saveVideoComments(vc);
 		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
 	}
+	
+	/**
+	 * 
+	 * 删除
+	 * @param request
+	 * @return
+	 * @throws Exception 
+	 * @date 2019年7月22日
+	 * @author liudawei
+	 */
+	@PostMapping(value = "/deleteVideo")
+    public ResultInfo<?> deleteFile(HttpServletRequest request,int videoId) throws Exception {    	
+		
+		videoservice.deleteImgOrVideo(videoId,videoPath);
+		
+		return new ResultInfo<>(ResultInfo.SUCCESS, ResultInfo.MSG_SUCCESS);
+	}
+	
+	
 
 }

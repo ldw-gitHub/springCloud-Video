@@ -34,4 +34,6 @@ public interface VideoService extends BaseService<VideoInfo>{
 	
 	List<VideoComments> getVideoCommentsByid(int videoid);
 	
+	void deleteImgOrVideo(int videoId,String videoPath);
+	
 }

@@ -51,12 +51,12 @@ public class UploadFile {
 		try {
 			this.ftpClient.connect(ftpIp, Integer.parseInt(ftpPort));
 			this.ftpClient.login(ftpUsername, ftpPassword);
+			System.out.println("连接到ftp服务器：" + ftpIp + " 成功..开始登录");
 		} catch (FTPConnectionClosedException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("连接到ftp服务器：" + ftpIp + " 成功..开始登录");
 	}
 
 	public void createDirectroy(String pathname) {
@@ -76,13 +76,16 @@ public class UploadFile {
 		System.out.println("变更工作目录为:" + remoteDir);
 	}
 
-	public void deleteFile(String fileName) {
+	public boolean deleteFile(String fileName) {
+		boolean flag = false;
 		if (fileName != null)
 			try {
 				this.ftpClient.dele(fileName);
+				return flag;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		return flag;
 	}
 
 	/**
