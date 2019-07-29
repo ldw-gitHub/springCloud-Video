@@ -1,4 +1,4 @@
-package com.itcast.dw.test.invoke;
+/*package com.itcast.dw.test.invoke;
 
 import com.itcast.dw.config.JedisUtils;
 import com.itcast.dw.constants.RedisKey;
@@ -18,7 +18,7 @@ public class RedisLock {
 	}
 	
 
-	/**
+	*//**
 	 * 加锁 使用方式为： lock(); try{ executeMethod(); }finally{ unlock(); }
 	 * 
 	 * @param timeout
@@ -26,7 +26,7 @@ public class RedisLock {
 	 * @param expire
 	 *            设置锁超时时间
 	 * @return 成功 or 失败
-	 */
+	 *//*
 	public boolean lock(long timeout, int expire) {
 		long nanoTime = System.currentTimeMillis();
 		timeout *= MILLI_NANO_TIME;
@@ -61,3 +61,4 @@ public class RedisLock {
 	}
 
 }
+*/

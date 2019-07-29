@@ -1,4 +1,4 @@
-package com.itcast.dw.test.invoke;
+/*package com.itcast.dw.test.invoke;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
@@ -64,7 +64,7 @@ public class CacheLockInterceptor implements InvocationHandler {
 
 	}
 
-	/**
+	*//**
 	 * 
 	 * 获取参数的注解
 	 * 
@@ -74,7 +74,7 @@ public class CacheLockInterceptor implements InvocationHandler {
 	 * @throws CacheLockException
 	 * @date 2019年7月10日
 	 * @author liudawei
-	 */
+	 *//*
 	public Object getLockedObject(Annotation[][] annotations, Object[] args) throws CacheLockException {
 		if (null == args || args.length == 0) {
 			throw new CacheLockException("方法参数为空，没有被锁定的对象");
@@ -115,3 +115,4 @@ public class CacheLockInterceptor implements InvocationHandler {
 	}
 
 }
+*/

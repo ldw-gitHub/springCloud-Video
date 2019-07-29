@@ -1,4 +1,4 @@
-package com.itcast.dw.test.invoke;
+/*package com.itcast.dw.test.invoke;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,3 +30,4 @@ public class SecKillImpl implements SeckillInterface {
 		return inventory.get(commodityId);
 	}
 }
+*/
