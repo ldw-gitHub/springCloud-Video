@@ -1083,11 +1083,12 @@ public class JedisUtils {
 	 *            可以使一个string 也可以使string数组
 	 * @return 返回list的value个数
 	 */
-	public Long rpush(String key, String... strs) {
+	public Long rpush(int indexdb,String key, String... strs) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
 			jedis = jedisPool.getResource();
+			jedis.select(indexdb);
 			res = jedis.rpush(key, strs);
 		} catch (Exception e) {
 
@@ -1215,11 +1216,12 @@ public class JedisUtils {
 	 * @param key
 	 * @return
 	 */
-	synchronized public String lpop(String key) {
+	synchronized public String lpop(int indexdb,String key) {
 		Jedis jedis = null;
 		String res = null;
 		try {
 			jedis = jedisPool.getResource();
+			jedis.select(indexdb);
 			res = jedis.lpop(key);
 		} catch (Exception e) {
 
