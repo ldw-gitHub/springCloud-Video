@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @author liudawei
  */
 
-public class Day1 {
+public class SortTest {
 	
 	/**
 	 * 
