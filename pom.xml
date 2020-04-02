@@ -24,6 +24,7 @@
 	    <failOnMissingWebXml>false</failOnMissingWebXml>
 		<jwt.version>0.9.1</jwt.version>
 		<mapper.version>1.1.4</mapper.version>
+		<lib.path>E:\repository\artemis</lib.path>
 	</properties>
 
 	<parent>

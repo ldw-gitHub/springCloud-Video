@@ -18,8 +18,8 @@ spring:
       refreshable: none
   data:
     elasticsearch:
-      #clusterNodes: 47.107.95.112:9300
-      clusterNodes: localhost:9300
+      clusterNodes: 47.107.95.112:9300
+      #clusterNodes: localhost:9300
       clusterName: video
      
     

@@ -5,10 +5,16 @@
 package com.itcast.dw.test.exam;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 import java.util.Stack;
+import java.util.Vector;
 
 import com.itcast.dw.test.model.ListNode;
+import com.itcast.dw.test.model.RandomListNode;
 import com.itcast.dw.test.model.TreeNode;
 
 /**
@@ -20,6 +26,8 @@ import com.itcast.dw.test.model.TreeNode;
 public class JZOffer {
 
 	public static void main(String[] args) {
+		
+		
 		/*
 		 * int target = 15; //int[][] arr =
 		 * {{1,2,8,9},{2,4,9,12},{4,7,10,13},{6,8,11,15}}; int[][] arr = {{}};
@@ -66,29 +74,1157 @@ public class JZOffer {
 		 */
 
 		// PrintFromTopToBottom(new TreeNode());
-		TreeNode t = new TreeNode(1);
+	/*	TreeNode t = new TreeNode(1);
+		t.addVal(2);
+		t.addVal(2);
+		t.addVal(3);
+		t.addVal(5);
+		t.addVal(5);
+		t.addVal(3);
+		for(int i = 2 ;i < 8;i++){
+		    t.addVal(i);
+		}
 		
-		TreeNode.addVal(t, 2);
-		TreeNode.addVal(t, 2);
-		TreeNode.addVal(t, 3);
-		TreeNode.addVal(t, 5);
-		TreeNode.addVal(t, 5);
-		TreeNode.addVal(t, 3);
-		/*for(int i = 2 ;i < 8;i++){
-		TreeNode.addVal(t, i);
-		}*/
+		TreeNode.cxSort(t);*/
 		
-		TreeNode.cxSort(t);
-		//TreeNode.qxSort(t);
-		ArrayList<ArrayList<Integer>> findPath = new JZOffer().FindPath(t,6);
+	/*	ArrayList<ArrayList<Integer>> findPath = new JZOffer().FindPath(t,6);
 		findPath.stream().forEach(e -> {
 			e.stream().forEach(f -> {
 				System.out.println(f);
 			});
 			System.out.println("===============");
+		});*/
+		
+/*		RandomListNode node = new RandomListNode(1);
+		node.add(2);
+		node.random = new RandomListNode(10);
+		node.add(3);
+		node.add(4);
+		node.printNodes(node);
+		RandomListNode clone = Clone(node);
+		System.out.println("============================clone======================");
+		node.printNodes(clone);*/
+		
+	/*	TreeNode node = new TreeNode(4);
+		node.addVal(node, 2);
+		node.addVal(node, 6);
+		node.addVal(node, 1);
+		node.addVal(node, 3);
+		node.addVal(node, 5);
+		node.addVal(node, 7);
+		node.qxSort(node);*/
+		
+/*		String str = "35142";
+		ArrayList<String> permutation = Permutation(str);
+		permutation.stream().forEach(e -> {System.out.println(e);});*/
+		
+		/*int [] arr = {1,2,3,2,2,2,5,4,2};
+		System.out.println(MoreThanHalfNum_Solution(arr));*/
+		
+		
+		/*int [] arr = {4,5,1,6,2,7,3,8};
+		ArrayList<Integer> getLeastNumbers_Solution = GetLeastNumbers_Solution(arr,2);
+		getLeastNumbers_Solution.stream().forEach(e -> {System.out.println(e);});*/
+		
+	/*	//int [] arr = {6,-3,-2,7,-15,1,2,2};
+		int [] arr = {1,-2,3,10,-4,7,2,-5};
+		//int [] arr = {2,8,1,5,9};
+		System.out.println(FindGreatestSumOfSubArray(arr));*/
+		
+		//System.out.println(NumberOf1Between1AndN_Solution(13));
+		
+		//int[] arr = {3,32,321};
+	/*	int[] arr = {3,5,1,4,2};
+		System.out.println(PrintMinNumber(arr));*/
+		
+		//System.out.println(GetUglyNumber_Solution(8));
+		
+		//System.out.println(FirstNotRepeatingChar("aaabbbcccddeffffgggg"));
+		
+		
+		/*int[] arr = {1,2,3,4,5,6,7,0};
+		System.out.println(InversePairs(arr));*/
+		
+/*		ArrayList<Integer> q = new ArrayList<Integer>();
+		q.add(1);
+		q.add(2);
+		
+		System.out.println(q.get(0));
+		q.remove(0);
+		System.out.println(q.get(0));*/
+		
+/*		TreeNode node = new TreeNode(0);
+		node.addVal(1);
+		node.addVal(2);
+		node.addVal(3);
+		node.addVal(4);
+		node.addVal(5);
+		node.addVal(5);
+		
+		ArrayList<ArrayList<Integer>> print = Print(node);
+		
+		for(ArrayList<Integer> a:print){
+			StringBuffer sb = new StringBuffer("");
+			a.stream().forEach(e -> {
+				sb.append(String.valueOf(e));
+			});
+			System.out.println(sb);
+		}
+		*/
+		
+	/*	TreeNode node = new TreeNode(0);
+		node.addVal(1);
+		node.addVal(2);
+		node.addVal(3);
+		node.addVal(4);?
+		node.addVal(5);
+		node.addVal(5);
+		
+		String str = node.Serialize(node);
+		System.out.println(str);
+		
+		TreeNode deserialize = node.Deserialize(str);
+		
+		deserialize.cxSort(deserialize);*/
+		
+		/*TreeNode node = new TreeNode(5);
+		node.addVal(3);
+		node.addVal(7);
+		node.addVal(2);
+		node.addVal(4);
+		node.addVal(6);
+		node.addVal(8);
+		
+		System.out.println(KthNode(node,7).val);*/
+		
+	/*	JZOffer jzOffer = new JZOffer();
+		jzOffer.Insert(2);
+		jzOffer.Insert(5);
+		jzOffer.Insert(3);
+		jzOffer.Insert(4);
+		jzOffer.Insert(1);
+		jzOffer.Insert(6);
+		jzOffer.Insert(8);
+		jzOffer.Insert(7);
+		jzOffer.minHeap.stream().forEach(e -> {
+			System.out.println(e);
 		});
+		System.out.println(jzOffer.GetMedian());*/
+		
+		
+	/*	node.addVal(2);
+		TreeNode node = new TreeNode(1);
+		node.addVal(3);
+		node.addVal(4);
+		node.addVal(5);
+		node.addVal(6);
+		node.addVal(7);
+		node.addVal(8);*/
+		/*node.left = new TreeNode(2);
+		node.left.left = new TreeNode(2);
+		node.left.left.left = new TreeNode(2);
+		node.left.left.left.left = new TreeNode(2);
+		node.left.left.left.left.left = new TreeNode(2);
+		
+		node.cxSort(node);
+		
+		System.out.println(TreeDepth(node));*/
+		
+/*		ArrayList<ArrayList<Integer>> findContinuousSequence = FindContinuousSequence(100);
+		
+		for(int i = 0;i < findContinuousSequence.size();i++){
+			findContinuousSequence.get(i).stream().forEach(e -> {
+				System.out.println(e);
+			});
+			System.out.println("========================");
+		}*/
+		
+	/*	int[] arr = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+		
+		ArrayList<Integer> findNumbersWithSum = FindNumbersWithSum(arr,21);
+		findNumbersWithSum.stream().forEach(e -> {
+			System.out.println(e);
+		});*/
+		
+		/*char[] matrix = {'a','b','c','e','s','f','c','s','a','d','e','e'};
+		char[] str = {'a','b','c','c'};
+		
+		boolean hasPath = hasPath(matrix,3,4,str);
+		System.out.println(hasPath);*/
+		
+		//System.out.println(movingCount(15,20,20));
+		
+		//System.out.println(cutRope(6));
+		
+		//System.out.println(Sum_Solution(1));
+		
+		//System.out.println(Add(5,3));
+		
 	}
 	
+	/**
+	 * 
+	 * 将一个字符串转换成一个整数，要求不能使用字符串转换整数的库函数。 数值为0或者字符串不是一个合法的数值则返回0
+	 * 输入一个字符串,包括数字字母符号,可以为空
+	 * 如果是合法的数值表达则返回该数字，否则返回0
+	 * @param str
+	 * @return 
+	 * @date 2019年10月15日
+	 * @author liudawei
+	 */
+	public static int StrToInt(String str) {
+		Integer.parseInt(str);
+		return 1;
+	}
+	
+	/**
+	 * 发散性思维
+	 * 
+	 * 写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。
+	 * 
+	 * & 与运算 0&0=0 0&1=0 1&0=0 1&1=1 ，都为1，结果才能1
+	 * 
+	 * | 或运算 0|0=0 0|1=1 1|0=1 1|1=1 ，一个为1，结果才能1
+	 * 
+	 * ^ 异或运算 0^0=0 0^1=1 1^0=1 1^1=0 ，两个对应位数不同，结果为1
+	 * 
+	 * ~ 取反运算 ~1=0 ~0=1 ,取反0变1，1变0
+	 * 
+	 * << 左移运算符 a = a << 2 将a的二进制左移2两位，右补0
+	 * >> 右移运算符 a = a >> 2 将a的二进制右移2两位，左补0或1，右丢弃
+	 * >>> 无符号右移
+	 * 
+	 * @param num1
+	 * @param num2
+	 * @return 
+	 * @date 2019年9月25日
+	 * @author liudawei
+	 */
+	public static int Add(int num1, int num2) {
+		if(num1 == 0) return num2;
+		if(num2 == 0) return num1;
+		
+		int sum;
+		while(num2 != 0){
+			System.out.println(num1 + " ===== " + num2);
+			sum = num1^num2;
+			num2 = (num1 & num2) << 1;
+			num1 = sum;
+		}
+		return num1;
+	}
+	
+	/**
+	 * 
+	 * 求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+	 * 
+	 * 1+...+n = (1+n)n/2 = (n+n2)/2
+	 * @param n
+	 * @return 
+	 * @date 2019年10月15日
+	 * @author liudawei
+	 */
+	public static int Sum_Solution(int n) {
+		return ((int)Math.pow(n, 2) + n) >> 1;
+	}
+
+	/**
+	 * 
+	 * 给你一根长度为n的绳子，请把绳子剪成m段（m、n都是整数，n>1并且m>1），
+	 * 每段绳子的长度记为k[0],k[1],...,k[m]。
+	 * 请问k[0]xk[1]x...xk[m]可能的最大乘积是多少？
+	 * 例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。
+	 * 
+	 * 输入一个数n，意义见题面。（2 <= n <= 60）
+	 * @param target
+	 * @return 
+	 * @date 2019年10月14日
+	 * @author liudawei
+	 */
+	public static int cutRope(int target) {
+		if(target < 2){
+			return 0;
+		}
+		if(target == 2) return 1;
+		if(target == 3) return 2;
+	    
+		int[] f = new int[target+1];
+		
+		f[0] = 0;
+		f[1] = 1;
+		f[2] = 2;
+		f[3] = 3;
+		
+		for(int i = 4;i <= target;i++){
+			int max = 0;
+			for(int j = 1;j<=i/2;j++){
+				int num = f[j]*f[i-j];
+				if(max < num){
+					max = num;
+				}
+			}
+			f[i] = max;
+		}
+		return f[target];
+	}
+	
+	/**
+	 * 
+	 * 地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，
+	 * 每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。
+	 * 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。
+	 * 但是，它不能进入方格（35,38），因为3+5+3+8 = 19。
+	 * 请问该机器人能够达到多少个格子？
+	 * @param threshold
+	 * @param rows
+	 * @param cols
+	 * @return 
+	 * @date 2019年10月10日
+	 * @author liudawei
+	 */
+	public static int movingCount(int threshold, int rows, int cols) {
+		ArrayList<ArrayList<Integer>> indexs = new ArrayList<ArrayList<Integer>>();
+		for(int i = 0;i < rows;i++){
+			ArrayList<Integer> rt = new ArrayList<Integer>();
+			for(int j = 0;j < cols;j++){
+				rt.add(checkNumbers(i,j,threshold));
+			}
+			indexs.add(rt);
+		}
+		indexs.stream().forEach(e -> {
+			StringBuffer str = new StringBuffer("");
+			e.stream().forEach(f -> {
+				str.append(" " + f);
+			});
+			System.out.println("e.size() === " + e.size() + "str === " + str);
+		});
+		return movingCountHelper(0,rows,cols,0,0,indexs);
+	}
+	
+	public static int checkNumbers(int i ,int j,int threshold){
+		int sums = 0;
+		while(i > 0){
+			sums += i%10;
+			i = i/10;
+		}
+		while(j > 0){
+			sums += j%10;
+			j = j/10;
+		}
+		return sums <= threshold ? 1:-1;
+	}
+	
+	public static int movingCountHelper(int moveCounts,int rows, int cols, int i,int j,ArrayList<ArrayList<Integer>> indexs) {
+		//走到哪步
+		if(indexs.get(i).get(j) != -1){
+			indexs.get(i).set(j, -1);
+			moveCounts++;
+		}
+		
+		if( i + 1 < rows && indexs.get(i+1).get(j) != -1){
+			moveCounts = movingCountHelper(moveCounts,rows,cols,i + 1,j,indexs);
+		}
+		if( i - 1 >= 0 && indexs.get(i-1).get(j) != -1){
+			moveCounts = movingCountHelper(moveCounts,rows,cols,i - 1,j,indexs);
+		}
+		if( j + 1 < cols && indexs.get(i).get(j+1) != -1){
+			moveCounts = movingCountHelper(moveCounts,rows,cols,i,j + 1,indexs);
+		}
+		if( j - 1 >= 0 && indexs.get(i).get(j-1) != -1){
+			moveCounts = movingCountHelper(moveCounts,rows,cols,i,j - 1,indexs);
+		}
+		
+		return moveCounts;
+	}
+	
+	
+
+	/**
+	 * 栈和队列
+	 * 
+	 * 请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。
+	 * 路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。
+	 * 如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
+	 * 例如 a b c e
+	 *     s f c s 
+	 *     a d e e 矩阵中包含一条字符串"bcced"的路径，但是矩阵中不包含"abcb"路径，
+	 * 因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入该格子。
+	 * @param matrix
+	 * @param rows
+	 * @param cols
+	 * @param str
+	 * @return 
+	 * @date 2019年9月27日
+	 * @author liudawei
+	 */
+	public static boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
+		//路径标识，走过后标为true
+		boolean[] flag = new boolean[matrix.length];
+		
+		for(int i = 0;i < rows;i++){
+			for(int j = 0;j < cols;j++){
+				//每个元素都可以为第一个
+				if(hasPathHelper(matrix,i,j,rows,cols,str,flag,0)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean hasPathHelper(char[] matrix, int i,int j,int rows, int cols, char[] str,boolean[] flag,int k) {
+		//当前走的数组位置
+		int index = i*cols + j;
+		//递归终止条件
+		if(i < 0 || j < 0 || i >= rows || j >= cols || matrix[index] != str[k] || flag[index] == true){
+			return false;
+		}
+		//所有字符已验证完
+		if(k  == str.length - 1){
+			return true;
+		}
+		
+		flag[index] = true;
+		
+		if(hasPathHelper(matrix,i-1,j,rows,cols,str,flag,k + 1) ||
+			hasPathHelper(matrix,i+1,j,rows,cols,str,flag,k + 1) ||
+			hasPathHelper(matrix,i,j-1,rows,cols,str,flag,k + 1) ||
+			hasPathHelper(matrix,i,j+1,rows,cols,str,flag,k + 1)){
+			return true;
+		}
+		
+		//走不通，改为false
+		flag[index] = false;
+		return false;
+	}
+	
+	/**
+	 * 
+	 * 输入一个递增排序的数组和一个数字S，在数组中查找两个数，使得他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。
+	 * @param array
+	 * @param sum
+	 * @return 
+	 * @date 2019年10月9日
+	 * @author liudawei
+	 */
+	public static ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
+		ArrayList<Integer> rt = new ArrayList<Integer>();
+		int i = 0,j = array.length - 1;
+		int minA = 0;
+		while(i < j){
+			if(array[i] + array[j] == sum){
+				if(minA == 0){
+					minA = array[i]*array[j];
+					rt.add(array[i]);
+					rt.add(array[j]);
+//					System.out.println("minA === " + minA + " i === " + array[i] + " j === " + array[j]);
+				}else{
+//					System.out.println("minA === " + minA + " i === " + array[i] + " j === " + array[j]);
+					minA = minA < array[i]*array[j] ? minA:array[i]*array[j];
+					if(minA > array[i]*array[j]){
+						rt.clear();
+						rt.add(array[i]);
+						rt.add(array[j]);
+					}
+				}
+				i++;
+			}else if(array[i] + array[j] < sum){
+				i++;
+			}else{
+				j--;
+			}
+		}
+		
+		return rt;
+	}
+	
+	/**
+	 * 
+	 * 小明很喜欢数学,有一天他在做数学作业时,要求计算出9~16的和,他马上就写出了正确答案是100。
+	 * 但是他并不满足于此,他在想究竟有多少种连续的正数序列的和为100(至少包括两个数)。
+	 * 没多久,他就得到另一组连续正数和为100的序列:18,19,20,21,22。
+	 * 现在把问题交给你,你能不能也很快的找出所有和为S的连续正数序列? Good Luck!
+	 * 
+	 * 
+	 * 输出:所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序
+	 * @param sum
+	 * @return 
+	 * @date 2019年10月9日
+	 * @author liudawei
+	 */
+	public static ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
+		ArrayList<ArrayList<Integer>> rt = new ArrayList<ArrayList<Integer>>();
+		//至少两位数
+		int low = 1;
+		int height = 2;
+		while(low < height){
+			int temp = (low+height)*(height - low + 1)/2;
+			if(temp == sum){
+				ArrayList<Integer> p = new ArrayList<Integer>();
+				for(int i = low;i <= height;i++){
+					p.add(i);
+				}
+				rt.add(p);
+				low++;
+			}else if(temp < sum){
+				height++;
+			}else{
+				low++;
+			}
+			
+		}
+		
+		return rt;
+	}
+
+	/**
+	 * 
+	 * 一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
+	 * num1,num2分别为长度为1的数组。传出参数
+	 * 将num1[0],num2[0]设置为返回结果
+	 * @param array
+	 * @param num1
+	 * @param num2 
+	 * @date 2019年10月9日
+	 * @author liudawei
+	 */
+	public void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
+         HashSet<Integer> set  = new HashSet<Integer>();
+         
+         for(int i = 0;i < array.length;i++){
+        	 if(!set.contains(array[i])) set.add(array[i]);
+        	 else set.remove(array[i]);
+         }
+         
+         Iterator<Integer> iterator = set.iterator();
+         if(iterator.hasNext()) num1[0] = iterator.next();
+         if(iterator.hasNext()) num2[0] = iterator.next();
+	}
+	
+	/**
+	 * 
+	 * 输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+	 * 平衡二叉树（Balanced Binary Tree）具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树
+	 * @param root
+	 * @return 
+	 * @date 2019年10月9日
+	 * @author liudawei
+	 */
+	public boolean IsBalanced_Solution(TreeNode root) {
+		return depth(root) != -1;
+	}
+	
+	public int depth(TreeNode node){
+		if(node == null){
+			return 0;
+		}
+		
+		int left = depth(node.left);
+		if(left == -1){
+			return -1;
+		}
+		
+		int right  = depth(node.right);
+		if(right == -1){
+			return -1;
+		}
+		
+		if(left - right < -1 || left - right > 1){
+			return -1;
+		}else{
+			return 1+ (left > right?left:right);
+		}
+		
+	}
+
+	/**
+	 * 
+	 * 输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
+	 * @param root
+	 * @return 
+	 * @date 2019年10月8日
+	 * @author liudawei
+	 */
+	public static int TreeDepth(TreeNode root) {
+		if(root == null) return 0;
+		int leftDepth = TreeDepth(root.left);
+		int rightDepth = TreeDepth(root.right);
+		int number = 1+(leftDepth > rightDepth ? leftDepth:rightDepth);
+		return number;
+	}
+	
+	public static int TreeDepthHelper(TreeNode root,int depth) {
+		if(root == null){
+			return depth;
+		}
+		if(root.left != null){
+			TreeDepthHelper(root.left,++depth);
+		}
+		if(root.right != null){
+			TreeDepthHelper(root.right,++depth);
+		}
+		return ++depth;
+	}
+	
+	/**
+	 * 
+	 * 给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。
+	 * 例如，如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，
+	 * 那么一共存在6个滑动窗口，他们的最大值分别为{4,4,6,6,6,5}； 
+	 * 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个：
+	 *   {[2,3,4],2,6,2,5,1}， {2,[3,4,2],6,2,5,1}，
+	 *   {2,3,[4,2,6],2,5,1}， {2,3,4,[2,6,2],5,1}， 
+	 *   {2,3,4,2,[6,2,5],1}， {2,3,4,2,6,[2,5,1]}。
+	 * @param num
+	 * @param size
+	 * @return 
+	 * @date 2019年9月25日
+	 * @author liudawei
+	 */
+	public ArrayList<Integer> maxInWindows(int[] num, int size) {
+		ArrayList<Integer> rt = new ArrayList<Integer>();
+		
+		if(num == null || num.length == 0){
+			return rt;
+		}
+		//滑动窗口的大小
+		int flushNumber = num.length - size + 1;
+		//第一个滑动窗口最大值
+		int maxNumber = num[0];
+		for(int i = 0; i < size;i++){
+			if(num[i] > maxNumber){
+				maxNumber = num[i];
+			}
+		}
+		
+		rt.add(maxNumber);
+		
+		for(int i = 1;i < flushNumber;i++){
+			
+		}
+		return rt;
+	}
+	
+	/**
+	 * 
+	 * 如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，
+	 * 那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，
+	 * 那么中位数就是所有数值排序之后中间两个数的平均值。
+	 * 我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。
+	 * @param num 
+	 * @date 2019年9月25日
+	 * @author liudawei
+	 */
+	PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+	PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(
+	   new Comparator<Integer>() {
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			return o2 - o1;
+		}
+	});
+	
+	int InsertCount = 0;
+	public void Insert(Integer num) {
+		if(InsertCount % 2 == 0){
+			maxHeap.offer(num);
+			minHeap.offer(maxHeap.poll());
+		}else{
+			minHeap.offer(num);
+			maxHeap.offer(minHeap.poll());
+		}
+		InsertCount++;
+	}
+	public Double GetMedian() {
+		if(InsertCount % 2 == 0){
+			return new Double(minHeap.peek() + maxHeap.peek()) / 2;
+		}else{
+			return new Double(minHeap.peek());
+		}
+	}
+    
+    
+	
+	/**
+	 * 
+	 * 给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）    中，
+	 * 按结点数值大小顺序第三小结点的值为4。
+	 * @param pRoot
+	 * @param k
+	 * @return 
+	 * @date 2019年9月25日
+	 * @author liudawei
+	 */
+	public static int KthNodeIndex = 0;
+	public static TreeNode KthNode(TreeNode pRoot, int k) {
+		//中序遍历
+		if(pRoot != null){
+			TreeNode node = KthNode(pRoot.left,k);
+			if(node != null){
+				System.out.println("left null");
+				return node;
+			}
+			KthNodeIndex++;
+			if(k == KthNodeIndex){
+				System.out.println("the last end");
+				return pRoot;
+			}
+			node = KthNode(pRoot.right,k);
+			if(node != null){
+				System.out.println("right null");
+				return node;
+			}
+		}
+		
+		return null;
+	}
+
+	/**
+	 * 
+	 * 从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
+	 * @param pRoot
+	 * @return 
+	 * @date 2019年9月24日
+	 * @author liudawei
+	 */
+	public static ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+		ArrayList<ArrayList<Integer>> rt = new ArrayList<ArrayList<Integer>>();
+		PrintHelper(pRoot,1,rt);
+		return rt;
+	}
+	public static void PrintHelper(TreeNode pRoot,int depth,ArrayList<ArrayList<Integer>> list) {
+		if(pRoot == null) return;
+		if(depth > list.size()){
+			list.add(new ArrayList<Integer>());
+		}
+		
+		list.get(depth - 1).add(pRoot.val);
+		
+		PrintHelper(pRoot.left,depth+1,list);
+		PrintHelper(pRoot.right,depth+1,list);
+	}
+	
+	
+/*	public static ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+		ArrayList<ArrayList<Integer>> rt = new ArrayList<ArrayList<Integer>>();
+		if(pRoot == null){
+			return rt;
+		}
+		ArrayList<TreeNode> q = new ArrayList<TreeNode>();
+		q.add(pRoot);
+		
+		int floorNumber = 1;
+		ArrayList<Integer> at = new ArrayList<Integer>();
+		while(!q.isEmpty()){
+			int number = floorNumber;
+			while(number % 2 == 0){
+				number = number / 2;
+			}
+			if(number == 1){
+				at = new ArrayList<Integer>();
+			}
+			TreeNode treeNode = q.get(0);
+			at.add(treeNode.val);
+			
+			if(treeNode.left != null){
+				q.add(treeNode.left);
+			}
+			if(treeNode.right != null){
+				q.add(treeNode.right);
+			}
+			
+			if(number == 1){
+				rt.add(at);
+			}
+			q.remove(0);
+			floorNumber++;
+		}
+		return rt;
+	}*/
+	
+	
+	
+	/**
+	 * 
+	 * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。
+	 *  即输出P%1000000007
+		输入描述:
+		题目保证输入的数组中没有的相同的数字
+		数据范围：
+			对于%50的数据,size<=10^4
+			对于%75的数据,size<=10^5
+			对于%100的数据,size<=2*10^5
+		示例1输入
+		1,2,3,4,5,6,7,0
+		输出 7
+	 * @param array
+	 * @return 
+	 * @date 2019年9月24日
+	 * @author liudawei
+	 */
+	public static int InversePairs(int[] array) {
+		for(int i = array.length - 1;i > 0;i--){
+			System.out.println(array[i]);
+		}
+		return 1;
+	}
+	
+	/**
+	 * 
+	 * 在一个字符串(0<=字符串长度<=10000，全部由字母组成)中找到第一个只出现一次的字符,
+	 * 并返回它的位置, 如果没有则返回 -1（需要区分大小写）.
+	 * @param str
+	 * @return 
+	 * @date 2019年9月24日
+	 * @author liudawei
+	 */
+	public static int FirstNotRepeatingChar(String str) {
+		if(str == null || str.length() == 0 || str.length() > 10000){
+			return -1;
+		}
+		
+		char[] arr = str.toCharArray();
+		for(int i = 0;i < arr.length;i++){
+			int number = 0;
+			for(char a:arr){
+				if(arr[i] == a){
+					number++;
+				}
+			}
+			
+			if(number == 1){
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
+	
+	/**
+	 * 
+	 * 把只包含质因子2、3和5的数称作丑数（Ugly Number）。例如6、8都是丑数，但14不是，因为它包含质因子7。 
+	 * 习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数。
+	 * @param index
+	 * @return 
+	 * @date 2019年9月24日
+	 * @author liudawei
+	 */
+	public static int GetUglyNumber_Solution(int index) {
+		if(index < 7) return index;
+		Vector<Integer> arr = new Vector<Integer>();
+		
+		int p1 = 0,p2 = 0,p3 = 0,newNum = 1;
+		arr.add(newNum);
+		
+		while(arr.size() < index){
+			newNum = Math.min(arr.get(p1) * 2, Math.min(arr.get(p2) * 3, arr.get(p3) * 5));
+			if(arr.get(p1) * 2 == newNum) p1++;
+			if(arr.get(p2) * 3 == newNum) p2++;
+			if(arr.get(p3) * 5 == newNum) p3++;
+			arr.add(newNum);
+		}
+		
+		return newNum;
+	}
+	
+	/**
+	 * 
+	 * 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+	 * 例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
+	 * @param numbers
+	 * @return 
+	 * @date 2019年9月23日
+	 * @author liudawei
+	 */
+	public static String PrintMinNumber(int[] numbers) {
+		if(numbers == null || numbers.length == 0){
+			return "";
+		}
+		
+		ArrayList<String> numberList = new ArrayList<String>();
+		ArrayList<String> printMinNumberHelper = PrintMinNumberHelper(numbers,0,numberList);
+		printMinNumberHelper.sort(null);
+		
+		return printMinNumberHelper.get(0);
+	}
+	
+	public static ArrayList<String> PrintMinNumberHelper(int[] numbers,int index,ArrayList<String> numberList) {
+		if(index == numbers.length - 1){
+			StringBuffer sb = new StringBuffer("");
+			for(int s:numbers){
+				sb.append(String.valueOf(s));
+			}
+			numberList.add(sb.toString());
+			return numberList;
+		}else{
+			for(int i = index;i < numbers.length;i++){
+				swap(numbers,index,i);
+				PrintMinNumberHelper(numbers,index+1,numberList);
+				swap(numbers,index,i);
+			}
+		}
+		return numberList;
+	}
+	
+	public static void swap(int[] numbers,int i,int j) {
+		int temp = numbers[i];
+		numbers[i] = numbers[j];
+		numbers[j] = temp;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 求出1~13的整数中1出现的次数,并算出100~1300的整数中1出现的次数？
+	 * 为此他特别数了一下1~13中包含1的数字有1、10、11、12、13因此共出现6次,
+	 * 但是对于后面问题他就没辙了。ACMer希望你们帮帮他,并把问题更加普遍化,
+	 * 可以很快的求出任意非负整数区间中1出现的次数（从1 到 n 中1出现的次数）。
+	 * @param n
+	 * @return 
+	 * @date 2019年9月23日
+	 * @author liudawei
+	 */
+	public static int NumberOf1Between1AndN_Solution(int n) {
+		if(n < 1){
+			return 0;
+		}
+		
+		int number = 0;
+		for(int i = 1;i <= n ;i++){
+			char[] charArray = (i + "").toCharArray();
+			for(char c:charArray){
+				if("1".equals(String.valueOf(c))){
+					number++;
+				}
+			}
+			
+		}
+		return number;
+	}
+
+	/**
+	 * 
+	 * HZ偶尔会拿些专业问题来忽悠那些非计算机专业的同学。
+	 * 今天测试组开完会后,他又发话了:在古老的一维模式识别中,常常需要计算连续子向量的最大和,
+	 * 当向量全为正数的时候,问题很好解决。但是,如果向量中包含负数,是否应该包含某个负数,
+	 * 并期望旁边的正数会弥补它呢？例如:{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止)。
+	 * 给一个数组，返回它的最大连续子序列的和，你会不会被他忽悠住？(子向量的长度至少是1)
+	 * @param array
+	 * @return 
+	 * @date 2019年9月23日
+	 * @author liudawei
+	 */
+	public static int FindGreatestSumOfSubArray(int[] array) {
+		if(array == null || array.length == 0){
+			return 0;
+		}
+		
+		int addNumber = array[0];
+		int maxNumber = array[0];
+		
+		for(int i = 1;i < array.length;i++){
+			if(i > 1){
+				addNumber = 0;
+			}
+			for(int j = i;j < array.length;j++){
+				addNumber += array[j];
+				if(addNumber > maxNumber){
+					maxNumber = addNumber;
+				}
+			}
+		}
+		return maxNumber;
+	}
+
+	/**
+	 * 
+	 * 输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
+	 * @param input
+	 * @param k
+	 * @return 
+	 * @date 2019年9月23日
+	 * @author liudawei
+	 */
+    public static ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+    	ArrayList<Integer> rt = new ArrayList<Integer>();
+    	if(input == null || input.length == 0 || k <= 0 || k > input.length){
+    		return rt;
+    	}
+    	int maxNumberIndex = 0;
+    	int maxNumber = input[0];
+    	for(int i = 0;i < k;i++){
+    		rt.add(i,input[i]);
+    		if(input[i] > maxNumber){
+    			maxNumber = input[i];
+    			maxNumberIndex = i;
+    		}
+    	}
+    	
+    	for(int i = k; i < input.length;i++){
+    		if(input[i] < maxNumber){
+    			rt.set(maxNumberIndex, input[i]);
+    			//重新选择最大数
+    			maxNumberIndex = 0;
+    	    	maxNumber = rt.get(0);
+    			for(int j = 0;j < rt.size();j++){
+    				if(rt.get(j) > maxNumber){
+    					maxNumberIndex = j;
+    					maxNumber = rt.get(j);
+    				}
+    			}
+    		}
+    	}
+        return rt;
+    }
+	
+	/**
+	 * 
+	 * 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。
+	 * 由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
+	 * @param array
+	 * @return 
+	 * @date 2019年9月23日
+	 * @author liudawei
+	 */
+    public static int MoreThanHalfNum_Solution(int [] array) {
+    	if(array == null || array.length == 0){
+    		return 0;
+    	}
+    	int numberSize = array.length/2;
+    	for(int i = 0;i < array.length;i++){
+    		int size = 0;
+    		for(int j = 0;j < array.length;j++){
+    			if(array[i] == array[j]){
+    				size++;
+    			}
+    		}
+    		if(size > numberSize){
+    			return array[i];
+    		}
+    	}
+    	
+        return 0;
+    }
+    
+	/**
+	 * 
+	 * 输入一个字符串,按字典序打印出该字符串中字符的所有排列。
+	 * 例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+	 * 
+	 * 输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母。
+	 * @param str
+	 * @return 
+	 * @date 2019年9月19日
+	 * @author liudawei
+	 */
+	public static ArrayList<String> Permutation(String str) {
+		ArrayList<String> rt = new ArrayList<String>();
+		if(str != null && str.length() > 0){
+			permutationHelper(str.toCharArray(),0,rt);
+			rt.sort(null);
+			//Collections.sort(rt);
+		}
+		return (ArrayList<String>) rt;
+	}
+	
+	public static void permutationHelper(char[] cs,int i,ArrayList<String> list){
+		if(i == cs.length - 1){//最后一个字母，不用交换
+			String val = String.valueOf(cs);
+			if(!list.contains(val)){
+				list.add(val);
+			}
+		}else{
+			for(int j = i;j < cs.length;j++){//交换i和i之后的位置
+				swp(cs,i,j);
+				permutationHelper(cs,i+1,list);
+				swp(cs,i,j);
+			}
+		}
+	}
+	
+	public static void swp(char[] cs,int i,int j){
+		char temp = cs[i];
+		cs[i] = cs[j];
+		cs[j] = temp;
+	}
+
+	/**
+	 * 
+	 * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+	 * @param pRootOfTree
+	 * @return 
+	 * @date 2019年9月19日
+	 * @author liudawei
+	 */
+	private static TreeNode pLast = null;
+	public static TreeNode Convert(TreeNode pRootOfTree) {
+		if(pRootOfTree == null){
+			return null;
+		}
+		
+		/**
+		 * 中序遍历，对结点左右子树进行处理
+		 */
+		TreeNode head = Convert(pRootOfTree.left);
+		
+		//左子树为空
+		if(head == null){
+			head = pRootOfTree;
+		}
+		
+		pRootOfTree.left = pLast;
+		if(pLast != null){
+			pLast.right = pRootOfTree;
+		}
+		pLast = pRootOfTree;
+		
+		Convert(pRootOfTree.right);
+		return head;
+	}
+
+	/**
+	 * 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），
+	 * 返回结果为复制后复杂链表的head。
+	 * （注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+	 * @param pHead
+	 * @return 
+	 * @date 2019年9月17日
+	 * @author liudawei
+	 */
+	public static RandomListNode Clone(RandomListNode pHead) {
+        if(pHead == null){
+        	return null;
+        }
+        
+        RandomListNode currentNode = pHead;
+        //1、复制每个结点、如复制结点A得到A1，将结点A1插到A后面
+        while(currentNode != null){
+        	RandomListNode cloneNode = new RandomListNode(currentNode.label);
+        	cloneNode.next = currentNode.next;
+        	currentNode.next = cloneNode;
+        	currentNode = cloneNode.next;
+        }
+        currentNode = pHead;
+        //2、重新遍历链表、复制老结点得随机指针给新结点，如A1.random = A.random
+        while(currentNode != null){
+        	currentNode.next.random = currentNode.random == null ? null:currentNode.random.next;
+        	currentNode = currentNode.next.next;
+        }
+        //3、拆分链表、将链表拆分为原链表和复制后得链表
+        currentNode = pHead;
+        RandomListNode pCloneHead = pHead.next;
+        while(currentNode != null){
+        	RandomListNode cloneNode = currentNode.next;
+        	currentNode.next = cloneNode.next;
+        	cloneNode.next = cloneNode.next == null ? null:cloneNode.next.next;
+        	currentNode = currentNode.next;
+        }
+        
+        return pCloneHead;
+	}
+
 	/**
 	 * 
 	 * 输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
