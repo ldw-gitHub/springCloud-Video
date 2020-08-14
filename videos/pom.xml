@@ -46,6 +46,24 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+<!--    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+
 		<dependency>
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
@@ -120,13 +138,13 @@
 
 
 
-		<dependency>
+<!--		<dependency>
 			<groupId>com.hikvision.ga</groupId>
 			<artifactId>artemis-http-client</artifactId>
 			<version>1.2</version>
 			<scope>system</scope>
 			<systemPath>${lib.path}/artemis-http-client-1.2-SNAPSHOT.jar</systemPath>
-		</dependency>
+		</dependency>-->
 
 
 
@@ -140,10 +158,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
 			</plugin>
 
 			<plugin>

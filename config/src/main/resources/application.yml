@@ -1,11 +1,43 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://10.0.0.92:8761/eureka/
 server:
   port: 8766
 spring:
   application:
     name: service-config
-        
-        
+  profiles:
+    active: native #要使用本机配置文件，请使用启动配置服务器
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:videos
+    bus:
+      trace:
+        enabled: true
+      enabled: true
+  rabbitmq:                    #本地环境不需要配置mq，但是需要启动mq,Springboot会自动连接本地mq
+    host: 47.107.95.112
+    port: 5672
+    username: java_user
+    password: java_user
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*" #释放所有的接口,主要释放 /actuator/bus-refresh 接口，该接口需要配置到 WebHooks 用于在提价的配置的时候通知ConfigServerServer端配置完成
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+
+
+
+

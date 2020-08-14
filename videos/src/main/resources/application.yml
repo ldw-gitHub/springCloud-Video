@@ -1,5 +1,5 @@
 spring:
-  profiles: 
+  profiles:
     active: dev
    #Redis配置
   #redis:
@@ -16,10 +16,14 @@ spring:
   cloud:
     refresh:
       refreshable: none
-
-ribbon:
-  eureka:
+  bus:
+    trace:
+      enabled: true    #开启消息跟踪
     enabled: true
+#
+#ribbon:
+#  eureka:
+#    enabled: true
 
 project:
   config:
@@ -35,3 +39,6 @@ logging:
   path: ./logs/videos
   #level:
     #org.springframework.web: DEBUG
+
+
+

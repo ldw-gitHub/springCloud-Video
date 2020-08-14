@@ -14,11 +14,14 @@ import redis.clients.jedis.JedisPoolConfig;
 @PropertySource("classpath:redis.properties")
 @Primary
 public class JedisConfig {
-	
+
 	public Logger log = Logger.getLogger(getClass());
 
 	@Value("${spring.redis.host}")
 	private String host;
+
+	@Value("${spring.redis.password}")
+  private String password;
 
 	@Value("${spring.redis.port}")
 	private int port;
@@ -50,10 +53,10 @@ public class JedisConfig {
 		//jedisPoolConfig.setBlockWhenExhausted(blockWhenExhausted);
 		// 是否启用pool的jmx管理功能, 默认true
 		jedisPoolConfig.setJmxEnabled(true);
-		JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout);
+		JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout,password);
 		return jedisPool;
 	}
-	
+
 	/**
 	 *  #redis配置开始
 		# Redis数据库索引（默认为0）

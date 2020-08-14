@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    config:
+      name: videoconfig #获取文件名
+      #label:
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: service-config
+  rabbitmq:                    #本地环境不需要配置mq，但是需要启动mq,Springboot会自动连接本地mq
+    host: 47.107.95.112
+    port: 5672
+    username: java_user
+    password: java_user
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# 更新单个
+# localhost:8762/actuator/bus-refresh
+# 更新eureka全部实例
+# localhost:8762/actuator/bus-refresh/eureka-client:*

@@ -23,13 +23,8 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-				    <fork>false</fork>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
