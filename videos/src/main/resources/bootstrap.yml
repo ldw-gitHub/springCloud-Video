@@ -1,23 +1,30 @@
 spring:
+  application:
+    name: video
   cloud:
     config:
+      url: http://localhost:8766
       name: videoconfig #获取文件名
       #label:
       profile: dev
       discovery:
         enabled: true
         service-id: service-config
+    bus:
+      trace:
+        enabled: true
+      enabled: true
+
   rabbitmq:                    #本地环境不需要配置mq，但是需要启动mq,Springboot会自动连接本地mq
     host: 47.107.95.112
     port: 5672
     username: java_user
     password: java_user
 
-
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://10.0.0.92:8761/eureka/
 
 management:
   endpoints:

@@ -19,7 +19,8 @@ spring:
     driverclassname: com.mysql.jdbc.Driver
     username: root
     password: Aa123456
-    url: jdbc:mysql://localhost:3306/shop?useUnicode=true&amp;characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong&useSSL=false
+#    url: jdbc:mysql://localhost:3306/shop?useUnicode=true&amp;characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong&useSSL=false
+    url: jdbc:mysql://localhost:3306/shop?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong&useSSL=false
     initialSize: 5
     minIdle: 5
     maxActive: 20
@@ -29,9 +30,14 @@ spring:
     poolPreparedStatements: true
   servlet:
     multipart:
-      max-file-size: 2048Mb
-      max-request-size: 2048Mb
+      max-file-size: 2048MB
+      max-request-size: 2048MB
       enabled: true
+  rabbitmq:                    #本地环境不需要配置mq，但是需要启动mq,Springboot会自动连接本地mq
+    host: 47.107.95.112
+    port: 5672
+    username: java_user
+    password: java_user
 
 mybatis:
   type-aliases-package: com.itcast.dw.model

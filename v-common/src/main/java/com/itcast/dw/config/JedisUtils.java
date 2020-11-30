@@ -1,5 +1,12 @@
 package com.itcast.dw.config;
 
+import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.SortingParams;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -7,15 +14,6 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.jboss.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import redis.clients.jedis.BinaryClient.LIST_POSITION;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.SortingParams;
 
 @Component
 public class JedisUtils {
@@ -169,7 +167,7 @@ public class JedisUtils {
 	 * <p>
 	 * 删除指定的key,也可以传入一个包含key的数组
 	 * </p>
-	 * 
+	 *
 	 * @param indexdb
 	 *            选择redis库 0-15
 	 * @param keys
@@ -195,7 +193,7 @@ public class JedisUtils {
 	 * <p>
 	 * 删除指定的key,也可以传入一个包含key的数组
 	 * </p>
-	 * 
+	 *
 	 * @param indexdb
 	 *            选择redis库 0-15
 	 * @param keys
@@ -1113,7 +1111,7 @@ public class JedisUtils {
 	 *            添加的value
 	 * @return
 	 */
-	public Long linsert(String key, LIST_POSITION where, String pivot, String value) {
+/*	public Long linsert(String key, LIST_POSITION where, String pivot, String value) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -1126,7 +1124,7 @@ public class JedisUtils {
 			returnResource(jedisPool, jedis);
 		}
 		return res;
-	}
+	}*/
 
 	/**
 	 * <p>
@@ -2260,7 +2258,7 @@ public class JedisUtils {
 
 	/**
 	 * 序列化对象
-	 * 
+	 *
 	 * @param obj
 	 * @return 对象需实现Serializable接口
 	 */
@@ -2280,7 +2278,7 @@ public class JedisUtils {
 
 	/**
 	 * 反序列化对象
-	 * 
+	 *
 	 * @param bytes
 	 * @return 对象需实现Serializable接口
 	 */
@@ -2304,7 +2302,7 @@ public class JedisUtils {
 	 */
 	public static void returnResource(JedisPool jedisPool, Jedis jedis) {
 		if (jedis != null) {
-			jedisPool.returnResource(jedis);
+//			jedisPool.returnResource(jedis);
 		}
 	}
 
